@@ -19,7 +19,7 @@ function App() {
 
 
 
-            <Route exact path="/a/:elem/pagination" element={<Home />} >
+            <Route exact path="/" element={<Home />} >
                
             </Route>
                </Routes>
