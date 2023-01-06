@@ -13,7 +13,7 @@ function App() {
 
   return (
            <Router>
-            <Link to="/a/:elem/pagination" >start</Link>
+            <Link to="/a/new/pagination" >start</Link>
 
           <Routes>
 
