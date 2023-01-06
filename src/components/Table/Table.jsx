@@ -62,7 +62,7 @@ const Table = (props, columns) => {
         labels:{eltabs:[{name:"all records", words:"", saved:1},], searchtext:searchtext}
       })
     }
-    tempsearchtext.current=setto1();
+    tempsearchtext.current=setto1;
     useEffect(()=>{
         tempsearchtext.current();
     }, [])
