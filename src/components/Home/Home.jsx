@@ -5,6 +5,7 @@ import {
 import "./Home.scss"; 
 import TreeNode from "../Tree/TreeNode"; 
 import AUrl from "../Navbar/AUrl"
+import Table from "../Table/Table";
   
 import { tree } from '../../data/dummy';
   
@@ -21,6 +22,7 @@ let arr = []
 class Home extends React.Component { 
   constructor(props) {
     super(props);
+    let data1 = { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] };
     this.state = {
       data: { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] },
       columns: [],
@@ -91,12 +93,26 @@ class Home extends React.Component {
       .then((response) => {
         // set the state 
  
-      
- this.state.data["new"]=response.filter((t, i) => {
-        return i>50 && i<100 && t;
-      })
-      this.setState({ data: this.state.data })
+        alert(JSON.stringify(this.state.data["new"]))
 
+
+
+        let state = { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] }
+    
+        
+                //This is where the state property value is cloned 
+        
+                state.new= response.filter((t, i) => {
+                  return i>50 && i<100 && t;
+                })
+        this.setState(data => ({
+          data: { ...this.state.data,  new:state.new // like push but without mutation
+        }}));
+
+
+
+        
+        
         this.state.data["postponed"] = response.filter((t, i) => {
           return i>50 && i<100 && t;
         })
@@ -516,7 +532,23 @@ this.state.treetable[1]===true)   || this.state.treetable[2]===true ) && <div cl
     parent={this.state.parent} 
      />
 
-    </div>  
+    </div>      <Table
+ changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
+ menuel={this.state.menuel}
+dp={this.state.dp} desapear={ this.state.displ } i={this.state.i} data={this.state.data[this.state.categories.actual[0].cat]} 
+checkall={this.state.checkall}  familyTree={tree.children}
+checkedel={this.state.checkedel.set[this.state.categories.actual[0].cat]}
+setchecked={this.setchecked.bind(this)}
+  columns={this.state.columns}
+  flagsettings={this.state.flagsettings} postPerPage={this.state.postPerPage}
+  dff={this.state.dff} str={this.props.params.str}
+  furl={this.furl.bind(this)} id={this.state.i} flag={this.state.flag} settingsid={this.state.settings}
+  acturl={this.state.categories.actual[0].cat}
+  number1={this.state.number1}
+  m={this.state.m}
+  changem={this.changem.bind(this)}
+  ChangePage={this.changePPP.bind(this)}
+/>
     </div>
      
   }
