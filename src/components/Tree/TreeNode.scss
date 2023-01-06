@@ -1,0 +1,113 @@
+.node{
+    width: 100%;
+    background-color: black;
+  }
+  .treeNode {
+    width: 240px;
+    border-radius: 5px;
+    background-color: #F2F8FD;
+    height: 300px
+  }
+
+  .pnode {
+    width: 100%;
+ 
+  }
+ 
+
+@mixin theme($k ) { 
+    @if $k == 4 { background-color:rgb(25, 60, 163); transition:  1s}
+
+}
+.nodeel{
+@for $k from 1 through 20 {
+
+      .btn-#{$k}{  
+              @include theme($k); 
+      }
+      .btn{
+          background-color:rgb(97, 7, 7);
+          width:100%;
+
+}
+}
+}
+
+
+
+
+
+
+
+
+
+p {
+  height:20px;
+   transition: height 0.5 sec;
+  transition: 0.5s;
+}
+p:hover  {
+background-color:red;
+
+}
+.fa-chevron-up{
+  background-color:yellow;
+  transition: 0.5s;
+}
+.fa-chevron-up{
+  background-color:yellow;
+  transition: 0.5s;
+}
+.fa-chevron-up:hover  {
+background-color:red;
+ 
+}
+.fa-chevron-down{
+  background-color:red;
+  transition: 0.5s;
+}
+.fa-chevron-down:hover  {
+background-color:yellow;
+ 
+}
+  span{
+    padding-left: 30px;
+  }
+  .nodeel{ padding-left: 10px;
+padding-top: 5px; }
+
+.uns{
+  user-select: none;
+}
+.x{
+ 
+  cursor: move;
+
+}
+p {
+  border-radius: 5px 0px  0px 5px;
+ 
+}
+i{
+  padding-right:5px; padding-left: 10px
+}
+.display1{
+  background-color:red;
+}
+
+.displaynone{
+  background-color:yellow;
+}
+
+#ff{
+  margin-top: -30px;
+   height: 50px;
+   width: 100%;
+   background-color: red;
+}
+#ffselected{
+  background-color: yellow;
+  margin-top: -30px;
+  height: 50px;
+  width: 100%;
+}
