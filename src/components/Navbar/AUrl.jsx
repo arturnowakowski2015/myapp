@@ -1,10 +1,8 @@
  
 
-import React, { useState, useEffect } from "react";
+import React, { useState  } from "react";
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
+ 
     Link,
  useLocation
 } from "react-router-dom"; 
@@ -31,19 +29,19 @@ const AUrl = (props) => {
                 </div>
             <Link className={item[0] ? "el-1" : "el-1-1"} 
                   to={"/a/"+location.pathname.split("/")[2]+"/pagination/"} 
-                  onClick={(e)=>{ item.indexOf(false)!=0 && changeconfig(2, 0)}} >app
+                  onClick={(e)=>{ item.indexOf(false)!==0 && changeconfig(2, 0)}} >app
             </Link>
             <Link 
                   className={item[1] ? "el-2" : "el-2-1"} 
                   to={"/a/"+location.pathname.split("/")[2]+"/pagination/"+
-                  (location.pathname.split("/")[4]!=undefined && location.pathname.split("/")[4]!="" ?
+                  (location.pathname.split("/")[4]!==undefined && location.pathname.split("/")[4]!=="" ?
                    location.pathname.split("/")[4] : 1)+"/1/searchtext"} 
-                  onClick={()=>{ item.indexOf(false)!=1 && changeconfig(2, 1)}}>searching</Link> 
+                  onClick={()=>{ item.indexOf(false)!==1 && changeconfig(2, 1)}}>searching</Link> 
             <Link 
                  className={item[2] ? "el-3" : "el-3-1"} 
                 to={"/a/"+location.pathname.split("/")[2]+"/pagination/"+
-                (location.pathname.split("/")[4]!=undefined  && location.pathname.split("/")[4]!="" ? location.pathname.split("/")[4] : 1)+"/1/settings"} 
-                onClick={()=>{ item.indexOf(false)!=2 && changeconfig(1, 2)}}>settings
+                (location.pathname.split("/")[4]!=undefined  && location.pathname.split("/")[4]!=="" ? location.pathname.split("/")[4] : 1)+"/1/settings"} 
+                onClick={()=>{ item.indexOf(false)!==2 && changeconfig(1, 2)}}>settings
             </Link>
         </div>)
 }

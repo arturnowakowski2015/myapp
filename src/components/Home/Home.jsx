@@ -516,7 +516,7 @@ this.state.treetable[1]==true   || this.state.treetable[2]==true ) && <div class
   pid={-1}
     displ1={this.state.displ}
     changeparent={(name) => this.setState({ parent: name })}
-    config={this.state.config}
+    config={1}
     familyTree={tree.children}
     changeconfig={(i) => { this.setState({ config: i }) }}
     settings={this.state.settings}
@@ -558,7 +558,8 @@ ii=0
         this.changedispl(0, 300, true);}} />
  
            
-  
+ 
+        {this.state.move!=1 &&  treetablemin }
 
 
 
