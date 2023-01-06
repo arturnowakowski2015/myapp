@@ -222,15 +222,13 @@ const TreeNode = (props) => {
       nodes.map((t, i) => {       //        console.log(q+":::"+t.name+":::"+elmenu.parent.name)
         if (t.name === elmenu.parent.name && mode === 0 && elmenu.child.name !==t.name) {    
           if (t.children == null && mode === 0)
-            t.children = []
-            console.log(q+":::"+t.children +":::"+JSON.stringify(elmenu.child.name))
+            t.children = [] 
           if (t.children!==undefined && t.children.filter((tt) => tt.name === elmenu.child.name).length === 0 && mode === 0){
-            if (t.name === elmenu.parentold.name && mode === 0){
-              console.log(90)
+            if (t.name === elmenu.parentold.name && mode === 0){ 
               t.children.unshift({ name: elmenu.child.name, bgcolor: "white", opacity: 0.4 })
             }
             else
-            {console.log(80)
+            { 
               t.children.unshift({ name: elmenu.child.name, depth: 0, id: 0, bgcolor: "orange" })
             }
           }
@@ -379,27 +377,39 @@ let strold="";
 
   const removeopacity = (e, tr, depth) => {
 
-      tr && tr.length && tr.map((t) => {
+      tr && tr.length && tr.map((t) => { 
         if(typeof elmenu.parentroot.name === "number" && mode===0)
         {  
-          if(e.target.id==="ffselected"){ 
+          if(e.target.id==="ffselected"){ alert(23+JSON.stringify(t)) 
           if(elmenu.parentroot.children && elmenu.parentroot.children[0])
           tr.splice(elmenu.parentroot.name+2,1, elmenu.parentroot.children[0])
           else tr.splice(elmenu.parentroot.name+2,1)
           }
-          else if(e.target.id ){ alert(9) 
+          else if(e.target.id==="ff" ){ alert(12) 
             if(elmenu.parentroot.children && elmenu.parentroot.children[0]){
             tr.splice(elmenu.parentroot.name+1,1, elmenu.parentroot.children[0])}
             else {tr.splice(elmenu.parentroot.name+1,1);alert(90)
             }
           }
-          else if(e.target.id==="text"){ 
+          else if(e.target.id==="text"){ alert("P    "+JSON.stringify(t)) 
             if(elmenu.parentroot.children && elmenu.parentroot.children[0])
             tr.splice(elmenu.parentroot.name+1,1, elmenu.parentroot.children[0])
            
-            else tr.splice(elmenu.parentroot.name+1,1)
+            else{alert(1+":::"+JSON.stringify(t)) 
+               tr.splice(elmenu.parentroot.name+1,1)
 
+            }
+
+          }else  if(e.target.id==="f"){
+               if(elmenu.parentroot.children && elmenu.parentroot.children[0] && q===0){
+                  tr.splice(elmenu.parentroot.name+1,1) ;   alert(JSON.stringify(elmenu.child.children[0])) 
+                  tr.splice(elmenu.parentroot.name+1, 0 , elmenu.child.children[0])
+               }
+          else{
+             tr.splice(elmenu.parentroot.name+1,1)
+q=1;  
           }
+        }
           mode=1
           elmenu.parentroot.name="";
         }
@@ -414,9 +424,9 @@ let strold="";
  
           if (elmenu.child.children ){
             findchild(t.children);
-            if(is) {
+            if(is) { 
              t.children.splice(y, 1, {name: elmenu.child.name, children: elmenu.child.children })
-             alert(JSON.stringify(t))
+             alert("eee"+JSON.stringify(t))
              if(t.children)changeforwards(t.children, elmenu.child.children[0].name, elmenu.child.children)
  
             }
@@ -425,10 +435,10 @@ let strold="";
           else { t.children.splice(y, 1)}
           y=-1
         }
-        if (t.children){++q; removeopacity(e, t.children)}
+        if (t.children){ removeopacity(e, t.children)}
         return t;
       })
-     if(tr[0]!==undefined && tr[0].name===null && !tr[0].line){
+     if(tr[0]!==undefined && tr[0].name==null && !tr[0].line){
       alert("   pmm   o   "+JSON.stringify(elmenu) )
         let u = tr[0].children
         delete tr[0].children
@@ -437,26 +447,15 @@ let strold="";
         tr[0].children=u[0].children
         alert( JSON.stringify(tr) + "   b          "+JSON.stringify(u) )
      } 
-      elmenu.parent.name="";
-      elmenu.parent.depth=null;
-      elmenu.parent.id=null;
-      elmenu.child.name="";
-      elmenu.child.depth=null;
-      elmenu.child.id=null;
-      elmenu.parentold.name="";
-      elmenu.parentold.depth=null;
-      elmenu.parentold.id=null;
-      elmenu.parentformer.name="";
-      elmenu.parentroot.name="";
       makeidlev(tree.children, 0, 0)
-      q=0;
+ 
     for (let ii = 0; ii < 20; ii++) {
       c = 0;
       makeids(tree.children, ii)
 
     }
-    setFamilyTree(props.familyTree)
-    props.changeconfig(props.config===1 ? 2 : 1)
+    setFamilyTree(props.familyTree) 
+    props.changeconfig(2) 
     mode = 1
 
   }
@@ -477,17 +476,23 @@ let strold="";
     }
     if(remchild==="root")
     {     
-    let yy=0;
-    nodes.children.map((t)=>{
+  
+    nodes.children.map((t)=>{ 
       if(t.name===elmenu.parentformer.name)
       {
-        t.children && t.children.map((tt, i) => {
+        t.children && t.children.map((tt, i) => {         console.log(yy+"::"+( elmenu.child.name+"::"+tt.name))
           if(tt.name===elmenu.child.name)
             yy=i;
+     
             return t;
+            
         })
- 
-        t.children && t.children.splice(yy, 1)
+        if(q===0){
+         t.children && t.children.splice(yy, 1)
+          q=1;
+        }
+        yy=-1;
+        q=1;
       }
       return t;
     })
@@ -630,7 +635,7 @@ let strold="";
             if (e.target.id === "ff")
               t.opacity = 0.1
              if (t.name !==elmenu.child.name) {
-              
+              yy=-1
                removeprobe(tree.children, 1, 0);
               if (mode === 0) {
 
@@ -654,8 +659,7 @@ let strold="";
             e.preventDefault(); 
        
                     q=0
-            removeopacity(e, tree.children)
- 
+            removeopacity(e, tree.children) 
 
           }}
 
@@ -705,16 +709,15 @@ let strold="";
             
             e.preventDefault();
             e.dataTransfer.getData("text");
-
+            yy=-1
              removeprobe(tree, root, "root");
             mode=0;
             addtoroot(tree)
                   }} 
 
                   onDrop={(e) => { 
-       
-                    removeopacity(e, tree.children, props.depth)
- 
+                    q=0;
+                    removeopacity(e, tree.children, props.depth) 
                   }}
                   onDragLeave={
                     (e) => {
@@ -767,7 +770,7 @@ return <div key={i}
       if (e.target.id === "ff")
         t.opacity = 0.1
        if (t.name !==elmenu.child.name) {
-        
+        yy=-1
          removeprobe(tree.children, 1, 0);
         if (mode === 0) {
 
@@ -800,8 +803,7 @@ return <div key={i}
       e.preventDefault(); 
  
       q=0;
-      removeopacity(e, tree.children)
-    
+      removeopacity(e, tree.children) 
     }}
 
   >drag'n'drop
@@ -832,16 +834,15 @@ style={{ backgroundColor: t.bgcolor }}>{t.name}
       
       e.preventDefault();
       e.dataTransfer.getData("text");
-
+      yy=-1
        removeprobe(tree, root, "root");
       mode=0;
       addtoroot(tree)
             }} 
 
             onDrop={(e) => { 
-            
-              removeopacity(e, tree.children, props.depth)
- 
+            q=0;
+              removeopacity(e, tree.children, props.depth) 
             }}
             onDragLeave={
               (e) => {
