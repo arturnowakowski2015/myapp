@@ -5,7 +5,7 @@ import {
   Routes,
   Route, Link
 } from "react-router-dom"; 
-import Home from "./components/Tree/TreeNode"; 
+import Home from "./components/Home/Home"; 
  
 
 
@@ -19,7 +19,7 @@ function App() {
 
 
 
-            <Route exact path="/a/:elem/pagination" element={<TreeNode />} >
+            <Route exact path="/a/:elem/pagination" element={<Home />} >
                
             </Route>
                </Routes>
