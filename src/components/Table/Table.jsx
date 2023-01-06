@@ -20,6 +20,7 @@ const Table = (props, columns) => {
     const tempsearchtext = useRef()
     const tempcountdown = useRef();
     const onCangeLocation = useRef()
+    const templimit= useRef();
     const location = useLocation();
     const navigate = useNavigate();
     const [flagel, setFlagel] = useState(true)
@@ -34,7 +35,7 @@ const Table = (props, columns) => {
     const [postPerPage, setPostPerPage] = useState(props.postPerPage);
     const [oldnumber, setOldnumber]=useState(1);
     const[oldel, setOldel]= useState(0)
-  
+    const [ limit, setLimit] = useState(props.data.length)
     const[oldindex, setOldIndex]=useState(1)
     const [tovalue, setTovalue] = useState(0); 
     const[countdown, setCountdown]=useState(0);
@@ -359,7 +360,26 @@ const Table = (props, columns) => {
 
     }
  
+    let j =-1;
+ const limit1 =( ) =>
+ {
+     const timer = setTimeout(()=>{
+         setLimit(limit=>limit+1)
+         limit1( ) 
+        ++j;
+     }, 100); 
+   
+     if(data.length===0 && j>6)clearTimeout(timer);
+     else if(data.length!==0 && j>Math.ceil(data.length/10))clearTimeout(timer);
   
+ }  
+ const setlimit1 = () => {
+         limit1()
+ }
+templimit.current = setlimit1;
+ useEffect(()=>{
+templimit.current()
+ }, [])
 
 if(data1.length===0)
  pageNumber=[1,2,3,4,5,6]
@@ -537,7 +557,7 @@ const z = <div className="tablecontainer">
                     <Pagination
                          changeintree={props.changeintree} stop={stop} acturl={props.acturl} fp={1} span={span} postPerPage={postPerPage} number={number} 
                          pageNumber={   pageNumber } 
- 
+                         limit={limit}
                         oldel={oldel}
                         currentPost={currentPost}
                          ChangePage={ChangePage} 
