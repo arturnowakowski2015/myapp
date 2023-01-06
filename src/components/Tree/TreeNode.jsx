@@ -34,7 +34,7 @@ const makeids = (nodes, i) => {
   })
 };
 
-
+/*
 const makeidlev1 = (str,nodes, i, tt) => {
   return nodes && nodes.forEach((t) => {
 
@@ -51,7 +51,7 @@ const makeidlev1 = (str,nodes, i, tt) => {
 
 };
 
-
+*/
 
 const makeidlev = (nodes, i, tt) => {
   return nodes && nodes.forEach((t) => {
