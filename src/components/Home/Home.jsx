@@ -4,8 +4,7 @@ import {
 } from "react-router-dom";
 import "./Home.scss"; 
 import TreeNode from "../Tree/TreeNode"; 
-import AUrl from "../Navbar/AUrl"
-import Table from "../Table/Table";
+import AUrl from "../Navbar/AUrl" 
   
 import { tree } from '../../data/dummy';
   
@@ -21,8 +20,7 @@ let y = [];
 let arr = [] 
 class Home extends React.Component { 
   constructor(props) {
-    super(props);
-    let data1 = { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] };
+    super(props); 
     this.state = {
       data: { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] },
       columns: [],
@@ -30,7 +28,7 @@ class Home extends React.Component {
       flagsettings: 0,
       postPerPage: 10,
       flag: 0,
-      dff: -1,
+      dff: -1, 
       ending: "",
       str: "sssss",
       menuel:false,
@@ -97,7 +95,7 @@ class Home extends React.Component {
 
 
 
-        let state = { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] }
+        let state = this.state.data
     
         
                 //This is where the state property value is cloned 
@@ -105,26 +103,27 @@ class Home extends React.Component {
                 state.new= response.filter((t, i) => {
                   return i>50 && i<100 && t;
                 })
-        this.setState(data => ({
-          data: { ...this.state.data,  new:state.new // like push but without mutation
-        }}));
+        this.setState( {
+          data: state  // like push but without mutation
+       }) ;
 
 
 
         
         
-        this.state.data["postponed"] = response.filter((t, i) => {
+        state["postponed"] = response.filter((t, i) => {
           return i>50 && i<100 && t;
         })
-        this.setState({ data: this.state.data })
-      this.state.data["removed"] = response.filter((t, i) => {
+        this.setState({ data: state })
+        state["removed"] = response.filter((t, i) => {
         return i>100 && i<150 && t;
       })
-    this.setState({ data: this.state.data })
+    this.setState({ data: state })
 
-
-        this.state.categories.actual[0].l = response.length
-        this.setState({ categories: this.state.categories })
+       let cat = this.state.categories;
+       cat.actual[0].l = response.length
+       cat.actual[0].l = response.length
+        this.setState({ categories: cat })
         this.setState({
           columns: Object.keys(response[0]).map((t, i) => {
 
@@ -196,6 +195,7 @@ class Home extends React.Component {
   }
   setchecked(i, actual)
   {    
+    let ch = this.state.checkedel;
     if(this.state.data!==undefined){  
         this.state.data[actual].map((t)=>{
           if(t.id===i &&      this.state.checkedel.set[actual].indexOf(i)===-1){ 
@@ -207,12 +207,13 @@ class Home extends React.Component {
             this.state.checkedel.set[actual].splice(this.state.checkedel.set[actual].indexOf(i), 1)
    
           }
-            this.state.checkedel.actual[0].cat=actual;
-          this.setState({checkedel: this.state.checkedel});
+     
+          ch.actual[0].cat=actual;
+          this.setState({checkedel: ch});
           return t;
         }) 
     }
-    if(this.state.checkedel.set[actual].length>0)
+    if(ch.set[actual].length>0)
       this.setState({settings: 4})
     else this.setState({settings:-1})
    // this.setState({checkall: false})
@@ -220,33 +221,33 @@ class Home extends React.Component {
  
  
   movetodestination(ii){
- 
+    const cat = this.state.categories;
     const timer =setTimeout(()=>{
 
-      this.state.checkedel.set[this.state.categories.actual[0].cat].map((t,i) => {
+      this.state.checkedel.set[cat.actual[0].cat].map((t,i) => {
  
   
-          this.state.data[this.state.dest.name].unshift(this.state.data[this.state.categories.actual[0].cat][   
-            this.state.data[this.state.categories.actual[0].cat].findIndex(function(item){
+          this.state.data[this.state.dest.name].unshift(this.state.data[cat.actual[0].cat][   
+            this.state.data[cat.actual[0].cat].findIndex(function(item){
             return item.id === t
           })])
  
  
-           this.state.data[ this.state.categories.actual[0].cat ].splice(
-                  this.state.data[this.state.categories.actual[0].cat].findIndex(function(item){
+           this.state.data[ cat.actual[0].cat ].splice(
+                  this.state.data[cat.actual[0].cat].findIndex(function(item){
                   return item.id === t
                 }), 1)
-           this.state.checkedel.set[this.state.categories.actual[0].cat].splice(i,1)
+           this.state.checkedel.set[cat.actual[0].cat].splice(i,1)
         return t;
       })
  
  
 
     this.movetodestination(--ii )
-    if(this.state.checkedel.set[this.state.categories.actual[0].cat].length<=  0){
-      actdest=this.state.categories.actual[0].cat
-      this.state.categories.actual[0].cat=this.state.dest.name
-      this.setState({categories: this.state.categories})
+    if(this.state.checkedel.set[cat.actual[0].cat].length<=  0){
+      actdest=cat.actual[0].cat
+      .actual[0].cat=this.state.dest.name
+      this.setState({categories: cat})
       ii=-2;
       this.movetodestination( --ii)
     } 
@@ -266,6 +267,8 @@ class Home extends React.Component {
  }
 
   delete1(str, flag ){ 
+    const cat = this.state.categories;
+    const dest =this.state.dest
 if(flag===0){
      const timer =setTimeout(()=>{
  
@@ -287,16 +290,16 @@ if(flag===0){
         clearTimeout(timer)
     this.setState({move: 0}) 
      if(this.state.checkedel.set[str].length===0){
-       this.state.categories.actual[0].cat=str
-      this.setState({categories: this.state.categories})
+      cat.actual[0].cat=str
+      this.setState({categories: cat})
          // 
  
      }}
     }
     else if(flag===1){ 
       this.changedata(str, 0, 1); 
-      this.state.dest.name=str;
-      this.setState({dest: this.state.dest})
+      dest.name=str;
+      this.setState({dest: dest})
     }
     
   }
@@ -316,23 +319,25 @@ if(flag===0){
 
   }
   checkallel(flag){
+    const ch = this.state.checkall;
+    const chdel =  this.state.checkedel;
     if(flag)
     {
       this.state.data[this.state.categories.actual[0].cat].map((t, i) => {  
-       if( this.state.checkedel.set[this.state.categories.actual[0].cat].indexOf(t.id)===-1)
-       this.state.checkedel.set[this.state.categories.actual[0].cat].push(t.id)
+       if( chdel.set[this.state.categories.actual[0].cat].indexOf(t.id)===-1)
+       chdel.set[this.state.categories.actual[0].cat].push(t.id)
         return t;
       })
-      this.state.checkall[1]=1;
-      this.setState({checkall: this.state.checkall});
-      this.setState({checkedel: this.state.checkedel})
+      ch[1]=1;
+      this.setState({checkall: ch});
+      this.setState({checkedel: chdel})
     }
     else
     {
-      this.state.checkedel.set[this.state.categories.actual[0].cat]=[];
-      this.setState({checkedel:this.state.checkedel})
-      this.state.checkall[1]=0;
-      this.setState({checkall: this.state.checkall});
+      chdel.set[this.state.categories.actual[0].cat]=[];
+      this.setState({checkedel:chdel})
+      ch[1]=0;
+      this.setState({checkall: ch});
     }
 
   }
@@ -364,63 +369,68 @@ if(flag===0){
   };
 
   setcategories(category, actstr) { 
+    const cat = this.state.categories;
     let obj = null
     let el = 0;
 
-    if (this.state.categories.actual[0].cat !== category) {
-      obj = this.state.categories.new.filter((t) => t.cat !== category)
+    if (cat.actual[0].cat !== category) {
+      obj = cat.new.filter((t) => t.cat !== category)
       if (obj.length === 0) {
-        el = { cat: this.state.categories.actual[0].cat, l: this.state.data[this.state.categories.actual[0].cat].length };
-        this.state.categories.new = [el]
+        el = { cat: cat.actual[0].cat, l: this.state.data[cat.actual[0].cat].length };
+        cat.new = [el]
       } else {
-        el = { cat: this.state.categories.actual[0].cat, l: this.state.data[this.state.categories.actual[0].cat].length };
-        this.state.categories.new = [...obj, el]
+        el = { cat: cat.actual[0].cat, l: this.state.data[cat.actual[0].cat].length };
+        cat.new = [...obj, el]
       }
-      if (this.state.categories.new.filter((t) => t.cat === category).length === 0) {
+      if (cat.new.filter((t) => t.cat === category).length === 0) {
 
-        this.state.categories.actual[0].cat = category;
-        this.state.categories.actual[0].l = this.state.data[category].length
+        cat.actual[0].cat = category;
+        cat.actual[0].l = this.state.data[category].length
       }
 
     }
 
  
-    return this.setState({ actual: this.state.categories.actual });
+    return this.setState({ actual: cat.actual });
 
 
   }
   reset() {
-
-    Object.keys(this.state.data).map((t) => { this.state.data[t] = []; this.setState({ data: this.state.data }); return t;})
-    this.state.categories.new = [];
-    this.setState({ categories: this.state.categories })
+    let d = this.state.data
+    const cat = this.state.categories
+    Object.keys(d).map((t) => { [t] = []; this.setState({ data: d }); return t;})
+    cat.new = [];
+    this.setState({ categories:cat })
 
   }
   changedest(str, d, id){ 
 
- 
-    this.state.dest.name=str;
-    this.state.dest.coordinates[0]=d;
-    this.state.dest.coordinates[1]=id;
-    this.setState({dest: this.state.dest});
+    let dest = this.state.dest
+    dest.name=str;
+    dest.coordinates[0]=d;
+    dest.coordinates[1]=id;
+    this.setState({dest: dest});
  
   }
   changedispl(ii,t, str){
+    const d = this.state.displ
     const timer = setTimeout(()=> {
-      this.state.displ[ii]=str
-      this.setState({displ: this.state.displ})
+      d[ii]=str
+      this.setState({displ: d})
        this.changedispl(++ii, t, str);
        
     }, t)
     if(ii>6)clearTimeout(timer)
   }
   changedata(category, flag, flag1) { 
+    const cat = this.state.categories
+    const data = this.state.data;
   ii=0;
     this.changedispl(3, 0, false)
     if (flag1 === 1 || flag1 === 2) {
 
-      this.state.categories.new[0] = category;
-      this.setState({ categories: this.state.categories })
+      cat.new[0] = category;
+      this.setState({ categories: cat })
       this.setState({settings: -1})
     }
 
@@ -434,43 +444,43 @@ if(flag===0){
 
 
  
-      this.setcategories(category, this.state.categories.actual[0].cat)
+      this.setcategories(category, cat.actual[0].cat)
       stop = 1;
 
 
     }
     if (flag === 2) {
-      if (this.state.data[category] || this.state.categories.actual[0].cat !== category) {
+      if ( data[category] || cat.actual[0].cat !== category) {
 
 
 
-        if (this.state.data[category] === undefined || this.state.data[category] === "")
-          this.state.data[category] = this.state.data[this.state.categories.actual[0].cat]
+        if ( data[category] === undefined ||  data[category] === "")
+           data[category] =  data[cat.actual[0].cat]
 
         let arr1 = arr.filter((t) => t !== "")
  
-        if (arr1.length !== this.state.data[category].length) {
-          y = this.state.data[category].filter(f => arr.some(item => item.id === f.id))
-          y2 = this.state.data[category].filter(f => !arr.some(item => item.id === f.id))
+        if (arr1.length !==  data[category].length) {
+          y =   data[category].filter(f => arr.some(item => item.id === f.id))
+          y2 =  data[category].filter(f => !arr.some(item => item.id === f.id))
         }
         else {
-          y = this.state.data[category].filter(f => arr1.some(item => item.id === f.id && item.checked === true))
-          y2 = this.state.data[category].filter(f => arr1.some(item => item.id === f.id && item.checked === false))
+          y =  data[category].filter(f => arr1.some(item => item.id === f.id && item.checked === true))
+          y2 =  data[category].filter(f => arr1.some(item => item.id === f.id && item.checked === false))
         }
-        this.state.data[this.state.categories.actual[0].cat] = y2
-        this.state.categories.actual[0].l = y2.length
-        this.state.categories.new = [...this.state.categories.new, { cat: category, l: y.length }]
+         data[cat.actual[0].cat] = y2
+        cat.actual[0].l = y2.length
+        cat.new = [...cat.new, { cat: category, l: y.length }]
  
-        this.state.data[category] = [...this.state.data[category], y]
-        this.setcategories(category, this.state.categories.actual[0].cat)
+         data[category] = [...data[category], y]
+        this.setcategories(category, cat.actual[0].cat)
      
       }
-    } else if (flag === 0 && this.state.data[category] && this.state.data[category].length && stop === 0) {
+    } else if (flag === 0 &&  data[category] &&  data[category].length && stop === 0) {
 
-      this.state.data[this.state.categories.actual[0].cat] =  this.state.data[category].filter(f => !arr.some(item => item.id === f.id))
-      this.state.categories.actual[0].l = this.state.data[category].length
-      this.state.categories.actual[0].cat = category;
-      this.setcategories(category, this.state.categories.actual[0].cat)
+       data[cat.actual[0].cat] =   data[category].filter(f => !arr.some(item => item.id === f.id))
+      cat.actual[0].l =  data[category].length
+      cat.actual[0].cat = category;
+      this.setcategories(category, cat.actual[0].cat)
 
     }
  
@@ -532,23 +542,7 @@ this.state.treetable[1]===true)   || this.state.treetable[2]===true ) && <div cl
     parent={this.state.parent} 
      />
 
-    </div>      <Table
- changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
- menuel={this.state.menuel}
-dp={this.state.dp} desapear={ this.state.displ } i={this.state.i} data={this.state.data[this.state.categories.actual[0].cat]} 
-checkall={this.state.checkall}  familyTree={tree.children}
-checkedel={this.state.checkedel.set[this.state.categories.actual[0].cat]}
-setchecked={this.setchecked.bind(this)}
-  columns={this.state.columns}
-  flagsettings={this.state.flagsettings} postPerPage={this.state.postPerPage}
-  dff={this.state.dff} str={this.props.params.str}
-  furl={this.furl.bind(this)} id={this.state.i} flag={this.state.flag} settingsid={this.state.settings}
-  acturl={this.state.categories.actual[0].cat}
-  number1={this.state.number1}
-  m={this.state.m}
-  changem={this.changem.bind(this)}
-  ChangePage={this.changePPP.bind(this)}
-/>
+    </div>       
     </div>
      
   }
