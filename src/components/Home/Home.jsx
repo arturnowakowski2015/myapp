@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import "./Home.scss"; 
 import TreeNode from "../Tree/TreeNode"; 
+import Table from "../Table/Table";
 import AUrl from "../Navbar/AUrl" 
   
 import { tree } from '../../data/dummy';
@@ -90,9 +91,7 @@ class Home extends React.Component {
       .then((response) => response.json())
       .then((response) => {
         // set the state 
- 
-        alert(JSON.stringify(this.state.data["new"]))
-
+  
 
 
         let state = this.state.data
@@ -519,7 +518,23 @@ if(flag===0){
   }
   render() {
 
- 
+ const table = <Table
+ changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
+ menuel={this.state.menuel}
+dp={this.state.dp} desapear={ this.state.displ } i={this.state.i} data={this.state.data[this.state.categories.actual[0].cat]} 
+checkall={this.state.checkall}  familyTree={tree.children}
+checkedel={this.state.checkedel.set[this.state.categories.actual[0].cat]}
+setchecked={this.setchecked.bind(this)}
+  columns={this.state.columns}
+  flagsettings={this.state.flagsettings} postPerPage={this.state.postPerPage}
+  dff={this.state.dff} str={this.props.params.str}
+ furl={this.furl.bind(this)} id={this.state.i} flag={this.state.flag} settingsid={this.state.settings}
+  acturl={this.state.categories.actual[0].cat}
+  number1={this.state.number1}
+  m={this.state.m}
+  changem={this.changem.bind(this)}
+  ChangePage={this.changePPP.bind(this)}
+/>
 
 
 let treetablemin = <div className={ this.state.treetable[0]===false && this.state.treetable[1]===false ? "treetablecon1" : "treetablecon"} > 
@@ -541,7 +556,7 @@ this.state.treetable[1]===true)   || this.state.treetable[2]===true ) && <div cl
     act={this.state.categories.actual[0].cat}
     parent={this.state.parent} 
      />
-
+{table}
     </div>       
     </div>
      

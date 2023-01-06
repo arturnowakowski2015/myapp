@@ -29,7 +29,7 @@ const AUrl = (props) => {
                 </div>
             <Link className={item[0] ? "el-1" : "el-1-1"} 
                   to={"/a/"+location.pathname.split("/")[2]+"/pagination/"} 
-                  onClick={(e)=>{ item.indexOf(false)!==0 && changeconfig(2, 0)}} >app
+                  onClick={(e)=>{ item.indexOf(false)!==0 && changeconfig(2, 0)}} >app 
             </Link>
             <Link 
                   className={item[1] ? "el-2" : "el-2-1"} 

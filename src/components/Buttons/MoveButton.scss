@@ -1,0 +1,21 @@
+
+.container{
+    display: flex;
+    flex-direction: row; 
+    padding-bottom:50px;
+    .moveto{
+            text-decoration:underline;
+    }
+    .from {
+        background-color:rgb(120, 219, 120);
+        width:auto
+    }
+    span{
+        width:20px;
+    }
+    .to{    
+        width:auto;
+        min-width:20px;
+        background-color:rgb(118, 118, 185);
+    }
+}
