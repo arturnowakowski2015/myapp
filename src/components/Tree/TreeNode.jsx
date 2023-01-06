@@ -108,7 +108,7 @@ const TreeNode = (props) => {
   }, [])
 
 
-
+/*
   useEffect(() => {
     if(props.config===0){
        makeidlev1(props.act, tree.children, 0, 0)
@@ -120,7 +120,7 @@ const TreeNode = (props) => {
       }
  
      }, [props.act])
-
+*/
  
   const markEl = (e, nodes, depth, id) => {
 

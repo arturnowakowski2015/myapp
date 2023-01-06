@@ -13,9 +13,9 @@ function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
  
-let actdest=0
+ 
 let stop = 0;
-let ii=0;
+ 
 let y = [];
 let arr = [] 
 class Home extends React.Component { 
@@ -245,8 +245,8 @@ class Home extends React.Component {
 
     this.movetodestination(--ii )
     if(this.state.checkedel.set[cat.actual[0].cat].length<=  0){
-      actdest=cat.actual[0].cat
-      .actual[0].cat=this.state.dest.name
+ 
+      cat.actual[0].cat=this.state.dest.name
       this.setState({categories: cat})
       ii=-2;
       this.movetodestination( --ii)
@@ -425,7 +425,7 @@ if(flag===0){
   changedata(category, flag, flag1) { 
     const cat = this.state.categories
     const data = this.state.data;
-  ii=0;
+ 
     this.changedispl(3, 0, false)
     if (flag1 === 1 || flag1 === 2) {
 
@@ -436,7 +436,7 @@ if(flag===0){
 
     let y2 = 0;
     let stop = 0;
-    ii=0
+ 
   this.changedispl(3,400, true) 
  
     setTimeout(()=> {
