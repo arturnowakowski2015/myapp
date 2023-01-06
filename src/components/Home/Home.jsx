@@ -558,8 +558,7 @@ ii=0
         this.changedispl(0, 300, true);}} />
  
            
- 
-        {this.state.move!=1 &&  treetablemin }
+  
 
 
 
