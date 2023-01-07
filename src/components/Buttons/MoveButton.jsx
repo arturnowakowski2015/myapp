@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {useNavigate} from "react-router-dom";
 import "./MoveButton.scss"
 const MoveButton = (props) => {

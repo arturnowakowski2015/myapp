@@ -509,15 +509,12 @@ if(flag===0){
   }
 
   setcol(e,r) {
-    this.setState({columns: this.state.columns.map((t, i) => {  
- 
-        if (i == r && e) t.col.disp = false;
-        else if (i == r && e == false) t.col.disp = true;
+    this.setState({columns: this.state.columns.map((t, i) => {   
+        if (i === parseInt(r) && e) t.col.disp = false;
+        else if (i === parseInt(r) && e === false) t.col.disp = true;
     
         return t;
-      })})
- 
-      alert(JSON.stringify(this.state.columns))
+      })}) 
   }
   chc(i){
     this.setState({ config: i}) 
