@@ -5,7 +5,7 @@ import {
 import Pagination from "./Pagination" 
 import "./Table.scss"
 import Tab from "../Different/Tab";
-
+import Searching from "../Different/Searching"
 
 
 
@@ -515,6 +515,32 @@ const setsi = (j,t) => {
      (location.pathname.split("/")[6]!==undefined ? location.pathname.split("/")[6]+ "/"+t: ""))
 
 }
+
+const setValue =(str) => { 
+ 
+ 
+    if(to[indextab].eltabs.length<8 && to[indextab].eltabs[to[indextab].eltabs.length-1].saved===1)
+         to[indextab].eltabs.push({name:str, words: str, saved:2})
+     else if(to[indextab].eltabs.length<8 && to[indextab].eltabs[to[indextab].eltabs.length-1].saved===2)
+        to[indextab].eltabs.splice(to[indextab].eltabs.length-1, 1, {name:str, words: str, saved:2})
+
+    searchtext[indextab].searchtext[to[indextab].eltabs.length-1]=to[indextab].eltabs[to[indextab].eltabs.length-1].words
+    
+    setSearchtext(searchtext)
+     setSearchi({new: to[indextab].eltabs.length-1, old:searchi-1})  
+    setTo(to);
+    
+    setFlagel(!flagel) 
+    navigate("/a/"+location.pathname.split("/")[2]+"/pagination/"+number+"/"+countdown+"/"+
+            
+    (location.pathname.split("/")[6]!==undefined ? location.pathname.split("/")[6]+ "/"+
+    searchtext[indextab].searchtext[searchi.new!==0 ? searchi.new : 1]  : ""))
+}
+
+const savetab =(str) =>{    
+    to[indextab].eltabs.splice(to[indextab].eltabs.length-1, 1, {name:to[indextab].eltabs[to[indextab].eltabs.length-1].name, words:searchtext[indextab].searchtext[searchtext[indextab].searchtext.length-1], saved:1})
+     setFlagel(!flagel)
+ }
 const z = <div className="tablecontainer">
     { 
           props.checkall[1]===0 && props.desapear[2] &&
@@ -531,20 +557,44 @@ const z = <div className="tablecontainer">
                  
 
    
-        <div className="pagcont">
-            <div class="pagcon"> {z}  
+        <div className="pagcont">{z}  
+ 
 
+            <div  className={props.desapear[3] ? "table1" : "desapeartable"} 
+                                    
+                                    transition-style= {props.desapear[3] ? "in:circle:center" : ""} >
             {   
                  window.location.href.indexOf("searchtext")!==-1 
                  ? 
                      <div className={props.desapear[4] ? "searchingvisible": "searching"}  transition-style= {props.desapear[4] ? "in:circle:center" : ""}>
-                     
+                     <Searching 
+                            i={window.location.href.indexOf("searchtext")} 
+                            searchtext={ to[indextab].eltabs[searchi.new]!==undefined ? to[indextab].eltabs[searchi.new].words : ""  } 
+                            searchi={searchi.new}
+                            saved={to[indextab]!==undefined && to[indextab].eltabs[to[indextab].eltabs.length-1].saved} 
+                            len={data1.length}
+                             setValue={(es)=> {setValue(es); 
+                             setStop(stop=>stop+1);setNumber(0);}} 
+                             savetab={()=>savetab()}
+                        />
                 </div>
 
                 :
-                <div style={{height:"30px"}}></div> 
+                ""
             }
-
+                               <div className={props.desapear[2] ? "tabs"  : "" } >{
+                                   window.location.href.indexOf("searchtext")!==-1 &&  to[indextab]!==undefined && 
+                                   to[indextab].eltabs.map((t, j) => {
+                                       return   <Tab 
+                                                   len={data1.length} 
+                                                   searchi={searchi} 
+                                                   j={j} 
+                                                   displ={props.displ}
+                                                   name={t.name}                           
+                                                   setsi={()=>setsi(j, t.words)} />          
+                                   })
+                               }
+                               </div></div>
                        {((props.flagsettings !== 4 && data1.length) ||
                     (data1.length===0 && window.location.href.indexOf("searchtext")===-1) 
                     || ( window.location.href.indexOf("searchtext")!==-1 && sliced.length!==0
@@ -571,24 +621,9 @@ const z = <div className="tablecontainer">
            </div>
              }
              
-             
-                    <div  className={props.desapear[3] ? "table1" : "desapeartable"} 
-               
-                         transition-style= {props.desapear[3] ? "in:circle:center" : ""} > 
-                    <div className={props.desapear[2] ? "tabs"  : "" } >{
-                        window.location.href.indexOf("searchtext")!==-1 &&  to[indextab]!==undefined && 
-                        to[indextab].eltabs.map((t, j) => {
-                            return   <Tab 
-                                        len={data1.length} 
-                                        searchi={searchi} 
-                                        j={j} 
-                                        displ={props.displ}
-                                        name={t.name}                           
-                                        setsi={()=>setsi(j, t.words)} />          
-                        })
-                    }
-                    </div></div>
-        </div>
+           
+                    
+ 
             {
   
 

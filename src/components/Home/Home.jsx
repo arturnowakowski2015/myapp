@@ -1,8 +1,7 @@
 import React from "react"; 
  
-import { tree } from '../../data/dummy';import {
- 
-  Link,
+import { tree } from '../../data/dummy';
+import { 
   useParams, 
 } from "react-router-dom";
 import "./Home.scss";
@@ -436,7 +435,7 @@ if(flag===0){
 
       cat.new[0] = category;
       this.setState({ categories: cat })
-      this.setState({settings: -1})
+    //  this.setState({settings: -1})
     }
 
     let y2 = 0;
@@ -718,10 +717,8 @@ ii=0
               number2={(o) => this.setState({ number1: o })}
             />
  
-            <Link className="tochange" to={"/a/" + this.state.categories.actual[0].cat + "/pagination/url"} 
-                onClick={() => this.setState({ settings: 2 })}>change database</Link>
 
-            <div className="border"></div>
+   
           </div>
           : 
          ( this.state.settings === 1 &&   this.state.treetable[0]===false &&

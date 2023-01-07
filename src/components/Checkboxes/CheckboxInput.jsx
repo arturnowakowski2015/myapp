@@ -6,7 +6,7 @@ const CheckboxInput = props => {
         props.checkedCol(check, e.target.value)
     }
     return (
-        <label>
+        <label className="checkbox">
             <input type="checkbox"
                 name={props.name}
                 checked={check}
