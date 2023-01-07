@@ -310,7 +310,7 @@ const Table = (props, columns) => {
                 } key={j}
                  onMouseOver={() => {;setGreen(firstPost+i);  url = "/" + row.id + "/edit";  
                   }} ><div className="div1">{row[k]}</div></td >
-                : typeof row[k] !== "object" && props.columns[j] && props.columns[j].col.disp === true
+                : typeof row[k] !== "object" && props.columns[j]!==undefined && props.columns[j].col.disp === true
                     && j === 2 ?
 
 
@@ -321,7 +321,7 @@ const Table = (props, columns) => {
 
 
 
-                    : col[j].col.disp = false
+                    : (col[j]!==undefined ? col[j].col.disp = false : "")
 
         });
 

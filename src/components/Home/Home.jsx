@@ -1,14 +1,19 @@
-import React from "react";
-import { 
+import React from "react"; 
+ 
+import { tree } from '../../data/dummy';import {
+ 
+  Link,
   useParams, 
 } from "react-router-dom";
-import "./Home.scss"; 
-import TreeNode from "../Tree/TreeNode"; 
+import "./Home.scss";
+import Treetablebutton from "../Buttons/Treetablebutton";
+import Selected from "../Selected/Selected"; 
 import Table from "../Table/Table";
-import AUrl from "../Navbar/AUrl" 
-  
-import { tree } from '../../data/dummy';
-  
+import Settings from "../Settings/Settings";
+import Select from "../Different/Select"
+import AUrl from "../Navbar/AUrl"
+import TreeNode from "../Tree/TreeNode";
+import Update from "../Different/Update";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -23,6 +28,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props); 
     this.state = {
+      layout: 1,
       data: { received:[], new: [], selected: [], opened: [], removed: [], labels: [], postponed:[] },
       columns: [],
       strd: [],
@@ -502,72 +508,117 @@ if(flag===0){
     this.setState({move: 1})
   }
 
-  setcol(e,r){
+  setcol(e,r) {
     this.setState({columns: this.state.columns.map((t, i) => {  
  
-        if (i === r && e) t.col.disp = false;
-        else if (i === r && e === false) t.col.disp = true;
+        if (i == r && e) t.col.disp = false;
+        else if (i == r && e == false) t.col.disp = true;
     
         return t;
       })})
  
-   
+      alert(JSON.stringify(this.state.columns))
   }
   chc(i){
     this.setState({ config: i}) 
   }
-  render() {
-
- const table = <Table
- changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
- menuel={this.state.menuel}
-dp={this.state.dp} desapear={ this.state.displ } i={this.state.i} data={this.state.data[this.state.categories.actual[0].cat]} 
-checkall={this.state.checkall}  familyTree={tree.children}
-checkedel={this.state.checkedel.set[this.state.categories.actual[0].cat]}
-setchecked={this.setchecked.bind(this)}
-  columns={this.state.columns}
-  flagsettings={this.state.flagsettings} postPerPage={this.state.postPerPage}
-  dff={this.state.dff} str={this.props.params.str}
- furl={this.furl.bind(this)} id={this.state.i} flag={this.state.flag} settingsid={this.state.settings}
-  acturl={this.state.categories.actual[0].cat}
-  number1={this.state.number1}
-  m={this.state.m}
-  changem={this.changem.bind(this)}
-  ChangePage={this.changePPP.bind(this)}
-/>
-
-
-let treetablemin = <div className={ this.state.treetable[0]===false && this.state.treetable[1]===false ? "treetablecon1" : "treetablecon"} > 
- {(( this.state.treetable[0]===false &&
-
-this.state.treetable[1]===true)   || this.state.treetable[2]===true ) && <div className={ this.state.displ[1] ? "leftcolumn" : "treenone"}  transition-style={this.state.displ[1] && this.state.menuel ? "in:circle:center" : null}>
+  changeconfig(i,ii){
+    
+    if(i===1){
+      this.setState({layout: 0})
+      setTimeout(()=>{
+      this.setState({config: 1});
+       this.setState({menuel: true})
+      this.setState({ settings: 1 })
+      this.setState({ number1: 1 });
+    }, 100)
+    } 
+    if(i===2){  
+                   this.setState({layout: 1})
  
- <div >
-<TreeNode changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
-  pid={-1}
-    displ1={this.state.displ}
-    changeparent={(name) => this.setState({ parent: name })}
-    config={this.state.config}
-    familyTree={tree.children}
-    changeconfig={(i) => { this.chc(i)}}
-    settings={this.state.settings}
-    ac={this.state.categories.set}
-    pc={this.state.data} id={0} depth={0} p={0} pdepth={-1} 
-    act={this.state.categories.actual[0].cat}
-    parent={this.state.parent} 
-     />
-{table}
-    </div>       
-    </div>
-     
+      this.setState({ settings: 0 })
+      this.setState({ config: 0 })
+      this.setState({menuel: true})
+ 
+    }
+    ii=0
+  this.changedispl(0, 0, false );
+ii=0
+    this.changedispl(0, 300, true);
   }
+  render() {
  
- 
-</div>
+    let treetablemin = <div className={ this.state.treetable[0]===false && this.state.treetable[1]===false ? "treetablecon1" : "treetablecon"} > 
+    {( this.state.treetable[0]===false &&
+   
+   this.state.treetable[1]===true  ) && <div className={ this.state.displ[1] ? "leftcolumn2" : "treenone"}  transition-style={this.state.displ[1] && this.state.menuel ? "in:circle:center" : null}>
+    
+    <div >s<TreeNode changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
+     pid={-1}
+       displ1={this.state.displ}
+       changeparent={(name) => this.setState({ parent: name })}
+       config={this.state.config}
+       familyTree={tree.children}
+       changeconfig={(i) => { this.setState({ config: i }) }}
+       settings={this.state.settings}
+       ac={this.state.categories.set}
+       pc={this.state.data} id={0} depth={0} p={0} pdepth={-1} 
+       act={this.state.categories.actual[0].cat}
+       parent={this.state.parent} />
+       </div>
+       </div>
+     }
+    
+    {(   this.state.treetable[2]===true ) && <div className={ this.state.displ[1] ? "leftcolumn" : "treenone"}  transition-style={this.state.displ[1] && this.state.menuel ? "in:circle:center" : null}>
+    
+    <div ><TreeNode changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
+     pid={-1}
+       displ1={this.state.displ}
+       changeparent={(name) => this.setState({ parent: name })}
+       config={this.state.config}
+       familyTree={tree.children}
+       changeconfig={(i) => { this.setState({ config: i }) }}
+       settings={this.state.settings}
+       ac={this.state.categories.set}
+       pc={this.state.data} id={0} depth={0} p={0} pdepth={-1} 
+       act={this.state.categories.actual[0].cat}
+       parent={this.state.parent} />
+       </div>
+       </div>
+     }
 
-  
 
-    return (
+
+
+
+
+
+   
+   { ((this.state.treetable[0]===true &&
+   
+   this.state.treetable[1]===false) || (this.state.treetable[2]===true ) )  && <div className={ "rightcolumn" }>
+   <Table
+    changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
+    menuel={this.state.menuel}
+   dp={this.state.dp} desapear={ this.state.displ } i={this.state.i} data={this.state.data[this.state.categories.actual[0].cat]} 
+   checkall={this.state.checkall}  familyTree={tree.children}
+   checkedel={this.state.checkedel.set[this.state.categories.actual[0].cat]}
+   setchecked={this.setchecked.bind(this)}
+     columns={this.state.columns}
+     flagsettings={this.state.flagsettings} postPerPage={this.state.postPerPage}
+     dff={this.state.dff} str={this.props.params.str}
+      furl={this.furl.bind(this)} id={this.state.i} flag={this.state.flag} settingsid={this.state.settings}
+     acturl={this.state.categories.actual[0].cat}
+     number1={this.state.number1}
+     m={this.state.m}
+     changem={this.changem.bind(this)}
+     ChangePage={this.changePPP.bind(this)}
+   /></div>
+     }
+   </div>
+   
+     
+     return (
       <body>        <AUrl st={this.state.displ} changeconfig={(i,ii) => {
  
         if(i===1){
@@ -591,8 +642,117 @@ this.state.treetable[1]===true)   || this.state.treetable[2]===true ) && <div cl
 ii=0
         this.changedispl(0, 300, true);}} />
  
-           
+         
+
+{this.state.settings === 4 && 
+
+  <Selected 
+  
+  dest={this.state.dest}
+  act={this.state.categories.actual[0].cat} movetodestination={this.movetodestination.bind(this)} 
+  movestatus={this.state.move} changemove={() => this.changemove()}  
+  lenel={this.state.checkedel.set[this.state.categories.actual[0].cat].length}
+
+
+  changesettings={this.setmove.bind(this)} checkallel={ this.checkallel.bind(this)}  
+  length={this.state.data[this.state.categories.actual[0].cat].length} 
  
+
+  move={this.state.move}     delete1={this.delete1.bind(this)} 
+   pc={this.state.data}  checkall1={this.state.checkall}  
+  i={this.state.i}
+  data={this.state.data}
+
+  changeintree={(category, flag, flag1) => {  this.changedata(category, flag, flag1);   }}
+  changedest={this.changedest.bind(this)}
+  
+  
+
+   changeparent={(name) => this.setState({ parent: name })}
+   config={this.state.config}
+   familyTree={tree.children}
+   changeconfig={(i) => { this.setState({ config: i }) }}
+   settings={this.state.settings}
+   ac={this.state.categories} 
+  id={0} depth={0} p={0} pdepth={-1} pid={0}
+
+   parent={this.state.parent}
+
+
+
+
+  />
+}
+
+
+
+
+        {this.state.settings === 3 &&
+          <div className="LT">
+            <div className="TreeNode">
+              <Update i={this.state.i} furl={this.furl.bind(this)} acturl={this.state.categories.actual[0].cat}
+                strcol={this.state.strcol} />
+
+            </div>
+
+
+          </div>
+
+        }
+
+
+
+
+
+        {
+         ( this.state.settings === 1 &&  this.state.treetable[0]===true &&
+
+          this.state.treetable[1]===false )?
+
+          <div className={this.state.displ[4] ? "desappearsettings" :  "LT select" } 
+           transition-style= {this.state.displ[4] ? "in:circle:center" : ""}  >
+
+<Treetablebutton title={"tree setup"} treetable={this.state.treetable} on={(tab)=>this.setState({treetable:[false, true, false]})}/>
+
+            <Settings data={this.state.data} columns={this.state.columns} changePPP={this.changePPP.bind(this)}
+              checkedCol={this.setcol.bind(this)}
+              length={this.state.data[this.state.categories.actual[0].cat].length}
+              flagsettings={this.state.flagsettings} postPerPage={this.state.postPerPage}
+              number2={(o) => this.setState({ number1: o })}
+            />
+ 
+            <Link className="tochange" to={"/a/" + this.state.categories.actual[0].cat + "/pagination/url"} 
+                onClick={() => this.setState({ settings: 2 })}>change database</Link>
+
+            <div className="border"></div>
+          </div>
+          : 
+         ( this.state.settings === 1 &&   this.state.treetable[0]===false &&
+
+          this.state.treetable[1]===true)  ?    
+          
+          <div className={this.state.displ[4] ? "desappearsettings" :  "LT select" } 
+          transition-style= {this.state.displ[4] ? "in:circle:center" : ""}  >
+
+              <Treetablebutton title={"table setup"} treetable={this.state.treetable} on={(tab)=>this.setState({treetable:[true, false, false]})}/>
+              <div className="title">drag and drop elements on new place</div>
+              </div>
+          :
+          ""
+        }
+
+        {this.state.settings === 2 &&
+          <div className="select">
+            <Select acturl={this.state.categories.actual[0].cat} changeconfig={(i) => { this.setState({ config: i }) }}
+              changecategory={(category, flag, flag1) => {
+                this.changedata(category, flag, flag1);
+ 
+              }} changeRecits={this.changeRecits.bind(this)} strd={this.state.strd}
+              reset={this.reset.bind(this)}
+
+            />
+          </div>
+        }
         {this.state.move!==1 &&  treetablemin }
 
 

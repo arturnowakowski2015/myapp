@@ -1,10 +1,7 @@
 import React,{useState, useEffect} from "react";
 import "./Searching.scss"
 const Searching = (props) => {
-    const [d, setD]=useState(1);
     const [str, setStr] = useState("")
-    const [i, setI] =useState(0)
-    setTimeout(()=> {setD(0)}, 1000)
     const z = (str) =>{
         props.setValue(str)
          setStr(str)

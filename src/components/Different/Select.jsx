@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Link,
-    useNavigate
+    useNavigate 
 } from "react-router-dom";
-import Table from "../Table/Table";
 
 
 const Select = (props) => {

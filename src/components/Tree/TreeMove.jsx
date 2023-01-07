@@ -1,15 +1,16 @@
-import React, {useState}     from "react";
+import React, {useState, useRef}     from "react";
 import { useEffect } from "react";
 import {tree} from "../../data/dummy"
 import "./TreeMove.scss";
 let c=0;
 const makeids = (nodes, i) => {
     nodes && nodes.map((t) => {
-      {
+ 
         if (t.depth === i)
           t.id = c++;
-      }
+ 
       if (t.children) { makeids(t.children, i); }
+      return t; 
     })
   };
   
@@ -26,32 +27,35 @@ const makeids = (nodes, i) => {
     });
   
   };
-const TreeMove = (props) => {
-    
-    const[btn, setBtn]=useState(false)
-    const [familyTree, setFamilyTree] = useState(props.familyTree)
+const TreeMove = (props) => {  
+  const tempset = useRef();
+  const tempclear = useRef();
     const [destination, setDestination] =useState({name:"", coordinates:[0,0]})
- 
+
+  setDestination({name:props.dest.name, coordinates:[props.dest.coordinates[0], props.dest.coordinates[1]]})
+  const set1 = () =>{
+    makeidlev(tree.children, 0, 0)
+    for (let ii = 0; ii < 20; ii++) {
+      c = 0;
+      makeids(tree.children, ii)
+    }
+    }
+tempset.current=set1;
+const clear = () => {
+  makeidlev(props.actcat, tree.children, 0, 0)
+  for (let ii = 0; ii < 20; ii++) {
+    c = 0;
+    makeids(tree.children, ii)
+
+  } 
+}
+tempclear.current=clear;
+
       useEffect(()=> {
-        makeidlev(tree.children, 0, 0)
-        for (let ii = 0; ii < 20; ii++) {
-          c = 0;
-          makeids(tree.children, ii)
-    
-        }
-        setDestination({name:props.dest.name, coordinates:[props.dest.coordinates[0], props.dest.coordinates[1]]})
- 
- 
+        tempset.current();
       }, [props.changedest])
       useEffect(()=> {
-        makeidlev(props.actcat, tree.children, 0, 0)
-        for (let ii = 0; ii < 20; ii++) {
-          c = 0;
-          makeids(tree.children, ii)
-    
-        } 
- 
- 
+        tempclear.current()
       }, [])
 
     return (
@@ -68,7 +72,7 @@ const TreeMove = (props) => {
        {destination.coordinates[0]===t.depth && destination.coordinates[1]===i? <p id="text" onClick={(e) => {
  
         props.changedest(t.name,t.depth, t.id)
-        setBtn(false)
+ 
         }}j
 
     
@@ -78,11 +82,11 @@ const TreeMove = (props) => {
     
         </p>
         :
-        props.ac.actual[0].cat!=t.name ? <p id="text" onClick={(e) => {
+        props.ac.actual[0].cat!==t.name ? <p id="text" onClick={(e) => {
  
             e.stopPropagation();
         props.changedest(t.name,t.depth, t.id)
-        setBtn(false)
+ 
         }}j
 
     
@@ -100,7 +104,7 @@ const TreeMove = (props) => {
             
             e.stopPropagation();
             props.changedest(t.name,t.depth, t.id)
-            setBtn(false)
+  
             }}j
 
 
