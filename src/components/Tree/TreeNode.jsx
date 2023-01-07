@@ -1,5 +1,5 @@
  
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {  tree } from '../../data/dummy';
@@ -86,6 +86,7 @@ const makeidlev2 = (ii,nodes, tt) => {
 let yy=-1
 let rrr=0;
 const TreeNode = (props) => {
+  const tempstart = useRef();
   const icons = {
     "received": <i className={ rrr ? "s fa fa-bolt" : "fa fa-bolt" }></i>,
     "new": <i class="fa fa-bell"></i>,
@@ -99,7 +100,7 @@ const TreeNode = (props) => {
   
   
       t.depth = tt;
-      if(t.name==str)
+      if(t.name===str)
         t.bgcolor="green"
         else
       t.bgcolor = "white";
@@ -109,16 +110,20 @@ const TreeNode = (props) => {
     });
   
   };
-  useEffect(() => {
-    if(props.config==0){
-       makeidlev1(props.act, tree.children, 0, 0)
-       for (let ii = 0; ii < 20; ii++) {
-         c = 0;
-         makeids(tree.children, ii)
-   
-       }
+  const start = () => {
+    if(props.config===0){
+      makeidlev1(props.act, tree.children, 0, 0)
+      for (let ii = 0; ii < 20; ii++) {
+        c = 0;
+        makeids(tree.children, ii)
+  
       }
- 
+     }
+
+  }
+  tempstart.current=start;
+  useEffect(() => {
+    tempstart.current();
      }, [props.act])
  
   const navigate = useNavigate();

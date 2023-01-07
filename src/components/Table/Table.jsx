@@ -335,7 +335,7 @@ alert(JSON.stringify(data))
             onChange={()=>{props.setchecked(row.id, location.pathname.split("/")[2])
         navigate("/a/"+location.pathname.split("/")[2]+"/pagination/"
         +(location.pathname.split("/")[4]!==undefined ? location.pathname.split("/")[4] : 0 )+"/"
-        +(location.pathname.split("/")[5]!=undefined ? location.pathname.split("/")[5] : 0)+"/selected")
+        +(location.pathname.split("/")[5]!==undefined ? location.pathname.split("/")[5] : 0)+"/selected")
     }} />}<div style={{marginLeft:"60px",height:"20px",position:"relative",top:"-20px", cursor: "pointer" ,  textDecoration: "underline" }}
                     onMouseOver={() => {url = "/a/" + props.acturl + "/pagination/" + row.name + "/" + row.id + "/" + row.name + "/1/edit"; }}
                     onClick={(e) => {

@@ -9,7 +9,7 @@ const Searching = (props) => {
  
 useEffect(()=>{ 
  
-    setStr(props.searchtext!=undefined ? props.searchtext : "")
+    setStr(props.searchtext!==undefined ? props.searchtext : "")
 }, [props.searchtext])
  
     return <div className={  "e"} ><input type="text" defaultValue 
