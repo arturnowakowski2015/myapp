@@ -53,7 +53,7 @@ const makeidlev1 = (str,nodes, i, tt) => {
 
 */
 
-const makeidlev = (nodes, i, tt) => {
+const makeidlev = (nodes, i, tt, str) => {
   return nodes && nodes.forEach((t) => {
 
 
@@ -62,7 +62,9 @@ const makeidlev = (nodes, i, tt) => {
     t.bgcolor = "white";
     if(t.children && t.children.length===0)
     delete t.children
-    if (t.children) { makeidlev(t.children, 0, ++tt); --tt }
+    if(t.name===str)
+    t.bgcolor="green"
+    if (t.children) { makeidlev(t.children, 0, ++tt,str); --tt }
   });
 
 };
@@ -92,14 +94,38 @@ const TreeNode = (props) => {
     "selected": <i class="fa fa-paper-plane"></i>,
     "labels": <i class="fa fa-file-o"></i>
   };
-
-
+  const makeidlev1 = (str,nodes, i, tt) => {
+    return nodes && nodes.forEach((t) => {
+  
+  
+      t.depth = tt;
+      if(t.name==str)
+        t.bgcolor="green"
+        else
+      t.bgcolor = "white";
+  
+  
+      if (t.children) { makeidlev1(str, t.children, 0, ++tt); --tt }
+    });
+  
+  };
+  useEffect(() => {
+    if(props.config==0){
+       makeidlev1(props.act, tree.children, 0, 0)
+       for (let ii = 0; ii < 20; ii++) {
+         c = 0;
+         makeids(tree.children, ii)
+   
+       }
+      }
+ 
+     }, [props.act])
  
   const navigate = useNavigate();
   const [familyTree, setFamilyTree] = useState(props.familyTree)
 
   useEffect(() => {
-    makeidlev(tree.children, 0, 0)
+    makeidlev(tree.children, 0, 0, props.act)
     for (let ii = 0; ii < 20; ii++) {
       c = 0;
       makeids(tree.children, ii)
@@ -534,7 +560,7 @@ q=1;
 
 
 
-    return t   && <div key={i} onMouseOut={() => { tdepth = []; tid = [] }}
+    return t && !t.line  && <div key={i} style={{paddingLeft:"20px"}} onMouseOut={() => { tdepth = []; tid = [] }}
       onClick={(e) => {        e.stopPropagation()
 
           if(props.pc[t.name].length>0){
@@ -615,12 +641,13 @@ q=1;
           props.changeconfig(2)
         }}
         
-        onMouseDown={(e) => { 
+        onMouseDown={(e) => { alert(e.target.id);
+          if(e.target.id==="f" || "text"){
           zrobopacity(e, t.name, props.depth - 1, props.pid)   
           if (e.dataTransfer)
             e.dataTransfer.setData("text", e.target.id)
           props.changeconfig(2)
-
+          }
         }}
 
 
@@ -753,12 +780,13 @@ return <div key={i}
     props.changeconfig(2)
   }}
   
-  onMouseDown={(e) => { 
+  onMouseDown={(e) => { alert(e.target.id);
+    if(e.target.id==="f" || "text"){
     zrobopacity(e, t.name, props.depth - 1, props.pid)   
     if (e.dataTransfer)
       e.dataTransfer.setData("text", e.target.id)
-      props.changeconfig(1)
-
+    props.changeconfig(2)
+    }
   }}
 
     onDragOver={(e) => {

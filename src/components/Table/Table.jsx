@@ -35,7 +35,7 @@ const Table = (props, columns) => {
     const [postPerPage, setPostPerPage] = useState(props.postPerPage);
     const [oldnumber, setOldnumber]=useState(1);
     const[oldel, setOldel]= useState(0)
-    const [ limit, setLimit] = useState(props.data.length)
+    const [ limit, setLimit] = useState(props.data!==undefined ? props.data.length : 0)
     const[oldindex, setOldIndex]=useState(1)
     const [tovalue, setTovalue] = useState(0); 
     const[countdown, setCountdown]=useState(0);
@@ -53,6 +53,7 @@ const Table = (props, columns) => {
         removed:{searchtext:[""]},   labels:{searchtext:[""]}
     }) 
     const setto1 = () => {
+        alert(JSON.stringify(props.data))
         setOldIndex(3);
         setTo( {
             new:{eltabs:[{name:"all records", words:"", saved:1},], searchtext:searchtext},
@@ -197,7 +198,7 @@ const Table = (props, columns) => {
     }
 
 
-
+alert(JSON.stringify(data))
 
     setData1(data1=>data.filter((r) => {return Object.keys(data[0]).some((row)  => {  
       return           typeof r[row] === "string" &&  r[row].indexOf(searchtext[indextab].searchtext[searchi.new])!==-1 
@@ -332,7 +333,9 @@ const Table = (props, columns) => {
             type="checkbox" id={row.id} 
             checked={props.checkedel!==undefined && props.checkedel.filter((t) => {return t===row.id  }).length===1 && true}
             onChange={()=>{props.setchecked(row.id, location.pathname.split("/")[2])
-        navigate("/a/"+location.pathname.split("/")[2]+"/pagination/selected")
+        navigate("/a/"+location.pathname.split("/")[2]+"/pagination/"
+        +(location.pathname.split("/")[4]!==undefined ? location.pathname.split("/")[4] : 0 )+"/"
+        +(location.pathname.split("/")[5]!=undefined ? location.pathname.split("/")[5] : 0)+"/selected")
     }} />}<div style={{marginLeft:"60px",height:"20px",position:"relative",top:"-20px", cursor: "pointer" ,  textDecoration: "underline" }}
                     onMouseOver={() => {url = "/a/" + props.acturl + "/pagination/" + row.name + "/" + row.id + "/" + row.name + "/1/edit"; }}
                     onClick={(e) => {
@@ -569,7 +572,8 @@ const z = <div className="tablecontainer">
                      <div className={props.desapear[4] ? "searchingvisible": "searching"}  transition-style= {props.desapear[4] ? "in:circle:center" : ""}>
                      <Searching 
                             i={window.location.href.indexOf("searchtext")} 
-                            searchtext={ to[indextab].eltabs[searchi.new]!==undefined ? to[indextab].eltabs[searchi.new].words : ""  } 
+                            searchtext={ to[indextab]!==undefined ? 
+                                to[indextab].eltabs[searchi.new].words : ""  } 
                             searchi={searchi.new}
                             saved={to[indextab]!==undefined && to[indextab].eltabs[to[indextab].eltabs.length-1].saved} 
                             len={data1.length}

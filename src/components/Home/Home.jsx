@@ -61,7 +61,7 @@ class Home extends React.Component {
       changes: [],
       changeall: false,
       checkall: [0,0],
-      config: 1,
+      config: 0,
       categories: { actual: [{ cat: "new", l: 0 }], new: [], set: ["labels", "received", "new", "selected", "postponed", "removed"] },
       parent: "",
       strcol: "",
@@ -300,9 +300,11 @@ if(flag===0){
  
      }}
     }
-    else if(flag===1){ 
+    else if(flag===1){  
       this.changedata(str, 0, 1); 
       dest.name=str;
+      cat.actual[0].cat=str;
+      this.setState({categories: cat});
       this.setState({dest: dest})
     }
     
@@ -647,11 +649,13 @@ ii=0
   dest={this.state.dest}
   act={this.state.categories.actual[0].cat} movetodestination={this.movetodestination.bind(this)} 
   movestatus={this.state.move} changemove={() => this.changemove()}  
-  lenel={this.state.checkedel.set[this.state.categories.actual[0].cat].length}
+  lenel={this.state.checkedel.set[this.state.categories.actual[0].cat]!==undefined ? 
+    this.state.checkedel.set[this.state.categories.actual[0].cat].length : 0}
 
 
   changesettings={this.setmove.bind(this)} checkallel={ this.checkallel.bind(this)}  
-  length={this.state.data[this.state.categories.actual[0].cat].length} 
+  length={this.state.data[this.state.categories.actual[0].cat]!==undefined ? 
+    this.state.data[this.state.categories.actual[0].cat].length : 0} 
  
 
   move={this.state.move}     delete1={this.delete1.bind(this)} 
