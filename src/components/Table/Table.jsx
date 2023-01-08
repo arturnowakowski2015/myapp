@@ -573,7 +573,7 @@ const Table = (props, columns) => {
 
 
     const el =     <Consumer> 
-    {color => <div className={"pag"+" color-"+color+"-set"}>
+    {color => <div className={"pag color-"+color+"-set"}>
 
 
 
