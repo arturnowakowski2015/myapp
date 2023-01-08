@@ -5,6 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 import "../../scss/Home.scss";
+import { ColorContext } from '../../ctx/ColorContext';
 import Treetablebutton from "../Buttons/Treetablebutton";
 import Selected from "../Selected/Selected";
 import Table from "../Table/Table";
@@ -27,6 +28,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      color: 1,
       layout: 1,
       data: { received: [], new: [], selected: [], opened: [], removed: [], labels: [], postponed: [] },
       columns: [],
@@ -543,7 +545,7 @@ class Home extends React.Component {
     this.changedispl(0, 300, true);
   }
   render() {
-
+    const { Provider } = ColorContext;
     let treetablemin = <div className={this.state.treetable[0] === false && this.state.treetable[1] === false ? "treetablecon1" : "treetablecon"} >
       {(this.state.treetable[0] === false &&
 
@@ -614,7 +616,7 @@ class Home extends React.Component {
     </div>
 
 
-    return (
+    return (        <Provider value={this.state.color}>
       <div>        <AUrl st={this.state.displ} changeconfig={(i, ii) => {
 
         if (i === 1) {
@@ -638,7 +640,8 @@ class Home extends React.Component {
         this.changedispl(0, 10, false);
         ii = 0
         this.changedispl(0, 300, true);
-      }} />
+      }} 
+      changecolor={(i)=>this.setState({color: i})}/>
 
 
 
@@ -688,12 +691,11 @@ class Home extends React.Component {
 
 
         {this.state.settings === 3 &&
-          <div className="LT">
-            <div className="TreeNode">
+            <div className={this.state.displ[4] ? "desappearsettings" : "LT select"}
+            transition-style={this.state.displ[4] ? "in:circle:center" : ""}  >
               <Update i={this.state.i} furl={this.furl.bind(this)} acturl={this.state.categories.actual[0].cat}
                 strcol={this.state.strcol} />
-
-            </div>
+        <div className="title">put new value</div>
 
 
           </div>
@@ -765,7 +767,7 @@ class Home extends React.Component {
 
 
 
-      </div >)
+      </div ></Provider>)
 
   }
 }

@@ -1,13 +1,14 @@
  
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { ColorContext } from '../../ctx/ColorContext';
 import {  tree } from '../../data/dummy';
  
 
 import "../../scss/TreeNode.scss"
 let c = 0;
 let q=0;
+let q1=0;
 let tdepth = [];
 let tid = [];
 let node = "";
@@ -58,8 +59,7 @@ const makeidlev = (nodes, i, tt, str) => {
 
 
     t.depth = tt;
-    if(t.bgcolor!=="yellow")
-    t.bgcolor = "white";
+ 
     if(t.children && t.children.length===0)
     delete t.children
     if(t.name===str)
@@ -86,6 +86,7 @@ const makeidlev2 = (ii,nodes, tt) => {
 let yy=-1
 let rrr=0;
 const TreeNode = (props) => {
+  const { Consumer } = ColorContext;
   const tempstart = useRef();
   const icons = {
     "received": <i className={ rrr ? "s fa fa-bolt" : "fa fa-bolt" }></i>,
@@ -164,7 +165,7 @@ const TreeNode = (props) => {
 
       if (t.depth === tdepth[0] && t.id === tid[0] && t.bgcolor !=="green") {
 
-        t.bgcolor = "blue";
+        t.bgcolor = "black";
       }
       else if (t.bgcolor !=="green") t.bgcolor = "white"
 
@@ -331,7 +332,7 @@ const TreeNode = (props) => {
         elmenu.parentold.name = t.name
         elmenu.parentold.depth = d;
         elmenu.parentold.id = id;
-        t.bgcolor = "yellow"
+        t.bgcolor = "white"
       } 
       
       if (t.children) { makeopacity(t.children, str, d, id); }
@@ -346,15 +347,15 @@ const TreeNode = (props) => {
     nodes.map((t) => {
 
       if (t.children) { onDragOver1(t.children, str, d, id); }
-      if (t.name === str && t.bgcolor !=="yellow") {
-        t.bgcolor = "blue";
+      if (t.name === str && t.color !=="yellow") {
+ 
         elmenu.parentformer.name = elmenu.parent.name
         elmenu.parent.name = t.name;
         elmenu.parent.depth = t.depth;
         elmenu.parent.id = t.id;
         removeorange(tree.children, elmenu.parentformer.name)
       }
-      else if (t.bgcolor !=="yellow") t.bgcolor = "white"
+      else if (t.color !=="yellow") t.color = "white"
       if (t.name !==elmenu.child.name)
         t.opacity = 1;
       return t;
@@ -391,7 +392,7 @@ const TreeNode = (props) => {
   }
   let is= 0;
   const findchild = (nodes ) =>{
-    nodes.map((t) => {
+    nodes &&  nodes.map((t) => {
       if(t.name===elmenu.child.name) is=1;
       return t;
     })
@@ -416,27 +417,27 @@ let strold="";
       tr && tr.length && tr.map((t) => { 
         if(typeof elmenu.parentroot.name === "number" && mode===0)
         {  
-          if(e.target.id==="ffselected"){  
+          if(e.target.id==="ffselected"){   console.log("ffselected");
           if(elmenu.parentroot.children && elmenu.parentroot.children[0])
           tr.splice(elmenu.parentroot.name+2,1, elmenu.parentroot.children[0])
           else tr.splice(elmenu.parentroot.name+2,1)
           }
-          else if(e.target.id==="ff" ){  
+          else if(e.target.id==="ff" ){  console.log("ff");
             if(elmenu.parentroot.children && elmenu.parentroot.children[0]){
             tr.splice(elmenu.parentroot.name+1,1, elmenu.parentroot.children[0])}
             else {tr.splice(elmenu.parentroot.name+1,1); 
             }
           }
-          else if(e.target.id==="text"){  
+          else if(e.target.id==="text"){   console.log("text");
             if(elmenu.parentroot.children && elmenu.parentroot.children[0])
             tr.splice(elmenu.parentroot.name+1,1, elmenu.parentroot.children[0])
            
-            else{ 
+            else{  console.log("fnnnnf");
                tr.splice(elmenu.parentroot.name+1,1)
 
             }
 
-          }else  if(e.target.id==="f"){
+          }else  if(e.target.id==="f"){ console.log("f");
                if(elmenu.parentroot.children && elmenu.parentroot.children[0] && q===0){
                   tr.splice(elmenu.parentroot.name+1,1) ;    
                   tr.splice(elmenu.parentroot.name+1, 0 , elmenu.child.children[0])
@@ -449,8 +450,8 @@ q=1;
           mode=1
           elmenu.parentroot.name="";
         }
-        if(t.bgcolor==="yellow")
-        t.bgcolor="white";
+        if(t.color==="yellow")
+        t.color="white";
         if (t.name === elmenu.parentold.name) {
 
           t.children && t.children.map((tt, i) => {  
@@ -498,7 +499,7 @@ q=1;
  
   const removeprobe = (nodes, r, remchild) => {
     if (r === 0 && remchild!=="root") {
-
+console.log("!root")
       nodes.map((t, i) => {
         if (t.name === elmenu.child.name){ yy = i
  
@@ -511,19 +512,19 @@ q=1;
 
     }
     if(remchild==="root")
-    {     
+    {     console.log("root")
   
     nodes.children.map((t)=>{ 
       if(t.name===elmenu.parentformer.name)
       {
-        t.children && t.children.map((tt, i) => {         console.log(yy+"::"+( elmenu.child.name+"::"+tt.name))
+        t.children && t.children.map((tt, i) => {   
           if(tt.name===elmenu.child.name)
             yy=i;
      
             return t;
             
         })
-        if(q===0){
+        if(q===0){   
          t.children && t.children.splice(yy, 1)
           q=1;
         }
@@ -533,10 +534,10 @@ q=1;
       return t;
     })
     if(typeof elmenu.parentroot.name === "number") 
-    {
-      if(q===0){
+    {console.log("number")
+      if(q1===0){
         tree.children.splice(1, 0, {name: elmenu.child.name})
-        q=1;
+        q1=1;
       }
     }
       makeidlev(tree.children, 0, 0)
@@ -546,7 +547,7 @@ q=1;
 
       }
     setFamilyTree(props.familyTree)
-    props.changeconfig(1)
+    props.changeconfig(props.config===1 ? 2 : 1)
     mode=1;
     }
 
@@ -563,10 +564,13 @@ q=1;
       }
       return t;
     })
-
+console.log(JSON.stringify(tree))
   }
 
-  return <div  > {props.config === 0 && familyTree.map((t, i) => {
+
+
+  return   <Consumer> 
+      {color =><div className={"color-"+color+"-set" }> {props.config === 0 && familyTree.map((t, i) => {
 
 
 
@@ -603,11 +607,11 @@ q=1;
     >
 
 
-      <p    
+      <p    className={t.bgcolor}
 
         onMouseOut={(e) => {t.width="20px"; bck(e, props.familyTree, t.depth, t.id); markEl(e, familyTree, t.depth, t.id) }}
   
-        style={{ backgroundColor: t.bgcolor }}>        {icons[t.name]}{t.name}
+    >        {icons[t.name]}{t.name}
         <span style={{ align: "right" }}>{t.name === props.ac.cat ? props.ac.l : ""}</span>
         {pcl(t.name) !==0 ? pcl(t.name) : ""}
 
@@ -720,11 +724,10 @@ q=1;
 
         > drag'n'drop
 
-          <p id="text"
+          <p id="text" className="pp" draggable={true} 
 
-
-            className="p fw-bold"
-            style={{ backgroundColor: t.bgcolor }}>{t.name} </p>
+ 
+             >{t.name} </p>
         </div>
         }
  
@@ -743,14 +746,14 @@ q=1;
 
         {
           t.line && root === 0 && <div id={typeof elmenu.parentroot.name==="number" ? "ffselected" : "ff"} draggable={true} onDragOver={(e) => {
-            if(elmenu.child.name!==""){
+ 
             e.preventDefault();
             e.dataTransfer.getData("text");
             yy=-1
              removeprobe(tree, root, "root");
             mode=0;
             addtoroot(tree)
-            }
+ 
                   }} 
 
                   onDrop={(e) => { 
@@ -846,11 +849,10 @@ return <div key={i}
     }}
 
   >drag'n'drop
-          <p id="text"
+          <p id="text" draggable={true} 
 
-
-className="p fw-bold"
-style={{ backgroundColor: t.bgcolor }}>{t.name} 
+className="pp"
+ >{t.name} 
 </p>
   </div>
   }
@@ -870,14 +872,14 @@ style={{ backgroundColor: t.bgcolor }}>{t.name}
 
   {
     t.line && root === 0 && <div id={typeof elmenu.parentroot.name==="number" ? "ffselected" : "ff"} draggable={true} 
-    onDragOver={(e) => {            if(elmenu.child.name!==""){
+    onDragOver={(e) => {  
       e.preventDefault();
       e.dataTransfer.getData("text");
       yy=-1
        removeprobe(tree, root, "root");
       mode=0;
       addtoroot(tree)
-      }
+  
             }}  
 
             onDrop={(e) => { 
@@ -892,8 +894,7 @@ style={{ backgroundColor: t.bgcolor }}>{t.name}
             }
   >##  ROOT</div>
   }</div>
-
-
+ 
 })}
 
 
@@ -912,7 +913,7 @@ style={{ backgroundColor: t.bgcolor }}>{t.name}
 
 
 
-  </div >
-}
+  </div >}</Consumer>
+}    
 
 export default TreeNode;

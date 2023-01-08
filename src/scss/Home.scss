@@ -1,12 +1,7 @@
 * {
   box-sizing: border-box;
 }
-
-body {
-  font-family: Arial;
-  padding: 10px;
-  background: #f1f1f1;
-}
+ 
 .tochange{
 margin-left:550px;
 }
@@ -70,3 +65,20 @@ display:flex;
 flex-direction:row;
 padding-left: 120px;
 } 
+
+
+@for $i from 1 to 5{
+  .color-#{$i}-set{
+    .white { 
+      background: lighten(nth(brown purple blue green, $i), 30%);
+      color: white;
+ 
+    }
+    .green{ 
+        background: darken(nth(brown purple blue green, $i), 10%) ;
+        color: white;
+        transition: background 1s
+    }
+  } 
+}
+ 

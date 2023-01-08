@@ -3,10 +3,11 @@ import {
     useNavigate, useLocation
 } from "react-router-dom";
 import Pagination from "./Pagination"
-import "./Table.scss"
+import "../../scss/Table.scss"
+import "../../scss/Home.scss"; 
 import Tab from "../Different/Tab";
 import Searching from "../Different/Searching"
-
+import { ColorContext } from '../../ctx/ColorContext';
 
 
 
@@ -15,6 +16,7 @@ import Searching from "../Different/Searching"
 
 
 const Table = (props, columns) => {
+    const { Consumer } = ColorContext;
     const tempsli = useRef();
     const tempsli2 = useRef();
     const tempsearchtext = useRef()
@@ -310,7 +312,7 @@ const Table = (props, columns) => {
                     setCountdown(oldindex); setTovalue(firstPost + i); setNumber(oldnumber);
                     setOldel((parseInt(firstPost) + parseInt(currentPost.length)) / 10 - 1);
                 }}
-                    className={countdown === firstPost + i ? "red" : "white" +
+                    className={countdown === firstPost + i ? "white" : "white" +
                         (green === firstPost + i && " green")
                     } key={j}
                     onMouseOver={() => {
@@ -570,7 +572,8 @@ const Table = (props, columns) => {
 
 
 
-    const el = <div className="pag">
+    const el =     <Consumer> 
+    {color => <div className={"pag"+" color-"+color+"-set"}>
 
 
 
@@ -669,14 +672,17 @@ const Table = (props, columns) => {
 
             }
         </div>
-    </div>;
+    </div>
+}</Consumer>;
 
     return (
+        
         <>
             {flagel === true ?
                 el : el
             }
         </>
+         
 
     )
 }

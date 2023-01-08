@@ -1,3 +1,7 @@
+@mixin hw(){
+    height:20px;
+    width:20px
+}
 @mixin belkaa($k)
 {
   span{
@@ -69,6 +73,43 @@
         }
       }
     }
-    
+    span{
+      cursor:pointer;
+    }
+    .c1{
+        background-color:brown;
+        @include hw();
+        cursor:pointer;
+    }
+    .c2{
+        background-color:purple;
+        @include hw();
+        cursor:pointer;
+    }
+    .c3{
+        background-color:blue;
+        @include hw();
+        cursor:pointer;
+    } 
+    .c4{
+        background-color:green;
+        @include hw();
+        cursor:pointer;
+    } 
   }
   
+
+  @mixin trans(){
+    @keyframes circle-in-center {
+      from {
+        clip-path: circle(0%);
+      }
+      to {
+        clip-path: circle(125%);
+      }
+    }
+    
+    [transition-style="in:circle:center"] {
+      animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
+    }
+  }

@@ -7,10 +7,13 @@ import {
  useLocation
 } from "react-router-dom"; 
 import "../../scss/AUrl.scss"
-import "../../scss/animations/AUrlmenu.scss"
-const AUrl = (props) => { 
+import "../../scss/animations/Animation.scss"
+
+
+const AUrl = (props) => {  
        const location = useLocation();
        const[item, setItem]=useState([true, true, true])
+ 
        const changeconfig = (i, ii) => { 
         item[0]=true;
         item[1]=true;
@@ -21,7 +24,10 @@ const AUrl = (props) => {
      
         props.changeconfig(i)
        }
-    return (<div className={ "topnav-1" } >
+
+    return (
+
+    <div className={ "topnav-1" } >
              <div className={"topnav-"+item.indexOf(false)}     >/{ location.pathname.split("/")[2] }/</div>
              
               <div className="title"> 
@@ -43,7 +49,17 @@ const AUrl = (props) => {
                 (location.pathname.split("/")[4]!==undefined  && location.pathname.split("/")[4]!=="" ? location.pathname.split("/")[4] : 1)+"/1/settings"} 
                 onClick={()=>{ item.indexOf(false)!==2 && changeconfig(1, 2)}}>settings
             </Link>
-        </div>)
+            <div class="dropdown">
+  <span>color themes</span>
+  <div class="dropdown-content">
+  <div onClick={()=>props.changecolor(1)}><div className="c1"></div>Hello World!</div>
+  <div onClick={()=>props.changecolor(2)}><div className="c2"></div>Hello World!</div> 
+   <div onClick={()=>props.changecolor(3)}><div className="c3"></div>Hello World!</div>
+   <div onClick={()=>{props.changecolor(4); }}><div className="c4"></div>Hello World!</div>
+  </div>
+</div>
+        </div>
+)
 }
 
 export default AUrl;

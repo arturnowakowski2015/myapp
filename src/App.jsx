@@ -5,7 +5,7 @@ import {
   Routes,
   Route, Link
 } from "react-router-dom";  
- 
+
 import Settings from "./components/Settings/Settings";
 import Selected from './components/Selected/Selected';
 import Select from './components/Different/Select'; 
@@ -18,6 +18,7 @@ import Table from "./components/Table/Table";
 function App() {  
 
   return (
+          
            <Router>
             <Link to="/a/new/pagination" >start</Link> 
             <Routes>

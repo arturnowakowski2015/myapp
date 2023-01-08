@@ -5,7 +5,7 @@
   .treeNode {
     width: 240px;
     border-radius: 5px;
-    background-color: #F2F8FD;
+ 
     height: 300px
   }
 
@@ -19,36 +19,31 @@
     @if $k == 4 { background-color:rgb(25, 60, 163); transition:  1s}
 
 }
-.nodeel{
-@for $k from 1 through 20 {
 
-      .btn-#{$k}{  
-              @include theme($k); 
-      }
-      .btn{
-          background-color:rgb(97, 7, 7);
-          width:100%;
 
+
+
+
+
+
+
+
+.pp{
+  background:white;
 }
+.pp:hover{
+  background:white;
 }
-}
-
-
-
-
-
-
-
-
-
 p {
   height:20px;
    transition: height 0.5 sec;
   transition: 0.5s;
+  background-color:blue;
+  cursor:pointer;
 }
 p:hover  {
 background-color:red;
-
+cursor:pointer;
 }
 .fa-chevron-up{
   background-color:yellow;

@@ -1,4 +1,4 @@
- 
+@import "./animations/Animation.scss";
 @mixin basictable(){
   border : black solid 1px; 
  
@@ -56,18 +56,7 @@
 }
 .table1{
   opacity: 1;
-  @keyframes circle-in-center {
-    from {
-      clip-path: circle(0%);
-    }
-    to {
-      clip-path: circle(125%);
-    }
-  }
-  
-  [transition-style="in:circle:center"] {
-    animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
-  }
+  @include trans();
   @include basictable();
 }
   .tablecontainer, .pag{
@@ -80,18 +69,7 @@
     border: black solid 1px
  }
  .tr {   
-  @keyframes circle-in-center {
-    from {
-      clip-path: circle(0%);
-    }
-    to {
-      clip-path: circle(125%);
-    }
-  }
-  
-  [transition-style="in:circle:center"] {
-    animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
-  }
+@include trans();
   height: 20px;
     border-right: black solid 1px;
     text-align: center;
@@ -116,12 +94,7 @@
    transform: scaleY(1.2) scaleX(1.2);
    transition: transform 1s;
  }
- .white{
-   background-color:white;
- }
- .green{
-   background-color:#70bb70;
- }
+ 
 
  
  .s {  
