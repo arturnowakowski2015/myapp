@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
-import "./MoveButton.scss"
+import "../../scss/MoveButton.scss"
 const MoveButton = (props) => {
     const navigate = useNavigate();
   const move =() =>{  
@@ -17,7 +17,7 @@ const MoveButton = (props) => {
             <div className="from">{props.act}</div>
             <div><span></span>to<span></span></div>
             <div className="to">{props.dest && props.dest.name}</div></div>  }
-         {props.movestatus!==1 && <div onClick={(e)=> {move()}} >choose destination</div>  }
+         {props.movestatus!==1 && <div className="btn1" onClick={(e)=> {move()}} >choose destination</div>  }
         </>
       );
     

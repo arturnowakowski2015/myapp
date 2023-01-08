@@ -4,7 +4,7 @@ import { tree } from '../../data/dummy';
 import { 
   useParams, 
 } from "react-router-dom";
-import "./Home.scss";
+import "../../scss/Home.scss";
 import Treetablebutton from "../Buttons/Treetablebutton";
 import Selected from "../Selected/Selected"; 
 import Table from "../Table/Table";
@@ -617,7 +617,7 @@ ii=0
    
      
      return (
-      <body>        <AUrl st={this.state.displ} changeconfig={(i,ii) => {
+      <div>        <AUrl st={this.state.displ} changeconfig={(i,ii) => {
  
         if(i===1){
           this.setState({treetable:[true, false,false]})
@@ -755,7 +755,7 @@ ii=0
 
 
 
-      </body >)
+      </div >)
         
   }
 }

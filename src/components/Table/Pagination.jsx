@@ -1,7 +1,7 @@
 import React  from "react"; 
 import {  useLocation,useNavigate
 } from "react-router-dom"; 
-import "./Pagination.css";
+import "../../scss/Pagination.css";
 
 const Pagination = props => {
     const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Tab.scss"
+import "../../scss/Tab.scss"
 const Tab = (props) => {
 return <> {1===props.j && <div className={"searched"}>searched: </div> }
 {props.len>0 && props.name !=="" ? <div className={"searched " + props.searchi.new===props.j 

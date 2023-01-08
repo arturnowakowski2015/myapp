@@ -1,5 +1,5 @@
 import React from "react";
-import "./Treetablebutton.scss";
+import "../../scss/Treetablebutton.scss";
 const Treetablebutton =(props) =>{
 
     return (

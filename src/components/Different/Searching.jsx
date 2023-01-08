@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import "./Searching.scss"
+import "../../scss/Searching.scss"
 const Searching = (props) => {
     const [str, setStr] = useState("")
     const z = (str) =>{

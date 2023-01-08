@@ -53,7 +53,7 @@ const Table = (props, columns) => {
         removed:{searchtext:[""]},   labels:{searchtext:[""]}
     }) 
     const setto1 = () => {
-        alert(JSON.stringify(props.data))
+       
         setOldIndex(3);
         setTo( {
             new:{eltabs:[{name:"all records", words:"", saved:1},], searchtext:searchtext},
@@ -198,7 +198,7 @@ const Table = (props, columns) => {
     }
 
 
-alert(JSON.stringify(data))
+ 
 
     setData1(data1=>data.filter((r) => {return Object.keys(data[0]).some((row)  => {  
       return           typeof r[row] === "string" &&  r[row].indexOf(searchtext[indextab].searchtext[searchi.new])!==-1 
@@ -335,7 +335,8 @@ alert(JSON.stringify(data))
             onChange={()=>{props.setchecked(row.id, location.pathname.split("/")[2])
         navigate("/a/"+location.pathname.split("/")[2]+"/pagination/"
         +(location.pathname.split("/")[4]!==undefined ? location.pathname.split("/")[4] : 0 )+"/"
-        +(location.pathname.split("/")[5]!==undefined ? location.pathname.split("/")[5] : 0)+"/selected")
+        +(location.pathname.split("/")[5]!==undefined ? location.pathname.split("/")[5] : 0)+"/"
+        +(location.pathname.split("/")[6]!==undefined ? location.pathname.split("/")[6] : ""))
     }} />}<div style={{marginLeft:"60px",height:"20px",position:"relative",top:"-20px", cursor: "pointer" ,  textDecoration: "underline" }}
                     onMouseOver={() => {url = "/a/" + props.acturl + "/pagination/" + row.name + "/" + row.id + "/" + row.name + "/1/edit"; }}
                     onClick={(e) => {

@@ -6,7 +6,7 @@ import {
     Link,
  useLocation
 } from "react-router-dom"; 
-import "./AUrl.scss"
+import "../../scss/AUrl.scss"
 
 const AUrl = (props) => { 
        const location = useLocation();
@@ -28,7 +28,7 @@ const AUrl = (props) => {
                 <span></span>
                 </div>
             <Link className={item[0] ? "el-1" : "el-1-1"} 
-                  to={"/a/"+location.pathname.split("/")[2]+"/pagination/"} 
+                  to={"/a/"+location.pathname.split("/")[2]+"/pagination"} 
                   onClick={(e)=>{ item.indexOf(false)!==0 && changeconfig(2, 0)}} >app 
             </Link>
             <Link 

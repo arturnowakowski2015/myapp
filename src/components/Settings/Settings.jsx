@@ -4,7 +4,7 @@ import {
   } from "react-router-dom";
 import CheckboxInput from "../Checkboxes/CheckboxInput";
  
-import "./Settings.scss"
+import "../../scss/Settings.scss"
  
 
 const Settings = props => {

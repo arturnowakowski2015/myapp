@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
  
 import {  useNavigate, useLocation
 } from "react-router-dom"; 
- 
+import "../../scss/Selected.scss"; 
 
 const Deletebutton = (props) => {
      const location = useLocation()
@@ -41,7 +41,7 @@ const Deletebutton = (props) => {
  
     return ( 
  
-        <div onClick={(e)=> { del()}} >delete selected:{"::"+props.lenel+"::"+j}</div>  
+        <div className="btn1" onClick={(e)=> { del()}} >delete selected:{ props.lenel }</div>  
  
       );
     

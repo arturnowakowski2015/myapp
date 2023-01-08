@@ -1,7 +1,7 @@
 import React, {useState, useRef}     from "react";
 import { useEffect } from "react";
 import {tree} from "../../data/dummy"
-import "./TreeMove.scss";
+import "../../scss/TreeMove.scss";
 let c=0;
 const makeids = (nodes, i) => {
     nodes && nodes.map((t) => {
@@ -14,7 +14,7 @@ const makeids = (nodes, i) => {
     })
   };
   
-  const makeidlev = (name, nodes, i, tt, depth, id) => {
+  const makeidlev = (name, nodes, i, tt ) => {
     return nodes && nodes.forEach((t) => {
   
   
@@ -23,7 +23,7 @@ const makeids = (nodes, i) => {
       t.bgcolor = "white";
       
   
-      if (t.children) { makeidlev(name,t.children, 0, ++tt, depth, id); --tt }
+      if (t.children) { makeidlev(name,t.children, 0, ++tt ); --tt }
     });
   
   };
@@ -32,13 +32,14 @@ const TreeMove = (props) => {
   const tempclear = useRef();
     const [destination, setDestination] =useState({name:"", coordinates:[0,0]})
 
-  setDestination({name:props.dest.name, coordinates:[props.dest.coordinates[0], props.dest.coordinates[1]]})
+
   const set1 = () =>{
     makeidlev(tree.children, 0, 0)
     for (let ii = 0; ii < 20; ii++) {
       c = 0;
       makeids(tree.children, ii)
     }
+    setDestination({name:props.dest.name, coordinates:[props.dest.coordinates[0], props.dest.coordinates[1]]})
     }
 tempset.current=set1;
 const clear = () => {
@@ -73,7 +74,7 @@ tempclear.current=clear;
  
         props.changedest(t.name,t.depth, t.id)
  
-        }}j
+        }}  
 
     
           className="p fw-bold"
@@ -87,7 +88,7 @@ tempclear.current=clear;
             e.stopPropagation();
         props.changedest(t.name,t.depth, t.id)
  
-        }}j
+        }}
 
     
           className={"p fw-bold "}
@@ -105,7 +106,7 @@ tempclear.current=clear;
             e.stopPropagation();
             props.changedest(t.name,t.depth, t.id)
   
-            }}j
+            }}
 
 
             className={"p fw-bold "}

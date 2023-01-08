@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {  tree } from '../../data/dummy';
  
 
-import "./TreeNode.scss"
+import "../../scss/TreeNode.scss"
 let c = 0;
 let q=0;
 let tdepth = [];
@@ -128,15 +128,20 @@ const TreeNode = (props) => {
  
   const navigate = useNavigate();
   const [familyTree, setFamilyTree] = useState(props.familyTree)
+ const tempclear = useRef();
+ const clear = () => {
+  makeidlev(tree.children, 0, 0, props.act)
+  for (let ii = 0; ii < 20; ii++) {
+    c = 0;
+    makeids(tree.children, ii)
 
+  }
+ }
+ tempclear.current = clear;
   useEffect(() => {
-    makeidlev(tree.children, 0, 0, props.act)
-    for (let ii = 0; ii < 20; ii++) {
-      c = 0;
-      makeids(tree.children, ii)
-
-    }
+    tempclear.current();
   }, [])
+
 
 
 /*
@@ -411,29 +416,29 @@ let strold="";
       tr && tr.length && tr.map((t) => { 
         if(typeof elmenu.parentroot.name === "number" && mode===0)
         {  
-          if(e.target.id==="ffselected"){ alert(23+JSON.stringify(t)) 
+          if(e.target.id==="ffselected"){  
           if(elmenu.parentroot.children && elmenu.parentroot.children[0])
           tr.splice(elmenu.parentroot.name+2,1, elmenu.parentroot.children[0])
           else tr.splice(elmenu.parentroot.name+2,1)
           }
-          else if(e.target.id==="ff" ){ alert(12) 
+          else if(e.target.id==="ff" ){  
             if(elmenu.parentroot.children && elmenu.parentroot.children[0]){
             tr.splice(elmenu.parentroot.name+1,1, elmenu.parentroot.children[0])}
-            else {tr.splice(elmenu.parentroot.name+1,1);alert(90)
+            else {tr.splice(elmenu.parentroot.name+1,1); 
             }
           }
-          else if(e.target.id==="text"){ alert("P    "+JSON.stringify(t)) 
+          else if(e.target.id==="text"){  
             if(elmenu.parentroot.children && elmenu.parentroot.children[0])
             tr.splice(elmenu.parentroot.name+1,1, elmenu.parentroot.children[0])
            
-            else{alert(1+":::"+JSON.stringify(t)) 
+            else{ 
                tr.splice(elmenu.parentroot.name+1,1)
 
             }
 
           }else  if(e.target.id==="f"){
                if(elmenu.parentroot.children && elmenu.parentroot.children[0] && q===0){
-                  tr.splice(elmenu.parentroot.name+1,1) ;   alert(JSON.stringify(elmenu.child.children[0])) 
+                  tr.splice(elmenu.parentroot.name+1,1) ;    
                   tr.splice(elmenu.parentroot.name+1, 0 , elmenu.child.children[0])
                }
           else{
@@ -457,7 +462,7 @@ q=1;
             findchild(t.children);
             if(is) { 
              t.children.splice(y, 1, {name: elmenu.child.name, children: elmenu.child.children })
-             alert("eee"+JSON.stringify(t))
+     
              if(t.children)changeforwards(t.children, elmenu.child.children[0].name, elmenu.child.children)
  
             }
@@ -470,13 +475,13 @@ q=1;
         return t;
       })
      if(tr[0]!==undefined && tr[0].name==null && !tr[0].line){
-      alert("   pmm   o   "+JSON.stringify(elmenu) )
+ 
         let u = tr[0].children
         delete tr[0].children
         tr[0].name=elmenu.child.children[0].name
         tr[0].children=[]
         tr[0].children=u[0].children
-        alert( JSON.stringify(tr) + "   b          "+JSON.stringify(u) )
+     
      } 
       makeidlev(tree.children, 0, 0)
  
@@ -646,7 +651,7 @@ q=1;
           props.changeconfig(2)
         }}
         
-        onMouseDown={(e) => { alert(e.target.id);
+        onMouseDown={(e) => { 
           if(e.target.id==="f" || "text"){
           zrobopacity(e, t.name, props.depth - 1, props.pid)   
           if (e.dataTransfer)
@@ -785,7 +790,7 @@ return <div key={i}
     props.changeconfig(2)
   }}
   
-  onMouseDown={(e) => { alert(e.target.id);
+  onMouseDown={(e) => { 
     if(e.target.id==="f" || "text"){
     zrobopacity(e, t.name, props.depth - 1, props.pid)   
     if (e.dataTransfer)
