@@ -743,13 +743,14 @@ q=1;
 
         {
           t.line && root === 0 && <div id={typeof elmenu.parentroot.name==="number" ? "ffselected" : "ff"} draggable={true} onDragOver={(e) => {
-            
+            if(elmenu.child.name!=""){
             e.preventDefault();
             e.dataTransfer.getData("text");
             yy=-1
              removeprobe(tree, root, "root");
             mode=0;
             addtoroot(tree)
+            }
                   }} 
 
                   onDrop={(e) => { 
@@ -868,15 +869,15 @@ style={{ backgroundColor: t.bgcolor }}>{t.name}
   }
 
   {
-    t.line && root === 0 && <div id={typeof elmenu.parentroot.name==="number" ? "ffselected" : "ff"} draggable={true} onDragOver={(e) => {
-      
+    t.line && root === 0 && <div id={typeof elmenu.parentroot.name==="number" ? "ffselected" : "ff"} draggable={true} onDragOver={(e) => {            if(elmenu.child.name!=""){
       e.preventDefault();
       e.dataTransfer.getData("text");
       yy=-1
        removeprobe(tree, root, "root");
       mode=0;
       addtoroot(tree)
-            }} 
+      }
+            }}  
 
             onDrop={(e) => { 
             q=0;

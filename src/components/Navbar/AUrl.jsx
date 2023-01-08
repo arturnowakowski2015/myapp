@@ -7,7 +7,7 @@ import {
  useLocation
 } from "react-router-dom"; 
 import "../../scss/AUrl.scss"
-
+import "../../scss/animations/AUrlmenu.scss"
 const AUrl = (props) => { 
        const location = useLocation();
        const[item, setItem]=useState([true, true, true])

@@ -1,38 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import {
-    useNavigate 
+    useNavigate, useLocation
 } from "react-router-dom";
-
+import "../../scss/Select.scss";
 
 const Select = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [vstr, setVstr] = useState("ddd")
     const [b, setB] = useState(0);
     const [strd, setStrd] = useState(props.strd);
-    const [id, setId] = useState(0);
+ 
     useEffect(() => {
         setStrd(props.strd)
     }, [props.strd]);
     const url = (e) => {
         setB(1); setVstr(e.target.value);
-
-        setId(e.target.value)
-        back()
+    
+        back(e.target.value)
     }
-    const back = () => {
+    const back = (e) => {
 
-        props.changeRecits(id, 0)
+        props.changeRecits(e, 0)
         props.changeconfig(0);
         props.changecategory("new", 2);
         props.reset();
-        navigate("/a/" + props.acturl + "/pagination/")
+        navigate("/a/"+location.pathname.split("/")[2]+"/pagination/"+location.pathname.split("/")[4]+"/"+
+        location.pathname.split("/")[5]+"/settings")
+        props.goback();
     }
-    return (<div>
+    return (<div className="disp">
         <select onChange={e => { url(e) }} value={vstr}>
             {strd}
         </select>
         <div>
-            {b === 0 && <div className="btn2" >choose database</div>} </div>
+            {b === 0 && <div className="btn2" >choose_database</div>} </div>
  
 
     </div>)

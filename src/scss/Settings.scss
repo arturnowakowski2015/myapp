@@ -1,5 +1,7 @@
 .settings{
-    padding-left:20px;
+    padding-left:220px;
+    display:flex;
+    flex-direction:row;
 }
 input{
     border-left:black 1px solid;
@@ -12,4 +14,6 @@ input{
 }
 .link{
     padding-left: 30px;
+    text-decoration:underline;
+    cursor:pointer;
 }

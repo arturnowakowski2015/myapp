@@ -7,8 +7,7 @@ import "../../scss/Selected.scss";
 const Deletebutton = (props) => {
      const location = useLocation()
     const navigate = useNavigate();
-    const eff = useRef()
-     let j=1
+    const eff = useRef() 
      const effect = () => {
           if(props.lenel===0) { 
      
@@ -21,8 +20,8 @@ const Deletebutton = (props) => {
                          let obj = Object.keys(props.data).filter((t) => {return props.data[t].length>0})
             
                          setTimeout(()=> {
-
-                              navigate("/a/"+props.act+"/pagination/"+location.pathname.split("/")[4]+"/"+
+ 
+                              navigate("/a/"+obj[0]+"/pagination/"+location.pathname.split("/")[4]+"/"+
                               location.pathname.split("/")[5]+"/selected");
                           props.delete1(obj[0], 1)}, 200)
      

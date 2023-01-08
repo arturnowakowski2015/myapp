@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { 
-    Link, useLocation
+import {   useLocation, useNavigate
   } from "react-router-dom";
 import CheckboxInput from "../Checkboxes/CheckboxInput";
  
@@ -8,6 +7,7 @@ import "../../scss/Settings.scss"
  
 
 const Settings = props => {
+    const navigate = useNavigate();
     const location = useLocation();
     const [postPerPage, setPostPerPage] = useState(props.postPerPage)
 
@@ -26,8 +26,11 @@ const Settings = props => {
                 onChange={(e) => { setPostPerPage(e.target.value); props.changePPP(postPerPage) }} />
             <label>pagination's page per site  .{props.length}.</label>
 
-            <Link className="link"   to={"/a/" + location.pathname.split("/")[2] + "/pagination/url"} 
-                onClick={() => this.setState({ settings: 2 })}>change database</Link>
+           
+
+            <div className="link"   
+                onClick={() =>{ props.changesetts(); navigate("/a/"+location.pathname.split("/")[2] +"/pagination/"+location.pathname.split("/")[4]+"/"+
+                              location.pathname.split("/")[5]+"/url");  }}>change database</div>
 
         </div>
     )
