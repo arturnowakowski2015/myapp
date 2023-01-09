@@ -29,11 +29,32 @@ const AUrl = (props) => {
 
 
 
+       async   function loadBooks () {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => { console.log(1); }, 1000)
+        });
+    }
+    
+    async   function loadPets  ()   {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => { console.log(2); }, 1000)
+        });
+    }
+    
+    async   function render() { 
+        const books = await loadBooks();
+        const pets = await loadPets();
+     
+    }
+
+
+
+
 
 
     return (
 
-    <div className={ "topnav-1" }  >aaaaaa
+    <div className={ "topnav-1" }     onClick={()=>render()}>aaaaaa
              <div className={"topnav-"+item.indexOf(false)}     >/{ location.pathname.split("/")[2] }/</div>
              
               <div className="title"> 

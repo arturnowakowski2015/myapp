@@ -223,7 +223,7 @@ class Home extends React.Component {
   }
 
 
-  async movetodestination(ii) {
+  movetodestination(ii) {
     const cat = this.state.categories;
     const timer = setTimeout(() => {
 
@@ -255,8 +255,8 @@ class Home extends React.Component {
         this.movetodestination(--ii)
       }
     }, ii * 10)
-        if (ii <= -1) { 
- 
+    if (ii <= -1) { 
+      this.changedata(this.state.dest.name, 0, 1);
       clearTimeout(timer)
    
 
@@ -266,45 +266,8 @@ class Home extends React.Component {
     this.setState({ checkedel: this.state.checkedel })
     this.setState({ data: this.state.data })
    this.setState({settings: -1})
-    
+
   }
-  async moverecords(ii){
-    await this.movetodestination(ii);
-    this.changedata(this.state.dest.name, 0, 1);
-  }
-
-/*
-
-
-       async   function loadBooks () {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => { console.log(1); }, 1000)
-        });
-    }
-    
-    async   function loadPets  ()   {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => { console.log(2); }, 1000)
-        });
-    }
-    
-    async   function render() { 
-        const books = await loadBooks();
-        const pets = await this.loadPets();
-     
-    }
-*/
-
-
-
-
-
-
-
-
-
-
-
 
   delete1(str, flag) {
     const cat = this.state.categories;
@@ -689,7 +652,7 @@ class Home extends React.Component {
                 <Selected
 
                   dest={this.state.dest}
-                  act={this.state.categories.actual[0].cat} moverecords={this.moverecords.bind(this)}
+                  act={this.state.categories.actual[0].cat} movetodestination={this.movetodestination.bind(this)}
                   movestatus={this.state.move} changemove={() => this.changemove()}
                   lenel={this.state.checkedel.set[this.state.categories.actual[0].cat] !== undefined ?
                     this.state.checkedel.set[this.state.categories.actual[0].cat].length : 0}
