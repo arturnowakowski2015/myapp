@@ -42,8 +42,8 @@ const AUrl = (props) => {
     }
     
     async   function render() { 
-        const books = await loadBooks();
-        const pets = await loadPets();
+         await loadBooks();
+         await loadPets();
      
     }
 
