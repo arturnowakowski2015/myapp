@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
 import "../../scss/MoveButton.scss"
 const MoveButton = (props) => {
@@ -11,7 +11,8 @@ const MoveButton = (props) => {
     return ( 
         <>
          {props.movestatus===1 && 
-            <div className="container"><div className="moveto" onClick={(e)=> {  props.movetodestination(1+props.lenel);
+            <div className="container"><div className="moveto" onClick={(e)=> {  props.moverecords(1+props.lenel);
+
                 navigate("/a/"+props.dest.name+"/pagination")}} >move selected<span></span>{props.lenel}</div>
             <div><span></span>from<span></span></div>
             <div className="from">{props.act}</div>

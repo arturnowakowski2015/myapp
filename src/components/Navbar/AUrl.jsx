@@ -25,9 +25,15 @@ const AUrl = (props) => {
         props.changeconfig(i)
        }
 
+
+
+
+
+
+
     return (
 
-    <div className={ "topnav-1" } >
+    <div className={ "topnav-1" }  >aaaaaa
              <div className={"topnav-"+item.indexOf(false)}     >/{ location.pathname.split("/")[2] }/</div>
              
               <div className="title"> 

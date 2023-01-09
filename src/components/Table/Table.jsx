@@ -339,13 +339,18 @@ const Table = (props, columns) => {
             : <input style={{ marginLeft: "20px", position: "relative", top: "10px" }}
                 type="checkbox" id={row.id}
                 checked={props.checkedel !== undefined && props.checkedel.filter((t) => { return t === row.id }).length === 1 && true}
-                onChange={() => {
+                onChange={() => { 
                     props.setchecked(row.id, location.pathname.split("/")[2])
                     navigate("/a/" + location.pathname.split("/")[2] + "/pagination/"
                         + (location.pathname.split("/")[4] !== undefined ? location.pathname.split("/")[4] : 0) + "/"
                         + (location.pathname.split("/")[5] !== undefined ? location.pathname.split("/")[5] : 0) + "/"
                         + (location.pathname.split("/")[6] !== undefined ? location.pathname.split("/")[6] : ""))
-                }} />}<div style={{ marginLeft: "60px", height: "20px", position: "relative", top: "-20px", cursor: "pointer", textDecoration: "underline" }}
+ 
+
+                
+                
+                
+                    }} />}<div style={{ marginLeft: "60px", height: "20px", position: "relative", top: "-20px", cursor: "pointer", textDecoration: "underline" }}
                     onMouseOver={() => { url = "/a/" + props.acturl + "/pagination/" + row.name + "/" + row.id + "/" + row.name + "/1/edit"; }}
                     onClick={(e) => {
                         dv(url, row[Object.keys(row).filter((t, i) => { return i === 2 && t })],
@@ -572,12 +577,11 @@ const Table = (props, columns) => {
 
 
 
-    const el =     <Consumer> 
-    {color => <div className={"pag color-"+color+"-set"}>
+    const el =   
 
 
 
-        <div className="pagcont">{z}
+        <div className="pagcont">
 
 
             <div className={props.desapear[3] ? "table1" : "desapeartable"}
@@ -624,7 +628,7 @@ const Table = (props, columns) => {
                     && data.length > 0)) &&
                 <div className={props.desapear[2] ? "pagination" : "pd"}
                     transition-style={props.desapear[2] ? "in:circle:center" : ""}
-                >
+                >{z}
 
 
                     <Pagination
@@ -672,15 +676,16 @@ const Table = (props, columns) => {
 
             }
         </div>
-    </div>
-}</Consumer>;
+ 
+
 
     return (
         
-        <>
+        <>  <Consumer> 
+        {color => <div className={"pag color-"+color+"-set"}>
             {flagel === true ?
                 el : el
-            }
+            }   </div>}</Consumer>;
         </>
          
 

@@ -69,6 +69,10 @@ padding-left: 120px;
 
 @for $i from 1 to 5{
   .color-#{$i}-set{
+    .unwhite{
+      background: lighten(nth(brown purple blue green, $i), 10%);
+      color: white;
+    }
     .white { 
       background: lighten(nth(brown purple blue green, $i), 30%);
       color: white;

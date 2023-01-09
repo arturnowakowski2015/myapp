@@ -9,8 +9,22 @@ margin:5px;
     background-color:rgb(120, 219, 120);
 width:200px;
 text-decoration:underline;
+text-align:center;
 } 
 
 .buttons{
+    
     padding:5px;
+    display:flex;
+    flex-direction:row; 
+padding-left:400px;
+}
+
+
+.buttonswithout{
+    height:68px;
+    padding:5px;
+    display:flex;
+    flex-direction:row; 
+padding-left:400px;
 }

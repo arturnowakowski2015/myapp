@@ -223,7 +223,7 @@ class Home extends React.Component {
   }
 
 
-  movetodestination(ii) {
+  async movetodestination(ii) {
     const cat = this.state.categories;
     const timer = setTimeout(() => {
 
@@ -251,23 +251,60 @@ class Home extends React.Component {
 
         cat.actual[0].cat = this.state.dest.name
         this.setState({ categories: cat })
-        ii = -2;
+       ii=-2
         this.movetodestination(--ii)
       }
-    }, ii * 1)
-    if (ii <= -1) {
-      this.changedata(this.state.dest.name, 0, 1);
+    }, ii * 10)
+        if (ii <= -1) { 
+ 
       clearTimeout(timer)
-
+   
 
 
     }
     this.setState({ move: 0 })
     this.setState({ checkedel: this.state.checkedel })
     this.setState({ data: this.state.data })
-
-
+   this.setState({settings: -1})
+    
   }
+  async moverecords(ii){
+    await this.movetodestination(ii);
+    this.changedata(this.state.dest.name, 0, 1);
+  }
+
+/*
+
+
+       async   function loadBooks () {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => { console.log(1); }, 1000)
+        });
+    }
+    
+    async   function loadPets  ()   {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => { console.log(2); }, 1000)
+        });
+    }
+    
+    async   function render() { 
+        const books = await loadBooks();
+        const pets = await this.loadPets();
+     
+    }
+*/
+
+
+
+
+
+
+
+
+
+
+
 
   delete1(str, flag) {
     const cat = this.state.categories;
@@ -549,7 +586,8 @@ class Home extends React.Component {
     let treetablemin = <div className={this.state.treetable[0] === false && this.state.treetable[1] === false ? "treetablecon1" : "treetablecon"} >
       {(this.state.treetable[0] === false &&
 
-        this.state.treetable[1] === true) && <div className={this.state.displ[1] ? "leftcolumn2" : "treenone"} transition-style={this.state.displ[1] && this.state.menuel ? "in:circle:center" : null}>
+        this.state.treetable[1] === true) && <div className={this.state.displ[1] ? "leftcolumn2" : "treenone"} 
+        transition-style={this.state.displ[1] && this.state.menuel ? "in:circle:center" : null}>
 
           <div >s<TreeNode changeintree={(category, flag, flag1) => { this.changedata(category, flag, flag1); }}
             pid={-1}
@@ -643,48 +681,49 @@ class Home extends React.Component {
       }} 
       changecolor={(i)=>this.setState({color: i})}/>
 
-
+{this.state.settings!==1 && this.state.settings!==4 && this.state.settings!==4 &&<div className="title"><div className="buttonswithout"></div></div>}
 
         {this.state.settings === 4 &&
+            <div className={this.state.displ[4] ? "desappearsettings" : "LT select"}
+            transition-style={this.state.displ[4] ? "in:circle:center" : ""}  >
+                <Selected
 
-          <Selected
-
-            dest={this.state.dest}
-            act={this.state.categories.actual[0].cat} movetodestination={this.movetodestination.bind(this)}
-            movestatus={this.state.move} changemove={() => this.changemove()}
-            lenel={this.state.checkedel.set[this.state.categories.actual[0].cat] !== undefined ?
-              this.state.checkedel.set[this.state.categories.actual[0].cat].length : 0}
-
-
-            changesettings={this.setmove.bind(this)} checkallel={this.checkallel.bind(this)}
-            length={this.state.data[this.state.categories.actual[0].cat] !== undefined ?
-              this.state.data[this.state.categories.actual[0].cat].length : 0}
+                  dest={this.state.dest}
+                  act={this.state.categories.actual[0].cat} moverecords={this.moverecords.bind(this)}
+                  movestatus={this.state.move} changemove={() => this.changemove()}
+                  lenel={this.state.checkedel.set[this.state.categories.actual[0].cat] !== undefined ?
+                    this.state.checkedel.set[this.state.categories.actual[0].cat].length : 0}
 
 
-            move={this.state.move} delete1={this.delete1.bind(this)}
-            pc={this.state.data} checkall1={this.state.checkall}
-            i={this.state.i}
-            data={this.state.data}
-
-            changeintree={(category, flag, flag1) => { this.changedata(category, flag, flag1); }}
-            changedest={this.changedest.bind(this)}
+                  changesettings={this.setmove.bind(this)} checkallel={this.checkallel.bind(this)}
+                  length={this.state.data[this.state.categories.actual[0].cat] !== undefined ?
+                    this.state.data[this.state.categories.actual[0].cat].length : 0}
 
 
+                  move={this.state.move} delete1={this.delete1.bind(this)}
+                  pc={this.state.data} checkall1={this.state.checkall}
+                  i={this.state.i}
+                  data={this.state.data}
 
-            changeparent={(name) => this.setState({ parent: name })}
-            config={this.state.config}
-            familyTree={tree.children}
-            changeconfig={(i) => { this.setState({ config: i }) }}
-            settings={this.state.settings}
-            ac={this.state.categories}
-            id={0} depth={0} p={0} pdepth={-1} pid={0}
-
-            parent={this.state.parent}
+                  changeintree={(category, flag, flag1) => { this.changedata(category, flag, flag1); }}
+                  changedest={this.changedest.bind(this)}
 
 
 
+                  changeparent={(name) => this.setState({ parent: name })}
+                  config={this.state.config}
+                  familyTree={tree.children}
+                  changeconfig={(i) => { this.setState({ config: i }) }}
+                  settings={this.state.settings}
+                  ac={this.state.categories}
+                  id={0} depth={0} p={0} pdepth={-1} pid={0}
 
-          />
+                  parent={this.state.parent}
+                  />
+                         <div className="title"></div>
+
+
+</div>
         }
 
 
@@ -714,7 +753,9 @@ class Home extends React.Component {
             <div className={this.state.displ[4] ? "desappearsettings" : "LT select"}
               transition-style={this.state.displ[4] ? "in:circle:center" : ""}  >
 
-              <Treetablebutton title={"tree setup"} treetable={this.state.treetable} on={(tab) => this.setState({ treetable: [false, true, false] })} />
+             <Treetablebutton title={"tree setup"} treetable={this.state.treetable} on={
+              (tab) =>1// this.setState({ treetable: [false, true, false] } )
+             } />
 
               <Settings data={this.state.data} columns={this.state.columns} changePPP={this.changePPP.bind(this)}
                 checkedCol={this.setcol.bind(this)}
@@ -762,7 +803,7 @@ class Home extends React.Component {
               }}
             /></div>
           </div>
-        }
+        } 
         {this.state.move !== 1 && treetablemin}
 
 
