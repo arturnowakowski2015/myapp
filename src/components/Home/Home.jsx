@@ -36,13 +36,15 @@ class Home extends React.Component {
         labels: [],
         postponed: [],
       },
-      columns: [],
+ 
+      tableColumns: [],
+ 
+  
       menuItem: [],
       flagsettings: 0,
       postPerPage: 10,
       flag: 0,
       dff: -1,
-      ending: "",
       str: "sssss",
       menuel: false,
       urls: [
@@ -55,11 +57,11 @@ class Home extends React.Component {
       i: 0,
       number1: 0,
       confirmdelete: false,
-      displ: [true, true, true, true, true, true],
+      displayAnimated: [true, true, true, true, true, true],
       dp: true,
-      treetable: [false, false, true],
+      treetableItems: [false, false, true],
 
-      checkedel: {
+      checkedelement: {
         actual: [{ cat: "new", l: 0 }],
         set: {
           received: [],
@@ -72,13 +74,13 @@ class Home extends React.Component {
       },
       checked: true,
       icolumn: -1,
-      settings: 0,
+      allowedTab: 0,
       change: false,
       changes: [],
       changeall: false,
       checkall: [0, 0],
       config: 0,
-      categories: {
+      menuCategories: {
         actual: [{ cat: "new", l: 0 }],
         new: [],
         set: ["labels", "received", "new", "selected", "postponed", "removed"],
@@ -87,19 +89,22 @@ class Home extends React.Component {
       strcol: "",
       w: [],
       m: 0,
-      ttt: true,
       move: 0,
-      dest: { name: "", coordinates: [0, 0] },
+      destination: { name: "", coordinates: [0, 0] },
       checkedcol: [],
     };
     this.setRec = this.setRec.bind(this);
   }
 
-  loadDatabase(settingsid, idrec, bazaid, tryb, upstr, str) {
+ 
+  loadDatabase(allowedTabid, idrec, bazaid, tryb, updatedStr, str) {
+ 
+  loadDatabase(allowedTabid, idrec, bazaid, tryb, upstr, str) {
+ 
     this.setState({ strcol: str });
     this.setState({ i: bazaid });
 
-    this.setState({ settings: settingsid });
+    this.setState({ allowedTab: allowedTabid });
 
     this.setState({ changes: [] });
 
@@ -126,12 +131,12 @@ class Home extends React.Component {
         });
         this.setState({ data: state });
 
-        let cat = this.state.categories;
+        let cat = this.state.menuCategories;
         cat.actual[0].l = response.length;
         cat.actual[0].l = response.length;
-        this.setState({ categories: cat });
+        this.setState({ menuCategories: cat });
         this.setState({
-          columns: Object.keys(response[0]).map((t) => {
+          tableColumns: Object.keys(response[0]).map((t) => {
             let d = { col: { title: t, disp: true } };
 
             return d;
@@ -139,8 +144,8 @@ class Home extends React.Component {
         });
       });
 
-    this.state.data[this.state.categories.actual[0].cat].map((tt) => {
-      if (tt.id === idrec) tt[str] = upstr;
+    this.state.data[this.state.menuCategories.actual[0].cat].map((tt) => {
+      if (tt.id === idrec) tt[str] = updatedStr;
       return tt;
     });
 
@@ -156,7 +161,7 @@ class Home extends React.Component {
   }
   m() {
     this.setState({
-      data: ([this.state.categories[0]] = this.props.data.map((t, i) => {
+      data: ([this.state.menuCategories[0]] = this.props.data.map((t, i) => {
         if (this.props.params.id === i) t.title = this.state.str;
         return t;
       })),
@@ -170,7 +175,7 @@ class Home extends React.Component {
       window.location.href.lastIndexOf("/") + 1
     );
   }
-  checkedCol(checked, index) {
+  checkColumn(checked, index) {
     this.setState(() => {
       return {
         icolumn: index,
@@ -179,37 +184,40 @@ class Home extends React.Component {
     });
   }
   setchecked(i, actual) {
-    let ch = this.state.checkedel;
+    let ch = this.state.checkedelement;
     if (this.state.data !== undefined) {
       this.state.data[actual].map((t) => {
-        if (t.id === i && this.state.checkedel.set[actual].indexOf(i) === -1) {
-          this.state.checkedel.set[actual].push(t.id);
+        if (
+          t.id === i &&
+          this.state.checkedelement.set[actual].indexOf(i) === -1
+        ) {
+          this.state.checkedelement.set[actual].push(t.id);
         } else if (
           t.id === i &&
-          this.state.checkedel.set[actual].indexOf(i) !== -1
+          this.state.checkedelement.set[actual].indexOf(i) !== -1
         ) {
-          this.state.checkedel.set[actual].splice(
-            this.state.checkedel.set[actual].indexOf(i),
+          this.state.checkedelement.set[actual].splice(
+            this.state.checkedelement.set[actual].indexOf(i),
             1
           );
         }
 
         ch.actual[0].cat = actual;
-        this.setState({ checkedel: ch });
+        this.setState({ checkedelement: ch });
         return t;
       });
     }
-    if (ch.set[actual].length > 0) this.setState({ settings: 4 });
-    else this.setState({ settings: -1 });
+    if (ch.set[actual].length > 0) this.setState({ allowedTab: 4 });
+    else this.setState({ allowedTab: -1 });
     // this.setState({checkall: false})
   }
 
   async moverecords(ii) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const cat = this.state.categories;
+        const cat = this.state.menuCategories;
         const timer = setTimeout(() => {
-          this.state.data[this.state.dest.name].unshift(
+          this.state.data[this.state.destination.name].unshift(
             this.state.data[cat.actual[0].cat][
               this.state.data[cat.actual[0].cat].findIndex(function (item) {
                 return item.id === ii;
@@ -223,14 +231,14 @@ class Home extends React.Component {
             }),
             1
           );
-          this.state.checkedel.set[cat.actual[0].cat].splice(ii, 1);
+          this.state.checkedelement.set[cat.actual[0].cat].splice(ii, 1);
 
           console.log(this.state.data[cat.actual[0].cat].length);
 
           this.moverecords(--ii);
           if (this.state.data[cat.actual[0].cat].length <= 0) {
-            cat.actual[0].cat = this.state.dest.name;
-            this.setState({ categories: cat });
+            cat.actual[0].cat = this.state.destination.name;
+            this.setState({ menuCategories: cat });
             ii = -2;
             this.moverecords(--ii);
           }
@@ -240,9 +248,9 @@ class Home extends React.Component {
           resolve();
         }
         this.setState({ move: 0 });
-        this.setState({ checkedel: this.state.checkedel });
+        this.setState({ checkedelement: this.state.checkedelement });
 
-        this.setState({ settings: -1 });
+        this.setState({ allowedTab: -1 });
       }, 100);
     });
   }
@@ -251,26 +259,26 @@ class Home extends React.Component {
       this.moverecords(ii);
       setTimeout(() => {
         resolve();
-      }, this.state.data[this.state.categories.actual[0].cat].length * 100);
+      }, this.state.data[this.state.menuCategories.actual[0].cat].length * 100);
     });
   }
   async movetodestination(ii) {
     // await this.moverecords(ii)
     await this.loadPets(ii);
-    this.changedata(this.state.dest.name, 0, 1);
+    this.changedata(this.state.destination.name, 0, 1);
     this.setState({ data: this.state.data });
   }
 
   delete1(str, flag) {
-    const cat = this.state.categories;
-    const dest = this.state.dest;
+    const cat = this.state.menuCategories;
+    const dest = this.state.destination;
     if (flag === 0) {
       const timer = setTimeout(() => {
-        this.state.checkedel.set[str].map((t, i) => {
+        this.state.checkedelement.set[str].map((t, i) => {
           if (this.state.data[str].indexOf(i)) {
             this.state.data[str].splice(i, 1);
-            // this.setState({data: this.state.data[this.state.categories.actual[0].cat]})
-            this.state.checkedel.set[str].splice(i, 1);
+            // this.setState({data: this.state.data[this.state.menuCategories.actual[0].cat]})
+            this.state.checkedelement.set[str].splice(i, 1);
             this.setState({ data: this.state.data });
           }
           return t;
@@ -278,12 +286,12 @@ class Home extends React.Component {
 
         this.delete1(str, flag);
       }, 210);
-      if (this.state.checkedel.set[str].length < 1) {
+      if (this.state.checkedelement.set[str].length < 1) {
         clearTimeout(timer);
         this.setState({ move: 0 });
-        if (this.state.checkedel.set[str].length === 0) {
+        if (this.state.checkedelement.set[str].length === 0) {
           cat.actual[0].cat = str;
-          this.setState({ categories: cat });
+          this.setState({ menuCategories: cat });
           //
         }
       }
@@ -291,8 +299,8 @@ class Home extends React.Component {
       this.changedata(str, 0, 1);
       dest.name = str;
       cat.actual[0].cat = str;
-      this.setState({ categories: cat });
-      this.setState({ dest: dest });
+      this.setState({ menuCategories: cat });
+      this.setState({ destination: dest });
     }
   }
 
@@ -303,26 +311,29 @@ class Home extends React.Component {
       return t;
     });
     this.setState({
-      settings: 0,
+      allowedTab: 0,
       flag: 1,
-      data: ([this.state.categories[0]] = t),
+      data: ([this.state.menuCategories[0]] = t),
     });
   }
   checkallel(flag) {
     const ch = this.state.checkall;
-    const chdel = this.state.checkedel;
+    const chdel = this.state.checkedelement;
     if (flag) {
-      this.state.data[this.state.categories.actual[0].cat].map((t) => {
-        if (chdel.set[this.state.categories.actual[0].cat].indexOf(t.id) === -1)
-          chdel.set[this.state.categories.actual[0].cat].push(t.id);
+      this.state.data[this.state.menuCategories.actual[0].cat].map((t) => {
+        if (
+          chdel.set[this.state.menuCategories.actual[0].cat].indexOf(t.id) ===
+          -1
+        )
+          chdel.set[this.state.menuCategories.actual[0].cat].push(t.id);
         return t;
       });
       ch[1] = 1;
       this.setState({ checkall: ch });
-      this.setState({ checkedel: chdel });
+      this.setState({ checkedelement: chdel });
     } else {
-      chdel.set[this.state.categories.actual[0].cat] = [];
-      this.setState({ checkedel: chdel });
+      chdel.set[this.state.menuCategories.actual[0].cat] = [];
+      this.setState({ checkedelement: chdel });
       ch[1] = 0;
       this.setState({ checkall: ch });
     }
@@ -330,7 +341,11 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (stop === 0) {
-      this.loadDatabase(this.state.settings, null, 1, "u", "dd d");
+ 
+      this.loadDatabase(this.state.allowedTab, null, 1, "u", "dd d");
+ 
+      this.loadDatabase(this.state.allowedTab, null, 1, "u", "dd d");
+ 
 
       this.setState({
         menuItem: this.state.urls.map((t, i) => (
@@ -342,12 +357,12 @@ class Home extends React.Component {
       });
     }
   }
-  changePPP(value) {
+  changepostPerPage(value) {
     this.setState({ postPerPage: value });
   }
 
-  setcategories(category) {
-    const cat = this.state.categories;
+  setmenuCategories(category) {
+    const cat = this.state.menuCategories;
     let obj = null;
     let el = 0;
 
@@ -376,46 +391,46 @@ class Home extends React.Component {
   }
   reset() {
     let d = this.state.data;
-    const cat = this.state.categories;
+    const cat = this.state.menuCategories;
     Object.keys(d).map((t) => {
       [t] = [];
       this.setState({ data: d });
       return t;
     });
     cat.new = [];
-    this.setState({ categories: cat });
+    this.setState({ menuCategories: cat });
   }
-  changedest(str, d, id) {
-    let dest = this.state.dest;
+  changedestination(str, d, id) {
+    let dest = this.state.destination;
     dest.name = str;
     dest.coordinates[0] = d;
     dest.coordinates[1] = id;
-    this.setState({ dest: dest });
+    this.setState({ destination: dest });
   }
-  changedispl(ii, t, str) {
-    const d = this.state.displ;
+  changedisplayAnimated(ii, t, str) {
+    const d = this.state.displayAnimated;
     const timer = setTimeout(() => {
       d[ii] = str;
-      this.setState({ displ: d });
-      this.changedispl(++ii, t, str);
+      this.setState({ displayAnimated: d });
+      this.changedisplayAnimated(++ii, t, str);
     }, t);
     if (ii > 6) clearTimeout(timer);
   }
   changedata(category, flag, flag1) {
-    const cat = this.state.categories;
+    const cat = this.state.menuCategories;
     const data = this.state.data;
 
-    this.changedispl(3, 0, false);
+    this.changedisplayAnimated(3, 0, false);
     if (flag1 === 1 || flag1 === 2) {
       cat.new[0] = category;
-      this.setState({ categories: cat });
-      //  this.setState({settings: -1})
+      this.setState({ menuCategories: cat });
+      //  this.setState({allowedTab: -1})
     }
 
     let y2 = 0;
     let stop = 0;
 
-    this.changedispl(3, 400, true);
+    this.changedisplayAnimated(3, 400, true);
 
     setTimeout(() => {
       if (
@@ -423,7 +438,7 @@ class Home extends React.Component {
           ? this.state.data[category].length
           : ""
       ) {
-        this.setcategories(category, cat.actual[0].cat);
+        this.setmenuCategories(category, cat.actual[0].cat);
         stop = 1;
       }
       if (flag === 2) {
@@ -453,7 +468,7 @@ class Home extends React.Component {
           cat.new = [...cat.new, { cat: category, l: y.length }];
 
           data[category] = [...data[category], y];
-          this.setcategories(category, cat.actual[0].cat);
+          this.setmenuCategories(category, cat.actual[0].cat);
         }
       } else if (
         flag === 0 &&
@@ -466,7 +481,7 @@ class Home extends React.Component {
         );
         cat.actual[0].l = data[category].length;
         cat.actual[0].cat = category;
-        this.setcategories(category, cat.actual[0].cat);
+        this.setmenuCategories(category, cat.actual[0].cat);
       }
     }, 1800);
   }
@@ -474,16 +489,16 @@ class Home extends React.Component {
   changeparent(name) {
     this.setState({ parent: name });
   }
-  setmove() {
-    this.setState({ settings: 0 });
+  setallowedTab() {
+    this.setState({ allowedTab: 0 });
   }
   changemove() {
-    this.setState({ move: 1 });
+    this.setState({ moveTab: 1 });
   }
 
   setcol(e, r) {
     this.setState({
-      columns: this.state.columns.map((t, i) => {
+      tableColumns: this.state.tableColumns.map((t, i) => {
         if (i === parseInt(r) && e) t.col.disp = false;
         else if (i === parseInt(r) && e === false) t.col.disp = true;
 
@@ -500,38 +515,41 @@ class Home extends React.Component {
       setTimeout(() => {
         this.setState({ config: 1 });
         this.setState({ menuel: true });
-        this.setState({ settings: 1 });
+        this.setState({ allowedTab: 1 });
         this.setState({ number1: 1 });
       }, 100);
     }
     if (i === 2) {
       this.setState({ layout: 1 });
 
-      this.setState({ settings: 0 });
+      this.setState({ allowedTab: 0 });
       this.setState({ config: 0 });
       this.setState({ menuel: true });
     }
 
-    this.changedispl(0, 0, false);
+    this.changedisplayAnimated(0, 0, false);
 
-    this.changedispl(0, 300, true);
+    this.changedisplayAnimated(0, 300, true);
   }
   render() {
     const { Provider } = ColorContext;
-    let treetablemin = (
+    let treetableItemsmin = (
       <div
         className={
-          this.state.treetable[0] === false && this.state.treetable[1] === false
-            ? "treetablecon1"
-            : "treetablecon"
+          this.state.treetableItems[0] === false &&
+          this.state.treetableItems[1] === false
+            ? "treetableItemscon1"
+            : "treetableItemscon"
         }
       >
-        {this.state.treetable[0] === false &&
-          this.state.treetable[1] === true && (
+        {this.state.treetableItems[0] === false &&
+          this.state.treetableItems[1] === true && (
             <div
-              className={this.state.displ[1] ? "leftcolumn2" : "treenone"}
+              className={
+                this.state.displayAnimated[1] ? "leftcolumn2" : "treenone"
+              }
               transition-style={
-                this.state.displ[1] && this.state.menuel
+                this.state.displayAnimated[1] && this.state.menuel
                   ? "in:circle:center"
                   : null
               }
@@ -543,32 +561,34 @@ class Home extends React.Component {
                     this.changedata(category, flag, flag1);
                   }}
                   pid={-1}
-                  displ1={this.state.displ}
+                  displayAnimated1={this.state.displayAnimated}
                   changeparent={(name) => this.setState({ parent: name })}
                   config={this.state.config}
                   familyTree={tree.children}
                   changeconfig={(i) => {
                     this.setState({ config: i });
                   }}
-                  settings={this.state.settings}
-                  ac={this.state.categories.set}
+                  settings={this.state.allowedTab}
+                  ac={this.state.menuCategories.set}
                   pc={this.state.data}
                   id={0}
                   depth={0}
                   p={0}
                   pdepth={-1}
-                  act={this.state.categories.actual[0].cat}
+                  act={this.state.menuCategories.actual[0].cat}
                   parent={this.state.parent}
                 />
               </div>
             </div>
           )}
 
-        {this.state.treetable[2] === true && (
+        {this.state.treetableItems[2] === true && (
           <div
-            className={this.state.displ[1] ? "leftcolumn" : "treenone"}
+            className={
+              this.state.displayAnimated[1] ? "leftcolumn" : "treenone"
+            }
             transition-style={
-              this.state.displ[1] && this.state.menuel
+              this.state.displayAnimated[1] && this.state.menuel
                 ? "in:circle:center"
                 : null
             }
@@ -579,30 +599,30 @@ class Home extends React.Component {
                   this.changedata(category, flag, flag1);
                 }}
                 pid={-1}
-                displ1={this.state.displ}
+                displayAnimated1={this.state.displayAnimated}
                 changeparent={(name) => this.setState({ parent: name })}
                 config={this.state.config}
                 familyTree={tree.children}
                 changeconfig={(i) => {
                   this.setState({ config: i });
                 }}
-                settings={this.state.settings}
-                ac={this.state.categories.set}
+                settings={this.state.allowedTab}
+                ac={this.state.menuCategories.set}
                 pc={this.state.data}
                 id={0}
                 depth={0}
                 p={0}
                 pdepth={-1}
-                act={this.state.categories.actual[0].cat}
+                act={this.state.menuCategories.actual[0].cat}
                 parent={this.state.parent}
               />
             </div>
           </div>
         )}
 
-        {((this.state.treetable[0] === true &&
-          this.state.treetable[1] === false) ||
-          this.state.treetable[2] === true) && (
+        {((this.state.treetableItems[0] === true &&
+          this.state.treetableItems[1] === false) ||
+          this.state.treetableItems[2] === true) && (
           <div className={"rightcolumn"}>
             <Table
               changeintree={(category, flag, flag1) => {
@@ -610,16 +630,18 @@ class Home extends React.Component {
               }}
               menuel={this.state.menuel}
               dp={this.state.dp}
-              desapear={this.state.displ}
+              displayAnimated={this.state.displayAnimated}
               i={this.state.i}
-              data={this.state.data[this.state.categories.actual[0].cat]}
+              data={this.state.data[this.state.menuCategories.actual[0].cat]}
               checkall={this.state.checkall}
               familyTree={tree.children}
-              checkedel={
-                this.state.checkedel.set[this.state.categories.actual[0].cat]
+              checkedelement={
+                this.state.checkedelement.set[
+                  this.state.menuCategories.actual[0].cat
+                ]
               }
               setchecked={this.setchecked.bind(this)}
-              columns={this.state.columns}
+              tableColumns={this.state.tableColumns}
               flagsettings={this.state.flagsettings}
               postPerPage={this.state.postPerPage}
               dff={this.state.dff}
@@ -627,12 +649,12 @@ class Home extends React.Component {
               loadDatabase={this.loadDatabase.bind(this)}
               id={this.state.i}
               flag={this.state.flag}
-              settingsid={this.state.settings}
-              acturl={this.state.categories.actual[0].cat}
+              settingsid={this.state.allowedTab}
+              acturl={this.state.menuCategories.actual[0].cat}
               number1={this.state.number1}
               m={this.state.m}
               changem={this.changem.bind(this)}
-              ChangePage={this.changePPP.bind(this)}
+              ChangePage={this.changepostPerPage.bind(this)}
             />
           </div>
         )}
@@ -644,71 +666,75 @@ class Home extends React.Component {
         <div>
           {" "}
           <AUrl
-            st={this.state.displ}
+            st={this.state.displayAnimated}
             changeconfig={(i) => {
               if (i === 1) {
-                this.setState({ treetable: [true, false, false] });
+                this.setState({ treetableItems: [true, false, false] });
                 setTimeout(() => {
                   this.setState({ config: 1 });
                   this.setState({ menuel: true });
-                  this.setState({ settings: 1 });
+                  this.setState({ allowedTab: 1 });
                   this.setState({ number1: 1 });
                 }, 100);
               }
               if (i === 2) {
-                this.setState({ treetable: [false, false, true] });
+                this.setState({ treetableItems: [false, false, true] });
                 setTimeout(() => {
-                  this.setState({ settings: 0 });
+                  this.setState({ allowedTab: 0 });
                   this.setState({ config: 0 });
                   this.setState({ menuel: true });
                 }, 100);
               }
 
-              this.changedispl(0, 10, false);
+              this.changedisplayAnimated(0, 10, false);
 
-              this.changedispl(0, 300, true);
+              this.changedisplayAnimated(0, 300, true);
             }}
             changecolor={(i) => this.setState({ color: i })}
           />
-          {this.state.settings !== 1 &&
-            this.state.settings !== 4 &&
-            this.state.settings !== 4 && (
+          {this.state.allowedTab !== 1 &&
+            this.state.allowedTab !== 4 &&
+            this.state.allowedTab !== 4 && (
               <div className="title">
                 <div className="buttonswithout"></div>
               </div>
             )}
-          {this.state.settings === 4 && (
+          {this.state.allowedTab === 4 && (
             <div
               className={
-                this.state.displ[4] ? "desappearsettings" : "LT select"
+                this.state.displayAnimated[4]
+                  ? "desappearsettings"
+                  : "LT select"
               }
-              transition-style={this.state.displ[4] ? "in:circle:center" : ""}
+              transition-style={
+                this.state.displayAnimated[4] ? "in:circle:center" : ""
+              }
             >
               <Selected
-                dest={this.state.dest}
-                act={this.state.categories.actual[0].cat}
+                destination={this.state.destination}
+                act={this.state.menuCategories.actual[0].cat}
                 movetodestination={this.movetodestination.bind(this)}
-                movestatus={this.state.move}
+                moveTab={this.state.moveTab}
                 changemove={() => this.changemove()}
-                lenel={
-                  this.state.checkedel.set[
-                    this.state.categories.actual[0].cat
+                checkedsetlenght={
+                  this.state.checkedelement.set[
+                    this.state.menuCategories.actual[0].cat
                   ] !== undefined
-                    ? this.state.checkedel.set[
-                        this.state.categories.actual[0].cat
+                    ? this.state.checkedelement.set[
+                        this.state.menuCategories.actual[0].cat
                       ].length
                     : 0
                 }
-                changesettings={this.setmove.bind(this)}
+                changeallowedTab={this.setallowedTab.bind(this)}
                 checkallel={this.checkallel.bind(this)}
                 length={
-                  this.state.data[this.state.categories.actual[0].cat] !==
+                  this.state.data[this.state.menuCategories.actual[0].cat] !==
                   undefined
-                    ? this.state.data[this.state.categories.actual[0].cat]
+                    ? this.state.data[this.state.menuCategories.actual[0].cat]
                         .length
                     : 0
                 }
-                move={this.state.move}
+                move={this.state.moveTab}
                 delete1={this.delete1.bind(this)}
                 pc={this.state.data}
                 checkall1={this.state.checkall}
@@ -717,15 +743,15 @@ class Home extends React.Component {
                 changeintree={(category, flag, flag1) => {
                   this.changedata(category, flag, flag1);
                 }}
-                changedest={this.changedest.bind(this)}
+                changedestination={this.changedestination.bind(this)}
                 changeparent={(name) => this.setState({ parent: name })}
                 config={this.state.config}
                 familyTree={tree.children}
                 changeconfig={(i) => {
                   this.setState({ config: i });
                 }}
-                settings={this.state.settings}
-                ac={this.state.categories}
+                settings={this.state.allowedTab}
+                ac={this.state.menuCategories}
                 id={0}
                 depth={0}
                 p={0}
@@ -736,79 +762,102 @@ class Home extends React.Component {
               <div className="title"></div>
             </div>
           )}
-          {this.state.settings === 3 && (
+          {this.state.allowedTab === 3 && (
             <div
               className={
-                this.state.displ[4] ? "desappearsettings" : "LT select"
+                this.state.displayAnimated[4]
+                  ? "desappearsettings"
+                  : "LT select"
               }
-              transition-style={this.state.displ[4] ? "in:circle:center" : ""}
+              transition-style={
+                this.state.displayAnimated[4] ? "in:circle:center" : ""
+              }
             >
               <Update
                 i={this.state.i}
                 loadDatabase={this.loadDatabase.bind(this)}
-                acturl={this.state.categories.actual[0].cat}
+ 
+                acturl={this.state.menuCategories.actual[0].cat}
+ 
+                acturl={this.state.menuCategories.actual[0].cat}
+ 
                 strcol={this.state.strcol}
               />
               <div className="title">put new value</div>
             </div>
           )}
-          {this.state.settings === 1 &&
-          this.state.treetable[0] === true &&
-          this.state.treetable[1] === false ? (
+          {this.state.allowedTab === 1 &&
+          this.state.treetableItems[0] === true &&
+          this.state.treetableItems[1] === false ? (
             <div
               className={
-                this.state.displ[4] ? "desappearsettings" : "LT select"
+                this.state.displayAnimated[4]
+                  ? "desappearsettings"
+                  : "LT select"
               }
-              transition-style={this.state.displ[4] ? "in:circle:center" : ""}
+              transition-style={
+                this.state.displayAnimated[4] ? "in:circle:center" : ""
+              }
             >
               <Treetablebutton
                 title={"tree setup"}
-                treetable={this.state.treetable}
+                treetableItems={this.state.treetableItems}
                 on={
-                  () => 1 // this.setState({ treetable: [false, true, false] } )
+                  () => 1 // this.setState({ treetableItems: [false, true, false] } )
                 }
               />
 
               <Settings
                 data={this.state.data}
-                columns={this.state.columns}
-                changePPP={this.changePPP.bind(this)}
-                checkedCol={this.setcol.bind(this)}
+                tableColumns={this.state.tableColumns}
+                changepostPerPage={this.changepostPerPage.bind(this)}
+                checkColumn={this.setcol.bind(this)}
                 length={
-                  this.state.data[this.state.categories.actual[0].cat].length
+                  this.state.data[this.state.menuCategories.actual[0].cat]
+                    .length
                 }
                 postPerPage={this.state.postPerPage}
                 number2={(o) => this.setState({ number1: o })}
-                changesetts={() => this.setState({ settings: 2 })}
+                changesetts={() => this.setState({ allowedTab: 2 })}
               />
             </div>
-          ) : this.state.settings === 1 &&
-            this.state.treetable[0] === false &&
-            this.state.treetable[1] === true ? (
+          ) : this.state.allowedTab === 1 &&
+            this.state.treetableItems[0] === false &&
+            this.state.treetableItems[1] === true ? (
             <div
               className={
-                this.state.displ[4] ? "desappearsettings" : "LT select"
+                this.state.displayAnimated[4]
+                  ? "desappearsettings"
+                  : "LT select"
               }
-              transition-style={this.state.displ[4] ? "in:circle:center" : ""}
+              transition-style={
+                this.state.displayAnimated[4] ? "in:circle:center" : ""
+              }
             >
               <Treetablebutton
                 title={"table setup"}
-                treetable={this.state.treetable}
-                on={() => this.setState({ treetable: [true, false, false] })}
+                treetableItems={this.state.treetableItems}
+                on={() =>
+                  this.setState({ treetableItems: [true, false, false] })
+                }
               />
               <div className="title">drag and drop elements on new place</div>
             </div>
           ) : (
             ""
           )}
-          {this.state.settings === 2 && (
+          {this.state.allowedTab === 2 && (
             <div
-              className={this.state.displ[4] ? "desappearsettings" : "ss"}
-              transition-style={this.state.displ[4] ? "in:circle:center" : ""}
+              className={
+                this.state.displayAnimated[4] ? "desappearsettings" : "ss"
+              }
+              transition-style={
+                this.state.displayAnimated[4] ? "in:circle:center" : ""
+              }
             >
               <div className="title">
                 <Select
-                  acturl={this.state.categories.actual[0].cat}
+                  acturl={this.state.menuCategories.actual[0].cat}
                   changeconfig={(i) => {
                     this.setState({ config: i });
                   }}
@@ -821,14 +870,14 @@ class Home extends React.Component {
                   goback={() => {
                     this.setState({ config: 1 });
                     this.setState({ menuel: true });
-                    this.setState({ settings: 1 });
+                    this.setState({ allowedTab: 1 });
                     this.setState({ number1: 1 });
                   }}
                 />
               </div>
             </div>
           )}
-          {this.state.move !== 1 && treetablemin}
+          {this.state.moveTab !== 1 && treetableItemsmin}
         </div>
       </Provider>
     );

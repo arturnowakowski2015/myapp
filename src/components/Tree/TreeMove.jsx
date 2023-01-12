@@ -45,8 +45,11 @@ const TreeMove = (props) => {
       makeids(tree.children, ii);
     }
     setDestination({
-      name: props.dest.name,
-      coordinates: [props.dest.coordinates[0], props.dest.coordinates[1]],
+      name: props.destination.name,
+      coordinates: [
+        props.destination.coordinates[0],
+        props.destination.coordinates[1],
+      ],
     });
   };
   tempset.current = set1;
@@ -61,7 +64,7 @@ const TreeMove = (props) => {
 
   useEffect(() => {
     tempset.current();
-  }, [props.changedest]);
+  }, [props.changedestination]);
   useEffect(() => {
     tempclear.current();
   }, []);
@@ -82,7 +85,7 @@ const TreeMove = (props) => {
                   <p
                     id="text"
                     onClick={() => {
-                      props.changedest(t.name, t.depth, t.id);
+                      props.changedestination(t.name, t.depth, t.id);
                     }}
                     className="p fw-bold"
                     style={{ backgroundColor: "blue" }}
@@ -94,7 +97,7 @@ const TreeMove = (props) => {
                     id="text"
                     onClick={(e) => {
                       e.stopPropagation();
-                      props.changedest(t.name, t.depth, t.id);
+                      props.changedestination(t.name, t.depth, t.id);
                     }}
                     className={"p fw-bold "}
                     style={{ backgroundColor: t.bgcolor }}
@@ -106,7 +109,7 @@ const TreeMove = (props) => {
                     id="text"
                     onClick={(e) => {
                       e.stopPropagation();
-                      props.changedest(t.name, t.depth, t.id);
+                      props.changedestination(t.name, t.depth, t.id);
                     }}
                     className={"p fw-bold "}
                     style={{ backgroundColor: "green" }}
@@ -122,8 +125,8 @@ const TreeMove = (props) => {
                 changeintree={props.changeintree}
                 config={props.config}
                 parent={props.parent}
-                changedest={props.changedest}
-                dest={props.dest}
+                changedestination={props.changedestination}
+                destination={props.destination}
                 changeconfig={props.changeconfig}
                 changeparent={props.changeparent}
                 familyTree={t.children}

@@ -1,120 +1,113 @@
 @import "./animations/Animation.scss";
-@mixin basictable(){
-  border : black solid 1px; 
- 
- 
- table{
-     margin:0px 10px 10px 10px;
-   }
- .tabs{
-   padding-left:10px;
-   display: flex;
-   flex-direction:row;
-   @for $k from 0 through 5 {
-     .tab-#{$k} {
-       @include basictabs();
-       background-color:white;
-       transition: background-color 1s;
-     }
-     .tab-#{$k}-1{
-       @include basictabs();
-        background-color: white;
-        transition: background-color 1s
-     }
-     .tab-#{$k}-0 {
-       @include basictabs();
-       background-color: rgb(0, 255, 229);
-       background-color: red;
-       transition: background-color 1s;
-     }
+@mixin basictable() {
+  border: black solid 1px;
 
-   }
+  table {
+    margin: 0px 10px 10px 10px;
+  }
+  .tabs {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    @for $k from 0 through 5 {
+      .tab-#{$k} {
+        @include basictabs();
+        background-color: white;
+        transition: background-color 1s;
+      }
+      .tab-#{$k}-1 {
+        @include basictabs();
+        background-color: white;
+        transition: background-color 1s;
+      }
+      .tab-#{$k}-0 {
+        @include basictabs();
+        background-color: rgb(0, 255, 229);
+        background-color: red;
+        transition: background-color 1s;
+      }
+    }
+  }
 }
-}
-@mixin basictabs() { 
-  border : black solid 1px;  
+@mixin basictabs() {
+  border: black solid 1px;
   padding: 2px;
   border-radius: 10%;
   text-decoration: underline;
-  cursor:pointer;
+  cursor: pointer;
 }
-.desapeartable{
+.displayAnimatedtable {
   opacity: 0;
-   
 }
-.pagination{
-  opacity:1;
+.pagination {
+  opacity: 1;
   transition: opacity 1s;
 }
-.paginationdesapear{
-  opacity:0;
- // transition: opacity 1s;
+.paginationdisplayAnimated {
+  opacity: 0;
+  // transition: opacity 1s;
 }
-.pd{
-  opacity:0;
+.pd {
+  opacity: 0;
 }
-.table1{
+.table1 {
   opacity: 1;
   @include trans();
   @include basictable();
 }
-  .tablecontainer, .pag{
+.tablecontainer,
+.pag {
+  display: flex;
+  flex-direction: row;
+}
 
-    display: flex;
-    flex-direction:row;
- }
-  
- .th{
-    border: black solid 1px
- }
- .tr {   
-@include trans();
+.th {
+  border: black solid 1px;
+}
+.tr {
+  @include trans();
   height: 20px;
-    border-right: black solid 1px;
-    text-align: center;
-    background-color:yellow;
-    transition: 0.5s;
- }
- .tr:hover{
-   background-color:blue;
- }
- .div1{ 
-    width:150px;
-        height: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        white-space: nowrap;
-        padding-left:15px;
-        border-left: black solid 1px
- }
- .red{
-   background-color:red;
-   transform: scaleY(1.2) scaleX(1.2);
-   transition: transform 1s;
- }
- 
+  border-right: black solid 1px;
+  text-align: center;
+  background-color: yellow;
+  transition: 0.5s;
+}
+.tr:hover {
+  background-color: blue;
+}
+.div1 {
+  width: 150px;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
+  padding-left: 15px;
+  border-left: black solid 1px;
+}
+.red {
+  background-color: red;
+  transform: scaleY(1.2) scaleX(1.2);
+  transition: transform 1s;
+}
 
- 
- .s {  
-  text-align:center;
+.s {
+  text-align: center;
   background-color: rgb(208, 208, 236);
   width: 20px;
-  height:20px;
-  transition : transform 0.8s 
+  height: 20px;
+  transition: transform 0.8s;
 }
-.s1{
-  text-align:center;
-  height:20px;  
-  background-color:rgb(208, 208, 236);
-   width: 20px;
+.s1 {
+  text-align: center;
+  height: 20px;
+  background-color: rgb(208, 208, 236);
+  width: 20px;
   transform: rotate(360deg);
-
 }
-.searching{
+.searching {
   opacity: 0;
 }
-.searchingvisible{
- 
-  opacity:1;
+.searchingvisible {
+  opacity: 1;
 }
