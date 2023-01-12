@@ -8,7 +8,7 @@ const Deletebutton = (props) => {
   const navigate = useNavigate();
   const eff = useRef();
   const effect = () => {
-    if (props.lenel === 0) {
+    if (props.checkedsetlenght === 0) {
       if (props.length > 0) {
         setTimeout(() => props.delete1(props.act, 1), 400);
         setTimeout(
@@ -47,7 +47,7 @@ const Deletebutton = (props) => {
   eff.current = effect;
   useEffect(() => {
     eff.current();
-  }, [props.lenel]);
+  }, [props.checkedsetlenght]);
 
   const del = () => {
     props.delete1(props.act, 0);
@@ -60,7 +60,7 @@ const Deletebutton = (props) => {
         del();
       }}
     >
-      delete selected:{props.lenel}
+      delete selected:{props.checkedsetlenght}
     </div>
   );
 };

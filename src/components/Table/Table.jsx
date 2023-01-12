@@ -238,11 +238,12 @@ const Table = (props) => {
   tempsli2.current = setsli2;
   useEffect(() => {
     tempsli2.current();
-  }, [stop, number, props.data, props.postPerPage, props.columns]);
+  }, [stop, number, props.data, props.postPerPage, props.tableColumns]);
 
   const buildHeader = (header) => {
     let h = header.map((k, ii) => {
-      return props.columns[ii] && props.columns[ii].col.disp === true ? (
+      return props.tableColumns[ii] &&
+        props.tableColumns[ii].col.disp === true ? (
         <th
           key={ii}
           className="tr"
@@ -275,8 +276,8 @@ const Table = (props) => {
 
   let url = "";
 
-  const dv = (url, str, upstr, i) => {
-    props.loadDatabase(3, i, props.i, "u", str, upstr);
+  const dv = (url, str, updatedStr, i) => {
+    props.loadDatabase(3, i, props.i, "u", str, updatedStr);
     navigate(url, {
       state: {
         id: props.id,
@@ -347,8 +348,8 @@ const Table = (props) => {
   const buildRow = (row, i) => {
     let tr = Object.keys(row).map((k, j) => {
       return typeof row[k] !== "object" &&
-        props.columns[j] &&
-        props.columns[j].col.disp === true ? (
+        props.tableColumns[j] &&
+        props.tableColumns[j].col.disp === true ? (
         <td
           onClick={() => {
             setCountdown(oldindex);
@@ -372,8 +373,8 @@ const Table = (props) => {
           <div className="div1">{row[k]}</div>
         </td>
       ) : typeof row[k] !== "object" &&
-        props.columns[j] !== undefined &&
-        props.columns[j].col.disp === true &&
+        props.tableColumns[j] !== undefined &&
+        props.tableColumns[j].col.disp === true &&
         j === 2 ? (
         <td key={j}>
           <div className="div1">{row[k]}</div>
@@ -396,8 +397,8 @@ const Table = (props) => {
               type="checkbox"
               id={row.id}
               checked={
-                props.checkedel !== undefined &&
-                props.checkedel.filter((t) => {
+                props.checkedelement !== undefined &&
+                props.checkedelement.filter((t) => {
                   return t === row.id;
                 }).length === 1 &&
                 true
@@ -732,7 +733,7 @@ const Table = (props) => {
   };
   const z = (
     <div className="tablecontainer">
-      {props.checkall[1] === 0 && props.desapear[2] && (
+      {props.checkall[1] === 0 && props.displayAnimated[2] && (
         <div className={countdown === tovalue ? "s" : "s1"}>{countdown}</div>
       )}
     </div>
@@ -741,13 +742,17 @@ const Table = (props) => {
   const el = (
     <div className="pagcont">
       <div
-        className={props.desapear[3] ? "table1" : "desapeartable"}
-        transition-style={props.desapear[3] ? "in:circle:center" : ""}
+        className={props.displayAnimated[3] ? "table1" : "displayAnimatedtable"}
+        transition-style={props.displayAnimated[3] ? "in:circle:center" : ""}
       >
         {window.location.href.indexOf("searchtext") !== -1 ? (
           <div
-            className={props.desapear[4] ? "searchingvisible" : "searching"}
-            transition-style={props.desapear[4] ? "in:circle:center" : ""}
+            className={
+              props.displayAnimated[4] ? "searchingvisible" : "searching"
+            }
+            transition-style={
+              props.displayAnimated[4] ? "in:circle:center" : ""
+            }
           >
             <Searching
               i={window.location.href.indexOf("searchtext")}
@@ -773,7 +778,7 @@ const Table = (props) => {
         ) : (
           ""
         )}
-        <div className={props.desapear[2] ? "tabs" : ""}>
+        <div className={props.displayAnimated[2] ? "tabs" : ""}>
           {window.location.href.indexOf("searchtext") !== -1 &&
             to[indextab] !== undefined &&
             to[indextab].eltabs.map((t, j) => {
@@ -797,8 +802,8 @@ const Table = (props) => {
           sliced.length !== 0 &&
           data.length > 0)) && (
         <div
-          className={props.desapear[2] ? "pagination" : "pd"}
-          transition-style={props.desapear[2] ? "in:circle:center" : ""}
+          className={props.displayAnimated[2] ? "pagination" : "pd"}
+          transition-style={props.displayAnimated[2] ? "in:circle:center" : ""}
         >
           {z}
 
@@ -831,16 +836,18 @@ const Table = (props) => {
 
       {
         <div
-          className={props.desapear[3] ? "table1" : "desapeartable"}
-          transition-style={props.desapear[3] ? "in:circle:center" : ""}
+          className={
+            props.displayAnimated[3] ? "table1" : "displayAnimatedtable"
+          }
+          transition-style={props.displayAnimated[3] ? "in:circle:center" : ""}
         >
-          <div className={props.desapear[2] ? "tabs" : ""}></div>
+          <div className={props.displayAnimated[2] ? "tabs" : ""}></div>
           <table>
             <thead className="th">
               {data && data[0]
                 ? buildHeader(
                     Object.keys(data && data[0]),
-                    data && data.columns
+                    data && data.tableColumns
                   )
                 : null}
             </thead>
