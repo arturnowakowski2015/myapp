@@ -275,9 +275,10 @@ const Table = (props) => {
   };
 
   let url = "";
-
+ 
   const dv = (url, str, updatedStr, i) => {
     props.loadDatabase(3, i, props.i, "u", str, updatedStr);
+ 
     navigate(url, {
       state: {
         id: props.id,
