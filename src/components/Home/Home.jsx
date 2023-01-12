@@ -12,9 +12,7 @@ import Select from "../Different/Select";
 import AUrl from "../Navbar/AUrl";
 import TreeNode from "../Tree/TreeNode";
 import Update from "../Different/Update";
-
 import * as myconst from "../../Consts/consts";
-
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
@@ -39,9 +37,6 @@ class Home extends React.Component {
         postponed: [],
       },
 
-      tableColumns: [],
-
-      menuItem: [],
       flagsettings: 0,
       postPerPage: 10,
       flag: 0,
@@ -338,8 +333,6 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (stop === 0) {
-      this.loadDatabase(this.state.allowedTab, null, 1, "u", "dd d");
-
       this.loadDatabase(this.state.allowedTab, null, 1, "u", "dd d");
 
       this.setState({
@@ -688,7 +681,7 @@ class Home extends React.Component {
             changecolor={(i) => this.setState({ color: i })}
           />
           {this.state.allowedTab !== myconst.EMPTYTAB &&
-            this.state.allowedTab !== myconst.SELECTEDRECORDS && (
+            this.state.allowedTab !== 4 && (
               <div className="title">
                 <div className="buttonswithout"></div>
               </div>
