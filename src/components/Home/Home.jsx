@@ -222,52 +222,68 @@ class Home extends React.Component {
     // this.setState({checkall: false})
   }
 
-
-  movetodestination(ii) {
-    const cat = this.state.categories;
-    const timer = setTimeout(() => {
-
-      this.state.checkedel.set[cat.actual[0].cat].map((t, i) => {
-
-
-        this.state.data[this.state.dest.name].unshift(this.state.data[cat.actual[0].cat][
-          this.state.data[cat.actual[0].cat].findIndex(function (item) {
-            return item.id === t
-          })])
-
-
-        this.state.data[cat.actual[0].cat].splice(
-          this.state.data[cat.actual[0].cat].findIndex(function (item) {
-            return item.id === t
-          }), 1)
-        this.state.checkedel.set[cat.actual[0].cat].splice(i, 1)
-        return t;
-      })
-
-
-
-      this.movetodestination(--ii)
-      if (this.state.checkedel.set[cat.actual[0].cat].length <= 0) {
-
-        cat.actual[0].cat = this.state.dest.name
-        this.setState({ categories: cat })
-       ii=-2
-        this.movetodestination(--ii)
-      }
-    }, ii * 10)
-    if (ii <= -1) { 
-      this.changedata(this.state.dest.name, 0, 1);
-      clearTimeout(timer)
+ 
+  async   moverecords  (ii)   {
+    return new Promise((resolve, reject) => {
+      setTimeout(()=>{
+        const cat = this.state.categories;
+        const timer = setTimeout(() => {
+      
+        
+      
+      
+            this.state.data[this.state.dest.name].unshift(this.state.data[cat.actual[0].cat][
+              this.state.data[cat.actual[0].cat].findIndex(function (item) {
+                return item.id === ii
+              })])
+      
+      
+            this.state.data[cat.actual[0].cat].splice(
+              this.state.data[cat.actual[0].cat].findIndex(function (item) {
+                return item.id === ii
+              }), 1)
+            this.state.checkedel.set[cat.actual[0].cat].splice(ii, 1)
+  
    
+      console.log(this.state.data[cat.actual[0].cat].length)
+      
+      
+          this.moverecords(--ii)
+          if (this.state.data[cat.actual[0].cat].length <= 0) {
+      
+            cat.actual[0].cat = this.state.dest.name
+            this.setState({ categories: cat })
+           ii=-2
+            this.moverecords(--ii)
+          }
+        }, ii)
+        if (ii <= -1) { 
+      
+          clearTimeout(timer)
+       
+      
+      
+        }
+        this.setState({ move: 0 })
+        this.setState({ checkedel: this.state.checkedel })
 
-
-    }
-    this.setState({ move: 0 })
-    this.setState({ checkedel: this.state.checkedel })
+       this.setState({settings: -1})
+ 
+      }, 100)
+    });
+}
+async  loadPets  (ii)   {
+  return new Promise((resolve, reject) => { this.moverecords(ii);
+      setTimeout(() => { resolve() }, this.state.data[this.state.categories.actual[0].cat].length*100)
+  });
+}
+async   movetodestination(ii) {     
+   // await this.moverecords(ii)
+    await this.loadPets(ii);
+    this.changedata(this.state.dest.name, 0, 1);
     this.setState({ data: this.state.data })
-   this.setState({settings: -1})
-
-  }
+}
+ 
 
   delete1(str, flag) {
     const cat = this.state.categories;

@@ -31,21 +31,23 @@ const AUrl = (props) => {
 
        async   function loadBooks () {
         return new Promise((resolve, reject) => {
-            setTimeout(() => { console.log(1); }, 1000)
+            setTimeout(() => { console.log(1); resolve() }, 2000)
         });
     }
     
     async   function loadPets  ()   {
         return new Promise((resolve, reject) => {
-            setTimeout(() => { console.log(2); }, 1000)
+            setTimeout(() => { console.log(2);resolve() }, 2200)
         });
     }
-    
-    async   function render() { 
-         await loadBooks();
-         await loadPets();
-     
+
+    async   function render() {     
+        await loadPets()
+        console.log(99)
+          await loadBooks()
+          console.log(890)
     }
+
 
 
 

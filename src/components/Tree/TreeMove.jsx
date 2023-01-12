@@ -1,4 +1,4 @@
-import React, {useState, useRef}     from "react";
+import  {useState, useRef}     from "react";
 import { useEffect } from "react";
 import {tree} from "../../data/dummy"
 import "../../scss/TreeMove.scss";
@@ -70,7 +70,7 @@ tempclear.current=clear;
       {t.name !== props.pc[0] && <div   style={{ opacity: t.opacity, cursor: t.cursor }}
       > 
     
-       {destination.coordinates[0]===t.depth && destination.coordinates[1]===i? <p id="text" onClick={(e) => {
+       {destination.coordinates[0]===t.depth && destination.coordinates[1]===i? <p id="text" onClick={() => {
  
         props.changedest(t.name,t.depth, t.id)
  
