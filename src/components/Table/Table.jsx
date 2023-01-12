@@ -276,7 +276,7 @@ const Table = (props) => {
   let url = "";
 
   const dv = (url, str, upstr, i) => {
-    props.furl(3, i, props.i, "u", str, upstr);
+    props.loadDatabase(3, i, props.i, "u", str, upstr);
     navigate(url, {
       state: {
         id: props.id,
