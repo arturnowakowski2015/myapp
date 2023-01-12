@@ -20,7 +20,6 @@ const AUrl = (props) => {
 
   return (
     <div className={"topnav-1"}>
-      aaaaaa
       <div className={"topnav-" + item.indexOf(false)}>
         /{location.pathname.split("/")[2]}/
       </div>
@@ -76,20 +75,20 @@ const AUrl = (props) => {
         <span>color themes</span>
         <div class="dropdown-content">
           <div onClick={() => props.changecolor(1)}>
-            <div className="c1"></div>Hello World!
+            <div className="c1"></div>color 1
           </div>
           <div onClick={() => props.changecolor(2)}>
-            <div className="c2"></div>Hello World!
+            <div className="c2"></div>color 2
           </div>
           <div onClick={() => props.changecolor(3)}>
-            <div className="c3"></div>Hello World!
+            <div className="c3"></div>color 3
           </div>
           <div
             onClick={() => {
               props.changecolor(4);
             }}
           >
-            <div className="c4"></div>Hello World!
+            <div className="c4"></div>color 4
           </div>
         </div>
       </div>
