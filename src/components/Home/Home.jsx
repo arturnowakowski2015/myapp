@@ -36,10 +36,9 @@ class Home extends React.Component {
         labels: [],
         postponed: [],
       },
- 
+
       tableColumns: [],
- 
-  
+
       menuItem: [],
       flagsettings: 0,
       postPerPage: 10,
@@ -96,11 +95,7 @@ class Home extends React.Component {
     this.setRec = this.setRec.bind(this);
   }
 
- 
   loadDatabase(allowedTabid, idrec, bazaid, tryb, updatedStr, str) {
- 
-  loadDatabase(allowedTabid, idrec, bazaid, tryb, upstr, str) {
- 
     this.setState({ strcol: str });
     this.setState({ i: bazaid });
 
@@ -341,11 +336,9 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (stop === 0) {
- 
       this.loadDatabase(this.state.allowedTab, null, 1, "u", "dd d");
- 
+
       this.loadDatabase(this.state.allowedTab, null, 1, "u", "dd d");
- 
 
       this.setState({
         menuItem: this.state.urls.map((t, i) => (
@@ -776,11 +769,7 @@ class Home extends React.Component {
               <Update
                 i={this.state.i}
                 loadDatabase={this.loadDatabase.bind(this)}
- 
                 acturl={this.state.menuCategories.actual[0].cat}
- 
-                acturl={this.state.menuCategories.actual[0].cat}
- 
                 strcol={this.state.strcol}
               />
               <div className="title">put new value</div>
