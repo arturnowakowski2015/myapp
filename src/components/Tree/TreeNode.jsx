@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { tree } from "../../data/dummy";
+import { ColorContext } from "../../ctx/ColorContext";
 
 import "../../scss/TreeNode.scss";
 let c = 0;
@@ -83,6 +84,7 @@ const makeidlev2 = (ii, nodes, tt) => {
 let yy = -1;
 let rrr = 0;
 const TreeNode = (props) => {
+  const { Consumer } = ColorContext;
   const tempstart = useRef();
   const icons = {
     received: <i className={rrr ? "s fa fa-bolt" : "fa fa-bolt"}></i>,
