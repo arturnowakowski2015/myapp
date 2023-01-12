@@ -37,7 +37,7 @@ class Home extends React.Component {
         postponed: [],
       },
       columns: [],
-      strd: [],
+      menuItem: [],
       flagsettings: 0,
       postPerPage: 10,
       flag: 0,
@@ -95,7 +95,7 @@ class Home extends React.Component {
     this.setRec = this.setRec.bind(this);
   }
 
-  furl(settingsid, idrec, bazaid, tryb, upstr, str) {
+  loadDatabase(settingsid, idrec, bazaid, tryb, upstr, str) {
     this.setState({ strcol: str });
     this.setState({ i: bazaid });
 
@@ -149,10 +149,10 @@ class Home extends React.Component {
   changem(i) {
     this.setState({ m: i });
   }
-  changeRecits(e) {
+  changeDatabase(e) {
     this.setState({ i: e });
 
-    this.furl(0, 0, e, "u", "", "");
+    this.loadDatabase(0, 0, e, "u", "", "");
   }
   m() {
     this.setState({
@@ -330,10 +330,10 @@ class Home extends React.Component {
 
   componentDidMount() {
     if (stop === 0) {
-      this.furl(this.state.settings, null, 1, "u", "dd d");
+      this.loadDatabase(this.state.settings, null, 1, "u", "dd d");
 
       this.setState({
-        strd: this.state.urls.map((t, i) => (
+        menuItem: this.state.urls.map((t, i) => (
           <option key={i} value={i}>
             {t.slice(t.lastIndexOf("/"))}
           </option>
@@ -624,7 +624,7 @@ class Home extends React.Component {
               postPerPage={this.state.postPerPage}
               dff={this.state.dff}
               str={this.props.params.str}
-              furl={this.furl.bind(this)}
+              loadDatabase={this.loadDatabase.bind(this)}
               id={this.state.i}
               flag={this.state.flag}
               settingsid={this.state.settings}
@@ -745,7 +745,7 @@ class Home extends React.Component {
             >
               <Update
                 i={this.state.i}
-                furl={this.furl.bind(this)}
+                loadDatabase={this.loadDatabase.bind(this)}
                 acturl={this.state.categories.actual[0].cat}
                 strcol={this.state.strcol}
               />
@@ -777,7 +777,6 @@ class Home extends React.Component {
                 length={
                   this.state.data[this.state.categories.actual[0].cat].length
                 }
-                flagsettings={this.state.flagsettings}
                 postPerPage={this.state.postPerPage}
                 number2={(o) => this.setState({ number1: o })}
                 changesetts={() => this.setState({ settings: 2 })}
@@ -816,8 +815,8 @@ class Home extends React.Component {
                   changecategory={(category, flag, flag1) => {
                     this.changedata(category, flag, flag1);
                   }}
-                  changeRecits={this.changeRecits.bind(this)}
-                  strd={this.state.strd}
+                  changeDatabase={this.changeDatabase.bind(this)}
+                  menuItem={this.state.menuItem}
                   reset={this.reset.bind(this)}
                   goback={() => {
                     this.setState({ config: 1 });
