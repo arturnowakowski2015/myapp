@@ -13,6 +13,8 @@ import AUrl from "../Navbar/AUrl";
 import TreeNode from "../Tree/TreeNode";
 import Update from "../Different/Update";
 
+import * as myconst from "../../Consts/consts";
+
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
@@ -685,14 +687,13 @@ class Home extends React.Component {
             }}
             changecolor={(i) => this.setState({ color: i })}
           />
-          {this.state.allowedTab !== 1 &&
-            this.state.allowedTab !== 4 &&
-            this.state.allowedTab !== 4 && (
+          {this.state.allowedTab !== myconst.EMPTYTAB &&
+            this.state.allowedTab !== myconst.SELECTEDRECORDS && (
               <div className="title">
                 <div className="buttonswithout"></div>
               </div>
             )}
-          {this.state.allowedTab === 4 && (
+          {this.state.allowedTab === myconst.SELECTEDRECORDS && (
             <div
               className={
                 this.state.displayAnimated[4]
@@ -755,7 +756,7 @@ class Home extends React.Component {
               <div className="title"></div>
             </div>
           )}
-          {this.state.allowedTab === 3 && (
+          {this.state.allowedTab === myconst.UPDATE && (
             <div
               className={
                 this.state.displayAnimated[4]
@@ -775,7 +776,7 @@ class Home extends React.Component {
               <div className="title">put new value</div>
             </div>
           )}
-          {this.state.allowedTab === 1 &&
+          {this.state.allowedTab === myconst.EMPTYTAB &&
           this.state.treetableItems[0] === true &&
           this.state.treetableItems[1] === false ? (
             <div
@@ -810,7 +811,7 @@ class Home extends React.Component {
                 changesetts={() => this.setState({ allowedTab: 2 })}
               />
             </div>
-          ) : this.state.allowedTab === 1 &&
+          ) : this.state.allowedTab === myconst.EMPTYTAB &&
             this.state.treetableItems[0] === false &&
             this.state.treetableItems[1] === true ? (
             <div
@@ -835,7 +836,7 @@ class Home extends React.Component {
           ) : (
             ""
           )}
-          {this.state.allowedTab === 2 && (
+          {this.state.allowedTab === myconst.CHANGEDATABASE && (
             <div
               className={
                 this.state.displayAnimated[4] ? "desappearsettings" : "ss"
