@@ -32,18 +32,30 @@
         ]
       }
     },
-    "plugins": ["react"],
+    "plugins": [
+      "react"
+    ],
     "extends": [
       "eslint:recommended"
     ],
     "rules": {
       "no-console": "off",
-      "react/jsx-uses-react": "error",   
-      "react/jsx-uses-vars": "error" 
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error"
     },
     "env": {
       "browser": true
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
@@ -59,7 +71,10 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "eslint": "^8.31.0",
-    "prettier": "^2.8.2"
+    "prettier": "^2.8.2",
+    "prop-types": "^15.8.1",
+    "webpack": "^5.75.0"
   }
 }
