@@ -51,7 +51,7 @@ class Home extends React.Component {
         "https://jsonplaceholder.typicode.com/todos",
       ],
       i: 0,
-      number1: 0,
+      pageNumber: 0,
       confirmdelete: false,
       displayAnimated: [true, true, true, true, true, true],
       dp: true,
@@ -504,7 +504,7 @@ class Home extends React.Component {
         this.setState({ configTree: 1 });
         this.setState({ menuel: true });
         this.setState({ allowedTab: 1 });
-        this.setState({ number1: 1 });
+        this.setState({ pageNumber: 1 });
       }, 100);
     }
     if (i === 2) {
@@ -639,7 +639,7 @@ class Home extends React.Component {
               flag={this.state.flag}
               settingsid={this.state.allowedTab}
               acturl={this.state.menuCategories.actual[0].cat}
-              number1={this.state.number1}
+              pageNumber={this.state.pageNumber}
               m={this.state.m}
               changem={this.changem.bind(this)}
               ChangePage={this.changepostPerPage.bind(this)}
@@ -662,7 +662,7 @@ class Home extends React.Component {
                   this.setState({ configTree: 1 });
                   this.setState({ menuel: true });
                   this.setState({ allowedTab: 1 });
-                  this.setState({ number1: 1 });
+                  this.setState({ pageNumber: 1 });
                 }, 100);
               }
               if (i === 2) {
@@ -800,7 +800,7 @@ class Home extends React.Component {
                     .length
                 }
                 postPerPage={this.state.postPerPage}
-                number2={(o) => this.setState({ number1: o })}
+                number2={(o) => this.setState({ pageNumber: o })}
                 changesetts={() => this.setState({ allowedTab: 2 })}
               />
             </div>
@@ -854,7 +854,7 @@ class Home extends React.Component {
                     this.setState({ configTree: 1 });
                     this.setState({ menuel: true });
                     this.setState({ allowedTab: 1 });
-                    this.setState({ number1: 1 });
+                    this.setState({ pageNumber: 1 });
                   }}
                 />
               </div>

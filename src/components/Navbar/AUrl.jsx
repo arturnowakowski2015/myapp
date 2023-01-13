@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../../scss/AUrl.scss";
 import "../../scss/animations/Animation.scss";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
 
 const AUrl = (props) => {
   const location = useLocation();
   const [item, setItem] = useState([true, true, true]);
+  const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
   const changeconfigTree = (i, ii) => {
     item[0] = true;
@@ -18,8 +23,42 @@ const AUrl = (props) => {
     props.changeconfigTree(i);
   };
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+        console.log("uid", uid);
+      } else {
+        // User is signed out
+        // ...
+        console.log("user is logged out");
+      }
+    });
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        navigate("/");
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate("/Login");
+  };
+
   return (
     <div className={"topnav-1"}>
+      <div>user: {user.email}</div>
+      <span></span>
+      <div onClick={() => handleLogout()}>sign up</div>
+
       <div className={"topnav-" + item.indexOf(false)}>
         /{location.pathname.split("/")[2]}/
       </div>
