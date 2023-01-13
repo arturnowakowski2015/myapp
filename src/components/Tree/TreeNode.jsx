@@ -96,7 +96,7 @@ const TreeNode = (props) => {
   };
 
   const start = () => {
-    if (props.config === 0) {
+    if (props.configTree === 0) {
       makeidlev1(props.act, tree.children, 0, 0);
       for (let ii = 0; ii < 20; ii++) {
         c = 0;
@@ -126,7 +126,7 @@ const TreeNode = (props) => {
 
   /*
   useEffect(() => {
-    if(props.config===0){
+    if(props.configTree===0){
        makeidlev1(props.act, tree.children, 0, 0)
        for (let ii = 0; ii < 20; ii++) {
          c = 0;
@@ -284,7 +284,7 @@ const TreeNode = (props) => {
       mode = 1;
     }
     setFamilyTree(props.familyTree);
-    props.changeconfig(2);
+    props.changeconfigTree(2);
   };
   const zrobopacity = (e, str, d, id) => {
     e.stopPropagation();
@@ -318,7 +318,7 @@ const TreeNode = (props) => {
         makeopacity(t.children, str, d, id);
       }
       setFamilyTree(familyTree);
-      props.changeconfig(props.config === 2 ? 1 : 2);
+      props.changeconfigTree(props.configTree === 2 ? 1 : 2);
       return t;
     });
   };
@@ -349,7 +349,7 @@ const TreeNode = (props) => {
     // removeprobe(tree.children, 1, 1)
 
     setFamilyTree(props.familyTree);
-    props.changeconfig(2);
+    props.changeconfigTree(2);
   };
   let is = 0;
   const findchild = (nodes) => {
@@ -479,7 +479,7 @@ const TreeNode = (props) => {
       makeids(tree.children, ii);
     }
     setFamilyTree(props.familyTree);
-    props.changeconfig(2);
+    props.changeconfigTree(2);
     mode = 1;
   };
 
@@ -530,7 +530,7 @@ const TreeNode = (props) => {
         makeids(tree.children, ii);
       }
       setFamilyTree(props.familyTree);
-      props.changeconfig(props.config === 1 ? 2 : 1);
+      props.changeconfigTree(props.configTree === 1 ? 2 : 1);
       mode = 1;
     }
 
@@ -552,7 +552,7 @@ const TreeNode = (props) => {
       {(color) => (
         <div className={"color-" + color + "-set"}>
           {" "}
-          {props.config === 0 &&
+          {props.configTree === 0 &&
             familyTree.map((t, i) => {
               return (
                 t &&
@@ -569,7 +569,7 @@ const TreeNode = (props) => {
 
                       if (props.pc[t.name].length > 0) {
                         findgreen(tree.children);
-                        props.changeintree(t.name, 0, 1);
+                        props.changeCategory(t.name, 0, 1);
 
                         let c = 0;
                         Object.keys(props.pc).filter((tt) => {
@@ -609,8 +609,8 @@ const TreeNode = (props) => {
 
                     {t.children && (
                       <TreeNode
-                        config={props.config}
-                        changeintree={props.changeintree}
+                        configTree={props.configTree}
+                        changeCategory={props.changeCategory}
                         parent={props.parent}
                         changeparent={props.changeparent}
                         familyTree={t.children}
@@ -625,7 +625,7 @@ const TreeNode = (props) => {
                 )
               );
             })}
-          {props.config === 1 &&
+          {props.configTree === 1 &&
             familyTree.map((t, i) => {
               return (
                 <div key={i} style={{ paddingLeft: "10px", paddingTop: "5px" }}>
@@ -641,17 +641,17 @@ const TreeNode = (props) => {
                           makeids(tree.children, ii);
                         }
                         setFamilyTree(props.familyTree);
-                        props.changeconfig(2);
+                        props.changeconfigTree(2);
                       }}
                       onMouseDown={(e) => {
                         zrobopacity(e, t.name, props.depth - 1, props.pid);
                         if (e.dataTransfer)
                           e.dataTransfer.setData("text", e.target.id);
                         console.log(
-                          props.config +
+                          props.configTree +
                             "                       kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
                         );
-                        props.changeconfig(2);
+                        props.changeconfigTree(2);
                       }}
                       onDragOver={(e) => {
                         e.preventDefault();
@@ -668,7 +668,7 @@ const TreeNode = (props) => {
                               props.id
                             );
                             zrob(e, t.depth);
-                            props.changeconfig(1);
+                            props.changeconfigTree(1);
                           }
                         }
                       }}
@@ -690,7 +690,7 @@ const TreeNode = (props) => {
                           makeids(tree.children, ii);
                         }
                         setFamilyTree(props.familyTree);
-                        props.changeconfig(2);
+                        props.changeconfigTree(2);
                       }}
                     >
                       {" "}
@@ -703,10 +703,10 @@ const TreeNode = (props) => {
 
                   {t.children && (
                     <TreeNode
-                      changeintree={props.changeintree}
-                      config={props.config}
+                      changeCategory={props.changeCategory}
+                      configTree={props.configTree}
                       parent={props.parent}
-                      changeconfig={props.changeconfig}
+                      changeconfigTree={props.changeconfigTree}
                       changeparent={props.changeparent}
                       familyTree={t.children}
                       settings={props.settings}
@@ -748,7 +748,7 @@ const TreeNode = (props) => {
                 </div>
               );
             })}
-          {props.config === 2 &&
+          {props.configTree === 2 &&
             familyTree.map((t, i) => {
               return (
                 <div key={i} style={{ paddingLeft: "10px", paddingTop: "5px" }}>
@@ -764,18 +764,18 @@ const TreeNode = (props) => {
                           makeids(tree.children, ii);
                         }
                         setFamilyTree(props.familyTree);
-                        props.changeconfig(2);
+                        props.changeconfigTree(2);
                       }}
                       onMouseDown={(e) => {
                         zrobopacity(e, t.name, props.depth - 1, props.pid);
                         if (e.dataTransfer)
                           e.dataTransfer.setData("text", e.target.id);
                         console.log(
-                          props.config +
+                          props.configTree +
                             "                     cccccccccccccccccccccccccccccccccccccccccccckkkkkkkkkkkkkk"
                         );
 
-                        props.changeconfig(1);
+                        props.changeconfigTree(1);
                       }}
                       onDragOver={(e) => {
                         e.preventDefault();
@@ -792,7 +792,7 @@ const TreeNode = (props) => {
                               props.id
                             );
                             zrob(e, t.depth);
-                            props.changeconfig(2);
+                            props.changeconfigTree(2);
                           }
                         }
                       }}
@@ -814,7 +814,7 @@ const TreeNode = (props) => {
                           makeids(tree.children, ii);
                         }
                         setFamilyTree(props.familyTree);
-                        props.changeconfig(1);
+                        props.changeconfigTree(1);
                       }}
                     >
                       {" "}
@@ -827,10 +827,10 @@ const TreeNode = (props) => {
 
                   {t.children && (
                     <TreeNode
-                      changeintree={props.changeintree}
-                      config={props.config}
+                      changeCategory={props.changeCategory}
+                      configTree={props.configTree}
                       parent={props.parent}
-                      changeconfig={props.changeconfig}
+                      changeconfigTree={props.changeconfigTree}
                       changeparent={props.changeparent}
                       familyTree={t.children}
                       settings={props.settings}

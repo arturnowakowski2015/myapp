@@ -122,12 +122,12 @@ const TreeMove = (props) => {
 
             {t.children && (
               <TreeMove
-                changeintree={props.changeintree}
-                config={props.config}
+                changeCategory={props.changeCategory}
+                configTree={props.configTree}
                 parent={props.parent}
                 changedestination={props.changedestination}
                 destination={props.destination}
-                changeconfig={props.changeconfig}
+                changeconfigTree={props.changeconfigTree}
                 changeparent={props.changeparent}
                 familyTree={t.children}
                 settings={props.settings}
