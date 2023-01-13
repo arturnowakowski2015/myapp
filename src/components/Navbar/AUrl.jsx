@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../../scss/AUrl.scss";
 import "../../scss/animations/Animation.scss";
+import { onAuthStateChanged } from "../../firebase/auth";
+import { auth } from "../../firebase";
 
 const AUrl = (props) => {
   const location = useLocation();
   const [item, setItem] = useState([true, true, true]);
-
+  const navigate = useNavigate();
   const changeconfig = (i, ii) => {
     item[0] = true;
     item[1] = true;
@@ -20,6 +22,7 @@ const AUrl = (props) => {
 
   return (
     <div className={"topnav-1"}>
+      <div onClick={() => navigate("/signup")}>sign up</div>
       <div className={"topnav-" + item.indexOf(false)}>
         /{location.pathname.split("/")[2]}/
       </div>

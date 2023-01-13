@@ -17,7 +17,7 @@ const Table = (props) => {
   const templimit = useRef();
   const location = useLocation();
   const navigate = useNavigate();
-  const [flagel, setFlagel] = useState(true);
+  const [reload, setreload] = useState(true);
   const [biw, setBiw] = useState(0);
   const [sort1, setSort1] = useState(true);
 
@@ -35,10 +35,12 @@ const Table = (props) => {
   const [oldindex, setOldIndex] = useState(1);
   const [tovalue, setTovalue] = useState(0);
   const [countdown, setCountdown] = useState(0);
-  const [data1, setData1] = useState([]);
+  const [searcheddata, setSearcheddata] = useState([]);
   const [stop, setStop] = useState(0);
-  const [sliced, setSliced] = useState([]);
-  const [indextab, setIndextab] = useState(location.pathname.split("/")[2]);
+  const [slicedSearchedText, setSlicedSearchedText] = useState([]);
+  const [indexOfLocation, setIndexOfLocation] = useState(
+    location.pathname.split("/")[2]
+  );
 
   const [searchi, setSearchi] = useState({ new: 0, old: 0 });
   const [to, setTo] = useState({});
@@ -136,7 +138,7 @@ const Table = (props) => {
   };
   const makepagination = () => {
     if (props.checkall[0] === 0) {
-      if (props.number1 === 0) {
+      if (props.pageNumber === 0) {
         lastPost = number * postPerPage;
         firstPost = lastPost - postPerPage;
       } else {
@@ -144,7 +146,7 @@ const Table = (props) => {
         firstPost = lastPost - postPerPage;
         if (firstPost > data.length) {
           firstPost = 0;
-          setNumber(Math.floor(data1.length / postPerPage));
+          setNumber(Math.floor(searcheddata.length / postPerPage));
         }
       }
     } else {
@@ -165,12 +167,12 @@ const Table = (props) => {
       }
     }
 
-    Math.floor(data1.length / postPerPage) >= 10
+    Math.floor(searcheddata.length / postPerPage) >= 10
       ? (span = 10)
       : (span = Math.floor(data && data.length / postPerPage) + 1);
 
     for (let i = fp; i <= border[biw] / postPerPage + span; i++) {
-      if (Math.floor(data1.length / postPerPage) < 10 + 1)
+      if (Math.floor(searcheddata.length / postPerPage) < 10 + 1)
         pageNumber.push(i - border[biw] / postPerPage);
       else pageNumber.push(i);
     }
@@ -191,7 +193,7 @@ const Table = (props) => {
     let lastPost = 0;
     let firstPost = 0;
 
-    if (props.number1 === 0) {
+    if (props.pageNumber === 0) {
       lastPost = number * postPerPage;
       firstPost = lastPost - postPerPage;
     } else {
@@ -206,34 +208,37 @@ const Table = (props) => {
       firstPost = 0;
     }
 
-    setData1(
+    setSearcheddata(
       data.filter((r) => {
         return Object.keys(data[0]).some((row) => {
           return (
             typeof r[row] === "string" &&
-            r[row].indexOf(searchtext[indextab].searchtext[searchi.new]) !== -1
+            r[row].indexOf(
+              searchtext[indexOfLocation].searchtext[searchi.new]
+            ) !== -1
           );
         });
       })
     );
-    // currentPost= data1.slice(firstPost, lastPost)
+    // currentPost= searcheddata.slice(firstPost, lastPost)
 
     let obj = Object.assign({}, makepagination());
-    setSliced(
+    setSlicedSearchedText(
       data
         .filter((r) => {
           return Object.keys(data[0]).some((row) => {
             return (
               typeof r[row] === "string" &&
-              r[row].indexOf(searchtext[indextab].searchtext[searchi.new]) !==
-                -1
+              r[row].indexOf(
+                searchtext[indexOfLocation].searchtext[searchi.new]
+              ) !== -1
             );
           });
         })
         .slice(obj.firstPost, obj.lastPost)
     );
 
-    setFlagel(flagel);
+    setreload(reload);
   };
   tempsli2.current = setsli2;
   useEffect(() => {
@@ -292,7 +297,7 @@ const Table = (props) => {
     setNumber(number);
 
     setBiw(
-      props.number1 === 0
+      props.pageNumber === 0
         ? Math.floor((number - 1) / 10)
         : Math.floor(number / 10)
     );
@@ -517,15 +522,15 @@ const Table = (props) => {
     templimit.current();
   }, []);
 
-  if (data1.length === 0) pageNumber = [1, 2, 3, 4, 5, 6];
+  if (searcheddata.length === 0) pageNumber = [1, 2, 3, 4, 5, 6];
 
   const onChangeLocation = () => {
-    setIndextab(location.pathname.split("/")[2]);
+    setIndexOfLocation(location.pathname.split("/")[2]);
 
     let lastPost = 0;
     let firstPost = 0;
 
-    if (props.number1 === 0) {
+    if (props.pageNumber === 0) {
       lastPost = number * postPerPage;
       firstPost = lastPost - postPerPage;
     } else {
@@ -533,32 +538,36 @@ const Table = (props) => {
       firstPost = lastPost - postPerPage;
       if (firstPost > data.length) {
         firstPost = 0;
-        setNumber(Math.floor(data1.length / postPerPage));
+        setNumber(Math.floor(searcheddata.length / postPerPage));
       }
     }
     if (firstPost < 0) {
       firstPost = 0;
     }
 
-    setData1(
+    setSearcheddata(
       props.data.filter((r) => {
         return Object.keys(data[0]).some((row) => {
           return (
             typeof r[row] === "string" &&
-            r[row].indexOf(searchtext[indextab].searchtext[searchi.new]) !== -1
+            r[row].indexOf(
+              searchtext[indexOfLocation].searchtext[searchi.new]
+            ) !== -1
           );
         });
       })
     );
-    // currentPost= data1.slice(firstPost, lastPost)
+    // currentPost= searcheddata.slice(firstPost, lastPost)
 
     let obj = Object.assign({}, makepagination());
-    setSliced(
+    setSlicedSearchedText(
       props.data.filter((r) => {
         return Object.keys(data[0]).some((row) => {
           return (
             typeof r[row] === "string" &&
-            r[row].indexOf(searchtext[indextab].searchtext[searchi.new]) !== -1
+            r[row].indexOf(
+              searchtext[indexOfLocation].searchtext[searchi.new]
+            ) !== -1
           );
         });
       }).length
@@ -568,7 +577,7 @@ const Table = (props) => {
                 return (
                   typeof r[row] === "string" &&
                   r[row].indexOf(
-                    searchtext[indextab].searchtext[searchi.new]
+                    searchtext[indexOfLocation].searchtext[searchi.new]
                   ) !== -1
                 );
               });
@@ -586,7 +595,7 @@ const Table = (props) => {
     lastPost = 31;
     setStop(0);
     // pageNumber=[1,2,3,4,5,6,7]
-    setFlagel(flagel);
+    setreload(reload);
     //setLimit(limit=>-1)
   };
   const location1 = location.pathname.split("/")[2];
@@ -596,12 +605,12 @@ const Table = (props) => {
   }, [location1]);
 
   const setSli = () => {
-    setIndextab(location.pathname.split("/")[2]);
+    setIndexOfLocation(location.pathname.split("/")[2]);
 
     let lastPost = 0;
     let firstPost = 0;
 
-    if (props.number1 === 0) {
+    if (props.pageNumber === 0) {
       lastPost = number * postPerPage;
       firstPost = lastPost - postPerPage;
     } else {
@@ -609,33 +618,37 @@ const Table = (props) => {
       firstPost = lastPost - postPerPage;
       if (firstPost > data.length) {
         firstPost = 0;
-        setNumber(Math.floor(data1.length / postPerPage));
+        setNumber(Math.floor(searcheddata.length / postPerPage));
       }
     }
     if (firstPost < 0) {
       firstPost = 0;
     }
 
-    setData1(
+    setSearcheddata(
       props.data.filter((r) => {
         return Object.keys(data[0]).some((row) => {
           return (
             typeof r[row] === "string" &&
-            r[row].indexOf(searchtext[indextab].searchtext[searchi.new]) !== -1
+            r[row].indexOf(
+              searchtext[indexOfLocation].searchtext[searchi.new]
+            ) !== -1
           );
         });
       })
     );
-    // currentPost= data1.slice(firstPost, lastPost)
+    // currentPost= searcheddata.slice(firstPost, lastPost)
 
     let obj = Object.assign({}, makepagination());
 
-    setSliced(
+    setSlicedSearchedText(
       props.data.filter((r) => {
         return Object.keys(data[0]).some((row) => {
           return (
             typeof r[row] === "string" &&
-            r[row].indexOf(searchtext[indextab].searchtext[searchi.new]) !== -1
+            r[row].indexOf(
+              searchtext[indexOfLocation].searchtext[searchi.new]
+            ) !== -1
           );
         });
       }).length
@@ -645,7 +658,7 @@ const Table = (props) => {
                 return (
                   typeof r[row] === "string" &&
                   r[row].indexOf(
-                    searchtext[indextab].searchtext[searchi.new]
+                    searchtext[indexOfLocation].searchtext[searchi.new]
                   ) !== -1
                 );
               });
@@ -683,28 +696,38 @@ const Table = (props) => {
 
   const setValue = (str) => {
     if (
-      to[indextab].eltabs.length < 8 &&
-      to[indextab].eltabs[to[indextab].eltabs.length - 1].saved === 1
+      to[indexOfLocation].eltabs.length < 8 &&
+      to[indexOfLocation].eltabs[to[indexOfLocation].eltabs.length - 1]
+        .saved === 1
     )
-      to[indextab].eltabs.push({ name: str, words: str, saved: 2 });
+      to[indexOfLocation].eltabs.push({ name: str, words: str, saved: 2 });
     else if (
-      to[indextab].eltabs.length < 8 &&
-      to[indextab].eltabs[to[indextab].eltabs.length - 1].saved === 2
+      to[indexOfLocation].eltabs.length < 8 &&
+      to[indexOfLocation].eltabs[to[indexOfLocation].eltabs.length - 1]
+        .saved === 2
     )
-      to[indextab].eltabs.splice(to[indextab].eltabs.length - 1, 1, {
-        name: str,
-        words: str,
-        saved: 2,
-      });
+      to[indexOfLocation].eltabs.splice(
+        to[indexOfLocation].eltabs.length - 1,
+        1,
+        {
+          name: str,
+          words: str,
+          saved: 2,
+        }
+      );
 
-    searchtext[indextab].searchtext[to[indextab].eltabs.length - 1] =
-      to[indextab].eltabs[to[indextab].eltabs.length - 1].words;
+    searchtext[indexOfLocation].searchtext[
+      to[indexOfLocation].eltabs.length - 1
+    ] = to[indexOfLocation].eltabs[to[indexOfLocation].eltabs.length - 1].words;
 
     setSearchtext(searchtext);
-    setSearchi({ new: to[indextab].eltabs.length - 1, old: searchi - 1 });
+    setSearchi({
+      new: to[indexOfLocation].eltabs.length - 1,
+      old: searchi - 1,
+    });
     setTo(to);
 
-    setFlagel(!flagel);
+    setreload(!reload);
     navigate(
       "/a/" +
         location.pathname.split("/")[2] +
@@ -716,21 +739,28 @@ const Table = (props) => {
         (location.pathname.split("/")[6] !== undefined
           ? location.pathname.split("/")[6] +
             "/" +
-            searchtext[indextab].searchtext[searchi.new !== 0 ? searchi.new : 1]
+            searchtext[indexOfLocation].searchtext[
+              searchi.new !== 0 ? searchi.new : 1
+            ]
           : "")
     );
   };
 
   const savetab = () => {
-    to[indextab].eltabs.splice(to[indextab].eltabs.length - 1, 1, {
-      name: to[indextab].eltabs[to[indextab].eltabs.length - 1].name,
-      words:
-        searchtext[indextab].searchtext[
-          searchtext[indextab].searchtext.length - 1
-        ],
-      saved: 1,
-    });
-    setFlagel(!flagel);
+    to[indexOfLocation].eltabs.splice(
+      to[indexOfLocation].eltabs.length - 1,
+      1,
+      {
+        name: to[indexOfLocation].eltabs[to[indexOfLocation].eltabs.length - 1]
+          .name,
+        words:
+          searchtext[indexOfLocation].searchtext[
+            searchtext[indexOfLocation].searchtext.length - 1
+          ],
+        saved: 1,
+      }
+    );
+    setreload(!reload);
   };
   const z = (
     <div className="tablecontainer">
@@ -758,16 +788,18 @@ const Table = (props) => {
             <Searching
               i={window.location.href.indexOf("searchtext")}
               searchtext={
-                to[indextab] !== undefined
-                  ? to[indextab].eltabs[searchi.new].words
+                to[indexOfLocation] !== undefined
+                  ? to[indexOfLocation].eltabs[searchi.new].words
                   : ""
               }
               searchi={searchi.new}
               saved={
-                to[indextab] !== undefined &&
-                to[indextab].eltabs[to[indextab].eltabs.length - 1].saved
+                to[indexOfLocation] !== undefined &&
+                to[indexOfLocation].eltabs[
+                  to[indexOfLocation].eltabs.length - 1
+                ].saved
               }
-              len={data1.length}
+              len={searcheddata.length}
               setValue={(es) => {
                 setValue(es);
                 setStop((stop) => stop + 1);
@@ -781,11 +813,11 @@ const Table = (props) => {
         )}
         <div className={props.displayAnimated[2] ? "tabs" : ""}>
           {window.location.href.indexOf("searchtext") !== -1 &&
-            to[indextab] !== undefined &&
-            to[indextab].eltabs.map((t, j) => {
+            to[indexOfLocation] !== undefined &&
+            to[indexOfLocation].eltabs.map((t, j) => {
               return (
                 <Tab
-                  len={data1.length}
+                  len={searcheddata.length}
                   searchi={searchi}
                   j={j}
                   displ={props.displ}
@@ -796,11 +828,11 @@ const Table = (props) => {
             })}
         </div>
       </div>
-      {((props.flagsettings !== 4 && data1.length) ||
-        (data1.length === 0 &&
+      {((props.flagsettings !== 4 && searcheddata.length) ||
+        (searcheddata.length === 0 &&
           window.location.href.indexOf("searchtext") === -1) ||
         (window.location.href.indexOf("searchtext") !== -1 &&
-          sliced.length !== 0 &&
+          slicedSearchedText.length !== 0 &&
           data.length > 0)) && (
         <div
           className={props.displayAnimated[2] ? "pagination" : "pd"}
@@ -824,7 +856,7 @@ const Table = (props) => {
             setN={setN}
             length={
               window.location.href.indexOf("searchtext") !== -1
-                ? data1.length
+                ? searcheddata.length
                 : props.data && props.data.length
             }
             firstPost={1}
@@ -853,11 +885,13 @@ const Table = (props) => {
                 : null}
             </thead>
             <tbody>
-              {currentPost.length >= 0 && data && data1.length === data.length
-                ? sliced.map(buildRow)
+              {currentPost.length >= 0 &&
+              data &&
+              searcheddata.length === data.length
+                ? slicedSearchedText.map(buildRow)
                 : stop === 0 && currentPost && currentPost.map(buildRow)
                 ? stop === 0 && currentPost && currentPost.map(buildRow)
-                : sliced.map(buildRow)}
+                : slicedSearchedText.map(buildRow)}
             </tbody>
           </table>
         </div>
@@ -871,7 +905,7 @@ const Table = (props) => {
       <Consumer>
         {(color) => (
           <div className={"pag color-" + color + "-set"}>
-            {flagel === true ? el : el}{" "}
+            {reload === true ? el : el}{" "}
           </div>
         )}
       </Consumer>
