@@ -75,7 +75,7 @@ class Home extends React.Component {
       changes: [],
       changeall: false,
       checkall: [0, 0],
-      config: 0,
+      configTree: 0,
       menuCategories: {
         actual: [{ cat: "new", l: 0 }],
         new: [],
@@ -246,7 +246,7 @@ class Home extends React.Component {
       }, 100);
     });
   }
-  async loadPets(ii) {
+  async loadRecords(ii) {
     return new Promise((resolve) => {
       this.moverecords(ii);
       setTimeout(() => {
@@ -256,7 +256,7 @@ class Home extends React.Component {
   }
   async movetodestination(ii) {
     // await this.moverecords(ii)
-    await this.loadPets(ii);
+    await this.loadRecords(ii);
     this.changedata(this.state.destination.name, 0, 1);
     this.setState({ data: this.state.data });
   }
@@ -495,13 +495,13 @@ class Home extends React.Component {
     });
   }
   chc(i) {
-    this.setState({ config: i });
+    this.setState({ configTree: i });
   }
-  changeconfig(i) {
+  changeconfigTree(i) {
     if (i === 1) {
       this.setState({ layout: 0 });
       setTimeout(() => {
-        this.setState({ config: 1 });
+        this.setState({ configTree: 1 });
         this.setState({ menuel: true });
         this.setState({ allowedTab: 1 });
         this.setState({ number1: 1 });
@@ -511,7 +511,7 @@ class Home extends React.Component {
       this.setState({ layout: 1 });
 
       this.setState({ allowedTab: 0 });
-      this.setState({ config: 0 });
+      this.setState({ configTree: 0 });
       this.setState({ menuel: true });
     }
 
@@ -545,16 +545,16 @@ class Home extends React.Component {
               <div>
                 s
                 <TreeNode
-                  changeintree={(category, flag, flag1) => {
+                  changeCategory={(category, flag, flag1) => {
                     this.changedata(category, flag, flag1);
                   }}
                   pid={-1}
                   displayAnimated1={this.state.displayAnimated}
                   changeparent={(name) => this.setState({ parent: name })}
-                  config={this.state.config}
+                  configTree={this.state.configTree}
                   familyTree={tree.children}
-                  changeconfig={(i) => {
-                    this.setState({ config: i });
+                  changeconfigTree={(i) => {
+                    this.setState({ configTree: i });
                   }}
                   settings={this.state.allowedTab}
                   ac={this.state.menuCategories.set}
@@ -583,16 +583,16 @@ class Home extends React.Component {
           >
             <div>
               <TreeNode
-                changeintree={(category, flag, flag1) => {
+                changeCategory={(category, flag, flag1) => {
                   this.changedata(category, flag, flag1);
                 }}
                 pid={-1}
                 displayAnimated1={this.state.displayAnimated}
                 changeparent={(name) => this.setState({ parent: name })}
-                config={this.state.config}
+                configTree={this.state.configTree}
                 familyTree={tree.children}
-                changeconfig={(i) => {
-                  this.setState({ config: i });
+                changeconfigTree={(i) => {
+                  this.setState({ configTree: i });
                 }}
                 settings={this.state.allowedTab}
                 ac={this.state.menuCategories.set}
@@ -613,7 +613,7 @@ class Home extends React.Component {
           this.state.treetableItems[2] === true) && (
           <div className={"rightcolumn"}>
             <Table
-              changeintree={(category, flag, flag1) => {
+              changeCategory={(category, flag, flag1) => {
                 this.changedata(category, flag, flag1);
               }}
               menuel={this.state.menuel}
@@ -655,11 +655,11 @@ class Home extends React.Component {
           {" "}
           <AUrl
             st={this.state.displayAnimated}
-            changeconfig={(i) => {
+            changeconfigTree={(i) => {
               if (i === 1) {
                 this.setState({ treetableItems: [true, false, false] });
                 setTimeout(() => {
-                  this.setState({ config: 1 });
+                  this.setState({ configTree: 1 });
                   this.setState({ menuel: true });
                   this.setState({ allowedTab: 1 });
                   this.setState({ number1: 1 });
@@ -669,7 +669,7 @@ class Home extends React.Component {
                 this.setState({ treetableItems: [false, false, true] });
                 setTimeout(() => {
                   this.setState({ allowedTab: 0 });
-                  this.setState({ config: 0 });
+                  this.setState({ configTree: 0 });
                   this.setState({ menuel: true });
                 }, 100);
               }
@@ -721,21 +721,21 @@ class Home extends React.Component {
                         .length
                     : 0
                 }
-                move={this.state.moveTab}
+                movestatus={this.state.moveTab}
                 delete1={this.delete1.bind(this)}
                 pc={this.state.data}
                 checkall1={this.state.checkall}
                 i={this.state.i}
                 data={this.state.data}
-                changeintree={(category, flag, flag1) => {
+                changeCategory={(category, flag, flag1) => {
                   this.changedata(category, flag, flag1);
                 }}
                 changedestination={this.changedestination.bind(this)}
                 changeparent={(name) => this.setState({ parent: name })}
-                config={this.state.config}
+                configTree={this.state.configTree}
                 familyTree={tree.children}
-                changeconfig={(i) => {
-                  this.setState({ config: i });
+                changeconfigTree={(i) => {
+                  this.setState({ configTree: i });
                 }}
                 settings={this.state.allowedTab}
                 ac={this.state.menuCategories}
@@ -841,8 +841,8 @@ class Home extends React.Component {
               <div className="title">
                 <Select
                   acturl={this.state.menuCategories.actual[0].cat}
-                  changeconfig={(i) => {
-                    this.setState({ config: i });
+                  changeconfigTree={(i) => {
+                    this.setState({ configTree: i });
                   }}
                   changecategory={(category, flag, flag1) => {
                     this.changedata(category, flag, flag1);
@@ -851,7 +851,7 @@ class Home extends React.Component {
                   menuItem={this.state.menuItem}
                   reset={this.reset.bind(this)}
                   goback={() => {
-                    this.setState({ config: 1 });
+                    this.setState({ configTree: 1 });
                     this.setState({ menuel: true });
                     this.setState({ allowedTab: 1 });
                     this.setState({ number1: 1 });

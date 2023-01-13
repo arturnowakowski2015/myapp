@@ -809,7 +809,7 @@ const Table = (props) => {
           {z}
 
           <Pagination
-            changeintree={props.changeintree}
+            changeCategory={props.changeCategory}
             stop={stop}
             acturl={props.acturl}
             fp={1}

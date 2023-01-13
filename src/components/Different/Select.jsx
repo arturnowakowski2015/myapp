@@ -20,7 +20,7 @@ const Select = (props) => {
   };
   const back = (e) => {
     props.changeDatabase(e, 0);
-    props.changeconfig(0);
+    props.changeconfigTree(0);
     props.changecategory("new", 2);
     props.reset();
     navigate(

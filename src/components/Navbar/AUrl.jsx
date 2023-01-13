@@ -7,7 +7,7 @@ const AUrl = (props) => {
   const location = useLocation();
   const [item, setItem] = useState([true, true, true]);
 
-  const changeconfig = (i, ii) => {
+  const changeconfigTree = (i, ii) => {
     item[0] = true;
     item[1] = true;
     item[2] = true;
@@ -15,7 +15,7 @@ const AUrl = (props) => {
 
     setItem((item) => item);
 
-    props.changeconfig(i);
+    props.changeconfigTree(i);
   };
 
   return (
@@ -30,7 +30,7 @@ const AUrl = (props) => {
         className={item[0] ? "el-1" : "el-1-1"}
         to={"/a/" + location.pathname.split("/")[2] + "/pagination"}
         onClick={() => {
-          item.indexOf(false) !== 0 && changeconfig(2, 0);
+          item.indexOf(false) !== 0 && changeconfigTree(2, 0);
         }}
       >
         app
@@ -48,7 +48,7 @@ const AUrl = (props) => {
           "/1/searchtext"
         }
         onClick={() => {
-          item.indexOf(false) !== 1 && changeconfig(2, 1);
+          item.indexOf(false) !== 1 && changeconfigTree(2, 1);
         }}
       >
         searching
@@ -66,7 +66,7 @@ const AUrl = (props) => {
           "/1/settings"
         }
         onClick={() => {
-          item.indexOf(false) !== 2 && changeconfig(1, 2);
+          item.indexOf(false) !== 2 && changeconfigTree(1, 2);
         }}
       >
         settings
