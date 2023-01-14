@@ -19,7 +19,7 @@ const AUrl = (props) => {
     item[ii] = false;
 
     setItem((item) => item);
-
+    console.log(new Error().stack);
     props.changeconfigTree(i);
   };
 
