@@ -21,6 +21,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/a/new/pagination" element={<Home />} />
 
+        <Route path="/" element={<Home />} />
+
         <Route exact path="/a/:elem/pagination" element={<Home />}>
           <Route path=":id/:ii" element={<Table />}>
             <Route exact path="settings" element={<Settings />} />
