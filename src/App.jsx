@@ -4,14 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Selected from "./components/Selected/Selected";
 import Select from "./components/Different/Select";
-import Home from "./components/Home/Home";
+import Home from "./views/Home/Home";
 import Update from "./components/Different/Update";
 
-import Signup from "./Pages/Signup";
-import Login from "./Pages/Login";
+import Signup from "./views/Auth/Signup";
+import Login from "./views/Auth/Login";
 
-import Searching from "./components/Different/Searching";
-import Table from "./components/Table/Table";
+import Searching from "./views/database/Searching";
+import Table from "./views/database/Table";
 
 function App() {
   return (
@@ -19,9 +19,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/a/new/pagination" element={<Home />} />
-
-        <Route path="/" element={<Home />} />
 
         <Route exact path="/a/:elem/pagination" element={<Home />}>
           <Route path=":id/:ii" element={<Table />}>
