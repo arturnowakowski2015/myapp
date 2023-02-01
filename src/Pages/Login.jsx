@@ -61,9 +61,9 @@ const Login = () => {
               </div>
             </form>
 
-            <p className="text-sm text-white text-center">
+            <div className="text-sm text-white text-center">
               No account yet? <NavLink to="/">Sign up</NavLink>
-            </p>
+            </div>
           </div>
         </section>
       </main>

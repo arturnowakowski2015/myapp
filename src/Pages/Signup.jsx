@@ -64,9 +64,9 @@ const Signup = () => {
               </button>
             </form>
 
-            <p>
+            <div>
               Already have an account? <NavLink to="/login">Sign in</NavLink>
-            </p>
+            </div>
           </div>
         </div>
       </section>
